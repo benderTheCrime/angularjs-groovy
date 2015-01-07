@@ -6,6 +6,10 @@
     "license": "MIT",
     "dependencies": {},
     "devDependencies": {},
+    "main": [
+        "dist/angularjs-groovy.js",
+        "dist/angularjs-groovy.css"
+    ],
     "keywords": [
         "angularjs-groovy",
         "angular-groovy",
