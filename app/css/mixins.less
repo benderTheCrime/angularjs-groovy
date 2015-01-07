@@ -1,0 +1,26 @@
+.box-sizing {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.dim(@1: auto, @2: auto) {
+    width: @1;
+    height: @2;
+}
+
+.font(@1: sans-serif, @2: 1em, @3: 1em, @4: black, @5: 400) {
+    font-family:@1;
+    font-size:@2;
+    line-height:@3;
+    color:@4;
+    font-weight:@5;
+}
+
+.position(@1: relative, @2: initial, @3: initial, @4: initial, @5: initial) {
+    position:@1;
+    top:@2;
+    right:@3;
+    bottom:@4;
+    left:@5;
+}

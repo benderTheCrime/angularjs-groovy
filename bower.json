@@ -1,0 +1,23 @@
+{
+    "name": "Groovy",
+    "version": "0.0.1",
+    "description": "A Framework for WebView Applications in Angular",
+    "author": "@benderTheCrime <joe.groseclose@ordergroove.com>",
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {},
+    "keywords": [
+        "angularjs-groovy",
+        "angular-groovy",
+        "groovy",
+        "framework",
+        "webview",
+        "app"
+    ],
+    "license": "MIT license",
+    "ignore" : [
+        "node_modules",
+        "lib",
+        "examples"
+    ]
+}
