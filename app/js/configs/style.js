@@ -11,8 +11,7 @@
                     * Your already in the service, which means that we need to
                     * manage attachment of the required styles
                     */
-                    var head = a.element(d.head),
-                    scripts = a.element(d.head.getElementsByTagName('script')),
+                    var scripts = a.element(d.head.getElementsByTagName('script')),
                     path;
 
                     // Get the relative path
@@ -28,7 +27,7 @@
                         link.rel = 'stylesheet';
                         link.href = ~v.indexOf('http') ? v : path + v;
 
-                        head.append(link);
+                        d.head.insertBefore(link, d.head.children[0]);
                     });
                 }
             ]

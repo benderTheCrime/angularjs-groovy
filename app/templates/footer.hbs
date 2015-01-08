@@ -1,2 +1,8 @@
 <div class='groovy-footer' ng-controller='baseCtrl' ng-class='groovyColor()'>
+    <div class='groovy-view-tab'
+         ng-repeat='view in views'
+         ng-click='setActiveGroovyView(view.id)'>
+        <img ng-if='view.icon' ng-src='{{{noparse 'view.icon'}}}' />
+        {{{noparse 'view.name'}}}
+    </div>
 </div>

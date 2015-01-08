@@ -29,6 +29,7 @@
 
     // Services
     require('./services/Handlebars');
+    require('./services/views');
 
     // Controllers
     require('./controllers/base');
@@ -36,7 +37,9 @@
     // Directives
     require('./directives/base');
     require('./directives/header');
-    require('./directives/footer');
     // require('./directives/masterDetail');
+    require('./directives/footer');
+    require('./directives/view');
+
 
 })(window, document, angular, groovy || window.groovy);

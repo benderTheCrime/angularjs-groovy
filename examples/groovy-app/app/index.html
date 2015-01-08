@@ -4,9 +4,10 @@
         <meta charset='utf-8'>
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <meta name='description' content=''>
-        <title>Groovy</title>
+        <title></title>
         <script type='text/javascript'>
             groovy = {
+                appName: 'Groovy',
                 namespace: 'groovy',
                 useStyle: true,
                 forWeb: false,
@@ -29,11 +30,19 @@
         </script>
         <script type='text/javascript' src='../../../dist/angularjs-groovy.js'></script>
         <script type='text/javascript' src='js/index.js'></script>
+        <link rel='stylesheet' href='css/index.css'></link>
     </head>
     <body ng-app='groovyApp'>
-        <groovy-base>
-        <groovy-view>
-            test
-        </groovy-view>
+        <groovy-base></groovy-base>
+        <div ng-controller='test'
+             ng-groovy-view
+             ng-groovy-view-name='profile'
+             ng-groovy-view-icon-url='images/appbar.nyan.svg'>
+        </div>
+        <div ng-controller='test'
+             ng-groovy-view
+             ng-groovy-view-name='settings'
+             ng-groovy-view-icon-url='images/appbar.nyan.svg'>
+        </div>
     </body>
 </html>

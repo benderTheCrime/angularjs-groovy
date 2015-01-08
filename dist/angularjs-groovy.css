@@ -6,7 +6,7 @@
 html,
 body {
   width: 100%;
-  height: auto;
+  height: 100%;
   min-height: 100%;
   background-color: #f8f8f8;
 }
@@ -40,6 +40,7 @@ h1 {
   background-color: #cccccc;
   color: white;
   text-align: center;
+  z-index: 100;
 }
 .groovy-footer {
   height: 60px;
@@ -67,6 +68,29 @@ h1 {
 }
 .groovy-footer.nassau-sunset {
   background-color: #b2c6cd;
+}
+.groovy-footer .groovy-view-tab {
+  padding: 0 10px;
+  width: auto;
+  height: 100%;
+  display: inline-block;
+  line-height: 60px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.groovy-view {
+  padding: 5px;
+  width: 100%;
+  height: auto;
+  min-height: 50px;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  bottom: initial;
+  left: initial;
+  border: 1px solid #cccccc;
+  background-color: white;
+  z-index: 90;
 }
 h1 {
   width: auto;
