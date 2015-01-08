@@ -23,9 +23,7 @@
 
     // Configs to append meta/style
     require('./configs/meta')(m);
-    if (g.useStyle !== false) {
-        require('./configs/style')(m);
-    }
+    require('./configs/style')(m);
 
     // Services
     require('./services/Handlebars');
@@ -37,7 +35,7 @@
     // Directives
     require('./directives/base');
     require('./directives/header');
-    // require('./directives/masterDetail');
+    require('./directives/masterDetail');
     require('./directives/footer');
     require('./directives/view');
 

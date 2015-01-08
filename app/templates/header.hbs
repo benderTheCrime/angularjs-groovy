@@ -1,3 +1,6 @@
 <div class='groovy-header' ng-controller='baseCtrl' ng-class='groovyColor()'>
+    {{#if masterDetail}}
+        <img class='groovy-header-menu' src='{{masterDetail.iconUrl}}' />
+    {{/if}}
     <h1>{{header.title}}</h1>
 </div>

@@ -1,15 +1,23 @@
 .groovy-header, .groovy-footer {
     .dim(100%, 50px);
-    .position(fixed, 0, 0);
+    .pos(fixed, 0, 0);
     background-color:@c0;
     color:white;
     text-align:center;
     z-index:100;
 }
 
+.groovy-header {
+    .groovy-header-menu {
+        margin:5px;
+        .dim(40px, 40px);
+        .pos(absolute, 0, initial, initial, 0);
+    }
+}
+
 .groovy-footer {
     height:60px;
-    .position(fixed, initial, 0, 0);
+    .pos(fixed, initial, 0, 0);
     &.lagoon {
         background-color:@p8;
     }

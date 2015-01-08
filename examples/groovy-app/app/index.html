@@ -8,21 +8,14 @@
         <script type='text/javascript'>
             groovy = {
                 appName: 'Groovy',
-                namespace: 'groovy',
-                useStyle: true,
                 forWeb: false,
                 header: {
-                    title: 'Drooly',
+                    title: 'Groovy',
                     color: 'Emerald Cove'
                 },
-                masterDetail: false,
-                panes: [
-                    {
-                        name: 'profile',
-                        type: '' //,
-                        //template: ''
-                    }
-                ]
+                masterDetail: {
+                    iconUrl: 'images/appbar.nyan.svg'
+                }
             };
         </script>
         <script type='text/javascript'
@@ -38,11 +31,13 @@
              ng-groovy-view
              ng-groovy-view-name='profile'
              ng-groovy-view-icon-url='images/appbar.nyan.svg'>
+            Profile
         </div>
         <div ng-controller='test'
              ng-groovy-view
              ng-groovy-view-name='settings'
              ng-groovy-view-icon-url='images/appbar.nyan.svg'>
+            Settings
         </div>
     </body>
 </html>

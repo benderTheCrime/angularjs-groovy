@@ -9,6 +9,7 @@ body {
   height: 100%;
   min-height: 100%;
   background-color: #f8f8f8;
+  overflow: hidden;
 }
 html *,
 body * {
@@ -41,6 +42,16 @@ h1 {
   color: white;
   text-align: center;
   z-index: 100;
+}
+.groovy-header .groovy-header-menu {
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  right: initial;
+  bottom: initial;
+  left: 0;
 }
 .groovy-footer {
   height: 60px;
@@ -77,6 +88,35 @@ h1 {
   line-height: 60px;
   vertical-align: middle;
   cursor: pointer;
+}
+.groovy-master-detail {
+  width: 200px;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: initial;
+  bottom: initial;
+  left: -200px;
+  z-index: 101;
+}
+.groovy-master-detail.lagoon {
+  background-color: #93a4aa;
+}
+.groovy-master-detail.strawberry {
+  background-color: #364347;
+}
+.groovy-master-detail.banana {
+  background-color: #b2c6cd;
+  color: black;
+}
+.groovy-master-detail.bruise {
+  background-color: #93a4aa;
+}
+.groovy-master-detail.emerald-cove {
+  background-color: #364347;
+}
+.groovy-master-detail.nassau-sunset {
+  background-color: #b2c6cd;
 }
 .groovy-view {
   padding: 5px;
