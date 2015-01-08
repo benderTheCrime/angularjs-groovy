@@ -57,4 +57,4 @@ groovy = {
 ```
 
 
-Example uses boilerplate: [https://www.npmjs.com/package/generator-html-boilerplate]
+Example uses boilerplate: https://www.npmjs.com/package/generator-html-boilerplates

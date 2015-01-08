@@ -29,7 +29,6 @@
                         'app/js/templates.js': [ src + 'templates/**/*.hbs' ]
                     },
                     options: {
-                        //returnTemplates: true,
                         exportCommonJS: 'Handlebars'
                     }
                 }
@@ -69,6 +68,7 @@
             'less:app'
         ]);
         grunt.registerTask('default', [
+            'build',
             'watch:app'
         ]);
     };

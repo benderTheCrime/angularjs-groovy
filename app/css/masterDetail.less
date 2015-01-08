@@ -1,6 +1,8 @@
 .groovy-master-detail {
     .dim(200px, 100%);
     .pos(fixed, 0, initial, initial, -200px);
+    .transition(400ms, left);
+    box-shadow:inset -4px 0px 8px black;
     z-index:101;
     &.lagoon {
         background-color:@p8;
@@ -20,6 +22,9 @@
     }
     &.nassau-sunset {
         background-color:@p9;
+    }
+    &.groovy-active {
+        left:0;
     }
     .groovy-view-detail {
     }

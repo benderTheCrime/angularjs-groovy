@@ -1,6 +1,9 @@
 <div class='groovy-header' ng-controller='baseCtrl' ng-class='groovyColor()'>
     {{#if masterDetail}}
-        <img class='groovy-header-menu' src='{{masterDetail.iconUrl}}' />
+        <img class='groovy-header-menu'
+             src='{{masterDetail.iconUrl}}'
+             onclick='javascript:void(0);'
+             ng-click='toggleMasterDetail()' />
     {{/if}}
     <h1>{{header.title}}</h1>
 </div>

@@ -1,4 +1,4 @@
-(function(a) {
+(function(d, a) {
     'use strict';
 
     a.module('angularjs-groovy').controller(
@@ -9,9 +9,14 @@
             'viewData',
             function($s, $scope, viewData) {
                 $scope.views = viewData.views;
+                $scope.masterDetailActive = true;
 
                 $scope.groovyColor = function() {
-                    return $s.header.color.replace(' ', '-').toLowerCase();
+                    return ($s.header.color || $s.color).replace(' ', '-').toLowerCase();
+                };
+
+                $scope.toggleMasterDetail = function() {
+                    $scope.masterDetailActive = !$scope.masterDetailActive;
                 };
 
                 $scope.isActiveGroovyView = function(id) {
@@ -28,7 +33,15 @@
                         }
                     });
                 };
+
+                $scope.$watch('masterDetailActive', function() {
+                    a.element(d.querySelectorAll(
+                        '.groovy-master-detail, .groovy-view, .groovy-header'
+                    ))[
+                        $scope.masterDetailActive ? 'removeClass' : 'addClass'
+                    ]('groovy-active');
+                });
             }
         ]
     );
-})(angular);
+})(document, angular);
