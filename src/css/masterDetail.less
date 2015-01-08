@@ -3,6 +3,7 @@
     .pos(fixed, 0, initial, initial, -200px);
     .transition(400ms, left);
     box-shadow:inset -4px 0px 8px black;
+    color: white;
     z-index:101;
     &.lagoon {
         background-color:@p8;
@@ -27,5 +28,13 @@
         left:0;
     }
     .groovy-view-detail {
+        .dim(100%, 50px);
+        .font(@f0, 1em, 50px, inherit);
+        vertical-align:middle;
+        border-bottom:1px solid @c0;
+        img {
+            .dim(auto, 50px);
+            max-width:50px;
+        }
     }
 }

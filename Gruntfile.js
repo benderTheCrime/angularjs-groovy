@@ -3,7 +3,7 @@
 
     module.exports = function(grunt) {
         var env = grunt.option('env') ? grunt.option('env').toLowerCase() : 'dev',
-            src = 'app/',
+            src = 'src/',
             dest = 'dist/';
 
         grunt.initConfig({
@@ -26,7 +26,7 @@
             handlebars: {
                 app: {
                     files: {
-                        'app/js/templates.js': [ src + 'templates/**/*.hbs' ]
+                        'src/js/templates.js': [ src + 'templates/**/*.hbs' ]
                     },
                     options: {
                         exportCommonJS: 'Handlebars'
@@ -52,6 +52,23 @@
                     }
                 }
             },
+            jshint: {
+                options: {
+                    jshintrc: '.jshintrc'
+                },
+                app: {
+                    src: [
+                        src + 'js/**/!(templates)*.js',
+                        'examples/groovy-app/app/js/**/*.js'
+                    ]
+                }
+            },
+            jscs: {
+                src: [
+                    src + 'js/**/!(templates)*.js',
+                    'examples/groovy-app/app/js/**/*.js'
+                ]
+            },
             bower: {
                 install: {}
             }
@@ -60,6 +77,8 @@
         grunt.loadNpmTasks('grunt-contrib-less');
         grunt.loadNpmTasks('grunt-handlebars-compiler');
         grunt.loadNpmTasks('grunt-contrib-watch');
+        grunt.loadNpmTasks('grunt-contrib-jshint');
+        grunt.loadNpmTasks('grunt-jscs-checker');
         grunt.loadNpmTasks('grunt-bower-task');
         grunt.registerTask('build', [
             'bower:install',
@@ -70,6 +89,10 @@
         grunt.registerTask('default', [
             'build',
             'watch:app'
+        ]);
+        grunt.registerTask('test', [
+            'jshint:app',
+            'jscs'
         ]);
     };
 })();

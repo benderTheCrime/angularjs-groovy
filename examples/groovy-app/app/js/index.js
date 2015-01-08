@@ -3,8 +3,5 @@
 
     a.module('groovyApp', [
         'angularjs-groovy'
-    ]).controller('test', function() {
-        
-    });
-
+    ]).controller('test', function() {});
 })(angular);

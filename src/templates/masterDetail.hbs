@@ -9,7 +9,7 @@
      ng-class='groovyColor()'>
     <div class='groovy-view-detail'
          ng-repeat='view in views'
-         ng-click='setActiveGroovyView(view.id) && toggleMasterDetail()'>
+         ng-click='setActiveGroovyView(view.id)'>
         <img ng-if='view.icon' ng-src='{{{noparse 'view.icon'}}}' />
         {{{noparse 'view.name'}}}
     </div>

@@ -1,4 +1,5 @@
-.groovy-footer .groovy-view-tab {
+.groovy-footer .groovy-view-tab,
+.groovy-master-detail .groovy-view-detail {
     vertical-align:top;
 }
 

@@ -112,6 +112,7 @@ h1 {
   -o-transition: left 400ms ease;
   transition: left 400ms ease;
   box-shadow: inset -4px 0px 8px black;
+  color: white;
   z-index: 101;
 }
 .groovy-master-detail.lagoon {
@@ -135,6 +136,22 @@ h1 {
 }
 .groovy-master-detail.groovy-active {
   left: 0;
+}
+.groovy-master-detail .groovy-view-detail {
+  width: 100%;
+  height: 50px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1em;
+  line-height: 50px;
+  color: inherit;
+  font-weight: 400;
+  vertical-align: middle;
+  border-bottom: 1px solid #cccccc;
+}
+.groovy-master-detail .groovy-view-detail img {
+  width: auto;
+  height: 50px;
+  max-width: 50px;
 }
 .groovy-view {
   -webkit-transition: left 400ms ease;

@@ -38,6 +38,4 @@
     require('./directives/masterDetail');
     require('./directives/footer');
     require('./directives/view');
-
-
 })(window, document, angular, groovy || window.groovy);

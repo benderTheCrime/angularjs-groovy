@@ -32,6 +32,7 @@
                             v.el.removeClass('ng-show').addClass('ng-hide');
                         }
                     });
+                    $scope.masterDetailActive = false;
                 };
 
                 $scope.$watch('masterDetailActive', function() {
