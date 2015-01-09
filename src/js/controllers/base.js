@@ -33,6 +33,9 @@
                         }
                     });
                     $scope.masterDetailActive = false;
+                    a.element(
+                        d.querySelectorAll('.groovy-active')
+                    ).removeClass('groovy-active');
                 };
 
                 $scope.$watch('masterDetailActive', function() {

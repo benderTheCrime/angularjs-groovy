@@ -5,7 +5,7 @@
 
         // Required stylesheets
         requiredStyles: [
-            'angularjs-groovy.css' //,
+            'angularjs-groovy.min.css' //,
             //'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/' +
             //    'master/css/drunken-parrot.css'
         ]

@@ -25,6 +25,8 @@
         "angular": true,
         "Handlebars": true,
         "module": true,
-        "require": true
+        "require": true,
+        "process": true,
+        "__dirname": true
     }
 }

@@ -2,9 +2,10 @@
     'use strict';
 
     module.exports = function(grunt) {
-        var env = grunt.option('env') ? grunt.option('env').toLowerCase() : 'dev',
+        var env = grunt.option('env') ? grunt.option('env').toLowerCase() : 'prod',
             src = 'src/',
-            dest = 'dist/';
+            dest = 'dist/',
+            nodeSrc = 'app/';
 
         grunt.initConfig({
             browserify: {
@@ -19,6 +20,10 @@
                         debug: env === 'dev',
                         alias: {
                             handlebars: '../../node_modules/handlebars/dist/handlebars.runtime.js'
+                        },
+                        postBundleCB: function(err, src, next) {
+                            grunt.task.run([ 'uglify:app' ]);
+                            next(err, src);
                         }
                     }
                 }
@@ -48,8 +53,31 @@
                     files: [ src + '**' ],
                     tasks: [ 'build', 'watch:app' ],
                     options: {
-                        debounceDelay: 1000
+                        debounceDelay: 2000
                     }
+                }
+            },
+            uglify: {
+                app: {
+                    files: [
+                        {
+                            src: dest + 'angularjs-groovy.js',
+                            dest: dest + 'angularjs-groovy.min.js'
+                        }
+                    ]
+                }
+            },
+            cssmin: {
+                options: {
+                    noAdvanced: true
+                },
+                app: {
+                    files: [
+                        {
+                            src: dest + 'angularjs-groovy.css',
+                            dest: dest + 'angularjs-groovy.min.css'
+                        }
+                    ]
                 }
             },
             jshint: {
@@ -59,6 +87,7 @@
                 app: {
                     src: [
                         src + 'js/**/!(templates)*.js',
+                        nodeSrc + 'js/**/*.js',
                         'examples/groovy-app/app/js/**/*.js'
                     ]
                 }
@@ -66,6 +95,7 @@
             jscs: {
                 src: [
                     src + 'js/**/!(templates)*.js',
+                    nodeSrc + 'js/**/*.js',
                     'examples/groovy-app/app/js/**/*.js'
                 ]
             },
@@ -77,14 +107,17 @@
         grunt.loadNpmTasks('grunt-contrib-less');
         grunt.loadNpmTasks('grunt-handlebars-compiler');
         grunt.loadNpmTasks('grunt-contrib-watch');
+        grunt.loadNpmTasks('grunt-contrib-uglify');
+        grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-jshint');
         grunt.loadNpmTasks('grunt-jscs-checker');
         grunt.loadNpmTasks('grunt-bower-task');
         grunt.registerTask('build', [
             'bower:install',
-            'browserify:app',
             'handlebars:app',
-            'less:app'
+            'browserify:app',
+            'less:app',
+            'cssmin'
         ]);
         grunt.registerTask('default', [
             'build',

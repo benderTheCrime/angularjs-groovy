@@ -3,14 +3,10 @@
 
     require('./settings/conf');
 
-    if (typeof a === 'undefined' ||
-        typeof g === 'undefined') {
-
-        // What is to be done? no settings, no plugin :`(
-        return;
+    if (typeof a === 'undefined') {
+        throw new Error('AngularJs-Groovy: No instance of AngularJS could be found.');
     }
 
-    g = w.groovy;
     g.masterDetail = g.mD || g.masterDetail;
     g.header = g.h || g.header;
 
