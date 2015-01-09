@@ -5,7 +5,7 @@
         var env = grunt.option('env') ? grunt.option('env').toLowerCase() : 'prod',
             src = 'src/',
             dest = 'dist/',
-            nodeSrc = 'app/';
+            nodeSrc = 'lib/';
 
         grunt.initConfig({
             browserify: {

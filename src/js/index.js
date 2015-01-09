@@ -3,10 +3,6 @@
 
     require('./settings/conf');
 
-    if (typeof a === 'undefined') {
-        throw new Error('AngularJs-Groovy: No instance of AngularJS could be found.');
-    }
-
     g.masterDetail = g.mD || g.masterDetail;
     g.header = g.h || g.header;
 
@@ -34,4 +30,7 @@
     require('./directives/masterDetail');
     require('./directives/footer');
     require('./directives/view');
-})(window, document, angular, groovy || window.groovy);
+})(
+    window, document, angular,
+    typeof groovy !== 'undefined' ? groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
+);

@@ -3109,14 +3109,6 @@ module.exports=require(15)
 
     require('./settings/conf');
 
-    if (typeof a === 'undefined' ||
-        typeof g === 'undefined') {
-
-        // What is to be done? no settings, no plugin :`(
-        return;
-    }
-
-    g = w.groovy;
     g.masterDetail = g.mD || g.masterDetail;
     g.header = g.h || g.header;
 
@@ -3144,7 +3136,10 @@ module.exports=require(15)
     require('./directives/masterDetail');
     require('./directives/footer');
     require('./directives/view');
-})(window, document, angular, groovy || window.groovy);
+})(
+    window, document, angular,
+    typeof groovy !== 'undefined' ? groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
+);
 
 },{"./configs/meta":32,"./configs/style":33,"./controllers/base":34,"./directives/base":35,"./directives/footer":36,"./directives/header":37,"./directives/masterDetail":38,"./directives/view":39,"./services/Handlebars":42,"./services/views":43,"./settings/conf":44}],41:[function(require,module,exports){
 (function() {
