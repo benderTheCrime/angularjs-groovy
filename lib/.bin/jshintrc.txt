@@ -1,0 +1,32 @@
+{
+    "eqeqeq": true,
+    "es3": true,
+    "freeze": true,
+    "immed": true,
+    "latedef": "nofunc",
+    "newcap": true,
+    "noarg": true,
+    "noempty": true,
+    "nonbsp": true,
+    "undef": true,
+    "unused": true,
+    "strict": true,
+    "trailing": true,
+    "maxparams": 6,
+    "maxlen": 120,
+    "eqnull": true,
+    "laxcomma": true,
+    "browser": true,
+    "globals": {
+        "window": true,
+        "document": true,
+        "console": true,
+        "groovy": true,
+        "angular": true,
+        "Handlebars": true,
+        "module": true,
+        "require": true,
+        "process": true,
+        "__dirname": true
+    }
+}
