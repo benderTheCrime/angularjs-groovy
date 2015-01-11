@@ -3,6 +3,6 @@
 
     a.module('angularjs-groovy').constant(
         '$s',
-        {"appName":"groovy-cli-app","header":false,"type":false}
+        {"header":false,"undefined":false}
     );
 })(angular);
