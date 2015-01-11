@@ -1,8 +1,2 @@
-node_modules/
-build/
-.DS_Store
-npm-debug.log
-zip/
-.sass-cache
-sass/
 bower_components/
+npm_modules/

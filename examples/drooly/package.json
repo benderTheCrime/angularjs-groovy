@@ -1,37 +1,10 @@
 {
-  "name": "drooly",
-  "version": "0.0.0",
-  "description": "",
-  "dependencies": {},
-  "devDependencies": {
-		"gulp": "*",
-		"gulp-concat": "^2.3.4",
-		"gulp-changed": "^0.4.1",
-		"gulp-webserver": "^0.6.0",
-		"gulp-filter": "^1.0.0",
-		"gulp-if": "^1.2.4",
-		"gulp-ignore": "^1.2.0",
-		"gulp-imagemin": "^0.6.2",
-		"gulp-jshint": "^1.8.4",
-		"gulp-load-plugins": "^0.5.3",
-		"gulp-minify-css": "^0.3.7",
-		"gulp-minify-html": "^0.1.4",
-		"del": "*",
-		"gulp-sass": "^0.7.2",
-		"gulp-size": "^1.0.0",
-		"gulp-uglify": "^0.3.1",
-		"gulp-watch": "^0.6.9",
-		"gulp-zip": "^0.3.4",
-		"jshint-stylish": "^0.4.0",
-		"open": "^0.0.5",
-		"run-sequence": "^0.3.6",
-		"main-bower-files": "^1.0.2",
-		"browser-sync": "^1.3.2",
-		"gulp-task-listing": "*",
-		"chalk": "*",
-		"gulp-file-include" : "0.7.1"
-  },
-  "engines": {
-		"node": ">=0.10.0"
-  }
+    "name": "scaffolded-app",
+    "version": "0.0.0",
+    "description": "An application built using angularjs-groovy",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "bower": "^1.3.12"
+    }
 }
