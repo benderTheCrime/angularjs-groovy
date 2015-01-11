@@ -3062,6 +3062,31 @@ module.exports=require(15)
     'use strict';
 
     a.module('angularjs-groovy').directive(
+        'ngGroovyListView',
+        [
+            '$s',
+            'baseView',
+            'scope',
+            function($s, baseView) {
+                return angular.extend(null, baseView, {
+                    scope: {
+                        groovyListView: '='
+                    },
+                    template: Handlebars.templates.listView({
+                        settings: $s,
+                        scope: this.scope
+                    })
+                });
+            }
+        ]
+    );
+})(angular);
+
+},{}],39:[function(require,module,exports){
+(function(a) {
+    'use strict';
+
+    a.module('angularjs-groovy').directive(
         'masterDetail',
         [
             '$s',
@@ -3076,7 +3101,7 @@ module.exports=require(15)
     );
 })(angular);
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -3084,30 +3109,15 @@ module.exports=require(15)
         'ngGroovyView',
         [
             'viewData',
-            function(viewData) {
-                return {
-                    restrict: 'A',
-                    Controller: [ '^baseCtrl' ],
-                    link: function(scope, element, attrs) {
-                        scope.groovyViewId = viewData.views.length;
-
-                        viewData.views.push({
-                            id: scope.groovyViewId,
-                            el: element,
-                            name: attrs.ngGroovyViewName[0].toUpperCase() +
-                                attrs.ngGroovyViewName.slice(1).toLowerCase(),
-                            icon: attrs.ngGroovyViewIconUrl
-                        });
-
-                        element.addClass('groovy-view ng-' + (scope.groovyViewId === 0 ? 'show' : 'hide'));
-                    }
-                };
+            'baseView',
+            function(viewData, baseView) {
+                return baseView;
             }
         ]
     );
 })(document, angular);
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function(w, d, a, g) {
     'use strict';
 
@@ -3130,6 +3140,7 @@ module.exports=require(15)
     // Services
     require('./services/Handlebars');
     require('./services/views');
+    require('./services/baseView');
 
     // Controllers
     require('./controllers/base');
@@ -3140,12 +3151,13 @@ module.exports=require(15)
     require('./directives/masterDetail');
     require('./directives/footer');
     require('./directives/view');
+    require('./directives/listView');
 })(
     window, document, angular,
     typeof groovy !== 'undefined' ? groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
 );
 
-},{"./configs/meta":32,"./configs/style":33,"./controllers/base":34,"./directives/base":35,"./directives/footer":36,"./directives/header":37,"./directives/masterDetail":38,"./directives/view":39,"./services/Handlebars":42,"./services/views":43,"./settings/conf":44}],41:[function(require,module,exports){
+},{"./configs/meta":32,"./configs/style":33,"./controllers/base":34,"./directives/base":35,"./directives/footer":36,"./directives/header":37,"./directives/listView":38,"./directives/masterDetail":39,"./directives/view":40,"./services/Handlebars":43,"./services/baseView":44,"./services/views":45,"./settings/conf":46}],42:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -3156,7 +3168,7 @@ module.exports=require(15)
     };
 })();
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3173,7 +3185,38 @@ module.exports=require(15)
     );
 })(angular);
 
-},{"../misc/helpers":41,"../templates":45,"handlebars":31}],43:[function(require,module,exports){
+},{"../misc/helpers":42,"../templates":47,"handlebars":31}],44:[function(require,module,exports){
+(function(a) {
+    'use strict';
+
+    a.module('angularjs-groovy').service(
+        'baseView',
+        [
+            'viewData',
+            function(viewData) {
+                return {
+                    restrict: 'A',
+                    Controller: [ '^baseCtrl' ],
+                    link: function(scope, element, attrs) {
+                        scope.groovyViewId = viewData.views.length;
+
+                        viewData.views.push({
+                            id: scope.groovyViewId,
+                            el: element,
+                            name: attrs.ngGroovyViewName[0].toUpperCase() +
+                            attrs.ngGroovyViewName.slice(1).toLowerCase(),
+                            icon: attrs.ngGroovyViewIconUrl
+                        });
+
+                        element.addClass('groovy-view ng-' + (scope.groovyViewId === 0 ? 'show' : 'hide'));
+                    }
+                };
+            }
+        ]
+    );
+})(angular);
+
+},{}],45:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3188,7 +3231,7 @@ module.exports=require(15)
     });
 })(angular);
 
-},{}],44:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3207,7 +3250,7 @@ module.exports=require(15)
     module.exports = conf;
 })(angular);
 
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 var Handlebars = require('Handlebars');
 var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['base'] = template(function (Handlebars,depth0,helpers,partials,data) {
@@ -3281,6 +3324,15 @@ function program1(depth0,data) {
   return buffer;
   });
 
+templates['listView'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<ul class='groovy-list-view-list'>\n    <li class='groovy-list-view-item' ng-repeat='groovyListView.items'>\n</ul>\n";
+  });
+
 templates['masterDetail'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -3307,4 +3359,4 @@ function program1(depth0,data) {
   return buffer;
   });
 
-},{"Handlebars":15}]},{},[40])
+},{"Handlebars":15}]},{},[41])

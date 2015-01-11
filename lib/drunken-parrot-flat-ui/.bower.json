@@ -1,0 +1,13 @@
+{
+  "name": "drunken-parrot-flat-ui",
+  "homepage": "https://github.com/hoarrd/drunken-parrot-flat-ui",
+  "_release": "a32380f8de",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "a32380f8def1fd6e2986d9590d94882bcacb6fe4"
+  },
+  "_source": "https://github.com/hoarrd/drunken-parrot-flat-ui.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/hoarrd/drunken-parrot-flat-ui.git"
+}

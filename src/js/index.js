@@ -20,6 +20,7 @@
     // Services
     require('./services/Handlebars');
     require('./services/views');
+    require('./services/baseView');
 
     // Controllers
     require('./controllers/base');
@@ -30,6 +31,7 @@
     require('./directives/masterDetail');
     require('./directives/footer');
     require('./directives/view');
+    require('./directives/listView');
 })(
     window, document, angular,
     typeof groovy !== 'undefined' ? groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
