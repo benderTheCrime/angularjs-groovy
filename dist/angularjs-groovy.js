@@ -2958,7 +2958,11 @@ module.exports=require(15)
                 $scope.masterDetailActive = true;
 
                 $scope.groovyColor = function() {
-                    return ($s.header.color || $s.color).replace(' ', '-').toLowerCase();
+                    if ($s.header.color || $s.color) {
+                        return ($s.header.color || $s.color).replace(' ', '-').toLowerCase();
+                    } else {
+                        return '';
+                    }
                 };
 
                 $scope.toggleMasterDetail = function() {
