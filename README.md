@@ -3,7 +3,28 @@
 Note: This project is still in early development. Although functional, it may not
 perform perfectly.
 
-##Include a Groovy Settings Object:
+To address issues or request additional functionality, please use the issues tab associated with this repo.
+
+####To use this framework to create a boilerplate application project, please install via NPM:
+```shell
+npm install [-g] angularjs-groovy
+```
+
+####To use this framework as a runtime JS API, please install the Bower component:
+```shell
+bower install angularjs-groove
+```
+
+##For CLI use:
+```shell
+groovy <app name> <desired location>
+```
+and then follow the prompts.
+
+Examples use the boilerplate
+
+##For Runtime Use:
+###Include a Groovy Settings Object:
 ```javascript
 <script type='text/javascript'>
     groovy = {
@@ -20,7 +41,7 @@ perform perfectly.
 ```
 More details on each option are included below.
 
-##Include these files in the head of your HTML:
+###Include these files in the head of your HTML:
 ```javascript
 <script type='text/javascript'
         src='bower_components/angularjs/angular.js'>
@@ -31,7 +52,7 @@ More details on each option are included below.
 ```
 Or wherever your Bower components install.
 
-##Include an element where you wish your application elements to register:
+###Include an element where you wish your application elements to register:
 ```javascript
 <groovy-base></groovy-base>
 ```
@@ -47,7 +68,7 @@ Doing the above will create a templated master-detail application.
 </div>
 ```
 
-##Options:
+####Options:
 ```javascript
 groovy = {
     appName: 'Groovy', // Adds your application name to the title of the page
@@ -55,6 +76,3 @@ groovy = {
     masterDetail: false // Doing so will make a tabbed-view application instead of master-detail
 };
 ```
-
-
-Example uses boilerplate: https://www.npmjs.com/package/generator-html-boilerplates

@@ -2958,11 +2958,8 @@ module.exports=require(15)
                 $scope.masterDetailActive = true;
 
                 $scope.groovyColor = function() {
-                    if ($s.header.color || $s.color) {
-                        return ($s.header.color || $s.color).replace(' ', '-').toLowerCase();
-                    } else {
-                        return '';
-                    }
+                    return ($s.header && $s.header.color) || $s.color ?
+                        ($s.header.color || $s.color).replace(' ', '-').toLowerCase() : '';
                 };
 
                 $scope.toggleMasterDetail = function() {
@@ -3000,7 +2997,28 @@ module.exports=require(15)
     );
 })(document, angular);
 
+// TODO split into many controllers
+
 },{}],35:[function(require,module,exports){
+(function(d, a) {
+    'use strict';
+
+    a.module('angularjs-groovy').controller(
+        'viewCtrl',
+        [
+            '$s',
+            '$scope',
+            'viewData',
+            function($s, $scope, viewData) {
+                $scope.views = viewData.views;
+            }
+        ]
+    );
+})(document, angular);
+
+// TODO split into many controllers
+
+},{}],36:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3019,7 +3037,7 @@ module.exports=require(15)
     );
 })(angular);
 
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3038,7 +3056,7 @@ module.exports=require(15)
     );
 })(angular);
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3057,7 +3075,7 @@ module.exports=require(15)
     );
 })(angular);
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3065,24 +3083,34 @@ module.exports=require(15)
         'ngGroovyListView',
         [
             '$s',
+            '$compile',
+            'Handlebars',
             'baseView',
-            'scope',
-            function($s, baseView) {
-                return angular.extend(null, baseView, {
-                    scope: {
-                        groovyListView: '='
-                    },
-                    template: Handlebars.templates.listView({
-                        settings: $s,
-                        scope: this.scope
-                    })
-                });
+            function($s, $compile, Handlebars, baseView) {
+                var baseLink = baseView.link;
+                return {
+                    restrict: baseView.restrict,
+                    Controller: baseView.Controller,
+                    link: function(scope, element, attrs) {
+                        element.addClass('groovy-list-view');
+                        if (!attrs.ngGroovyNoClear) {
+                            element.html('');
+                        }
+                        element.append(
+                            $compile(Handlebars.templates.listView({
+                                name: attrs.ngGroovyViewName
+                            }))(scope)
+                        );
+                        baseLink(scope, element, attrs);
+                    }
+
+                };
             }
         ]
     );
 })(angular);
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3101,7 +3129,7 @@ module.exports=require(15)
     );
 })(angular);
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -3117,7 +3145,7 @@ module.exports=require(15)
     );
 })(document, angular);
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function(w, d, a, g) {
     'use strict';
 
@@ -3144,6 +3172,7 @@ module.exports=require(15)
 
     // Controllers
     require('./controllers/base');
+    require('./controllers/view');
 
     // Directives
     require('./directives/base');
@@ -3157,7 +3186,7 @@ module.exports=require(15)
     typeof groovy !== 'undefined' ? groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
 );
 
-},{"./configs/meta":32,"./configs/style":33,"./controllers/base":34,"./directives/base":35,"./directives/footer":36,"./directives/header":37,"./directives/listView":38,"./directives/masterDetail":39,"./directives/view":40,"./services/Handlebars":43,"./services/baseView":44,"./services/views":45,"./settings/conf":46}],42:[function(require,module,exports){
+},{"./configs/meta":32,"./configs/style":33,"./controllers/base":34,"./controllers/view":35,"./directives/base":36,"./directives/footer":37,"./directives/header":38,"./directives/listView":39,"./directives/masterDetail":40,"./directives/view":41,"./services/Handlebars":44,"./services/baseView":45,"./services/views":46,"./settings/conf":47}],43:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -3168,7 +3197,7 @@ module.exports=require(15)
     };
 })();
 
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3185,7 +3214,7 @@ module.exports=require(15)
     );
 })(angular);
 
-},{"../misc/helpers":42,"../templates":47,"handlebars":31}],44:[function(require,module,exports){
+},{"../misc/helpers":43,"../templates":48,"handlebars":31}],45:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3196,7 +3225,7 @@ module.exports=require(15)
             function(viewData) {
                 return {
                     restrict: 'A',
-                    Controller: [ '^baseCtrl' ],
+                    Controller: [ '^viewCtrl' ],
                     link: function(scope, element, attrs) {
                         scope.groovyViewId = viewData.views.length;
 
@@ -3216,7 +3245,7 @@ module.exports=require(15)
     );
 })(angular);
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3231,7 +3260,7 @@ module.exports=require(15)
     });
 })(angular);
 
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -3250,7 +3279,7 @@ module.exports=require(15)
     module.exports = conf;
 })(angular);
 
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var Handlebars = require('Handlebars');
 var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['base'] = template(function (Handlebars,depth0,helpers,partials,data) {
@@ -3318,19 +3347,33 @@ function program1(depth0,data) {
   buffer += "<div class='groovy-header' ng-controller='baseCtrl' ng-class='groovyColor()'>\n    ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.masterDetail), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    <h1>"
+  buffer += "\n    <h1 class='groovy-header-title'>\n        "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.header)),stack1 == null || stack1 === false ? stack1 : stack1.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</h1>\n</div>\n";
+    + "\n    </h1>\n</div>\n";
   return buffer;
   });
 
 templates['listView'] = template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
+  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  return "<ul class='groovy-list-view-list'>\n    <li class='groovy-list-view-item' ng-repeat='groovyListView.items'>\n</ul>\n";
+  buffer += "<ul class='groovy-list-view-list'>\n    <li class='groovy-list-view-item'\n        ng-repeat='item in groovyListView.";
+  if (helper = helpers.name) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.name); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + ".items'>\n        <a ng-href='";
+  stack1 = (helper = helpers.noparse || (depth0 && depth0.noparse),options={hash:{},data:data},helper ? helper.call(depth0, "item.href", options) : helperMissing.call(depth0, "noparse", "item.href", options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "'>\n            <img ng-if='item.icon' ng-src='";
+  stack1 = (helper = helpers.noparse || (depth0 && depth0.noparse),options={hash:{},data:data},helper ? helper.call(depth0, "item.icon", options) : helperMissing.call(depth0, "noparse", "item.icon", options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "' />\n            <span>\n                ";
+  stack1 = (helper = helpers.noparse || (depth0 && depth0.noparse),options={hash:{},data:data},helper ? helper.call(depth0, "item.label", options) : helperMissing.call(depth0, "noparse", "item.label", options));
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n            </span>\n        </a>\n    </li>\n</ul>\n";
+  return buffer;
   });
 
 templates['masterDetail'] = template(function (Handlebars,depth0,helpers,partials,data) {
@@ -3359,4 +3402,4 @@ function program1(depth0,data) {
   return buffer;
   });
 
-},{"Handlebars":15}]},{},[41])
+},{"Handlebars":15}]},{},[42])

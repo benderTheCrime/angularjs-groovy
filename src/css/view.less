@@ -7,4 +7,31 @@
     border:1px solid @c0;
     background-color:white;
     z-index:90;
+    &.groovy-list-view {
+        .groovy-list-view-list {
+            .list;
+            li {
+                .dim(100%, 50px);
+                cursor:pointer;
+                border-bottom:1px solid @c0;
+                a {
+                    .dim(100%, 100%);
+                    img {
+                        margin-right:-10px;
+                        .dim(auto, 100%);
+                    }
+                    span {
+                        margin-left:15px;
+                        .font(@f0, 1em, 50px, black);
+                        vertical-align:middle;
+                        text-decoration:none;
+                        display:inline-block;
+                    }
+                }
+                &:last-of-type {
+                    border-bottom:none;
+                }
+            }
+        }
+    }
 }

@@ -24,6 +24,7 @@
 
     // Controllers
     require('./controllers/base');
+    require('./controllers/view');
 
     // Directives
     require('./directives/base');

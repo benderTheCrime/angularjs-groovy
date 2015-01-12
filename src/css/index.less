@@ -4,20 +4,6 @@
 @import 'masterDetail';
 @import 'view';
 
-h1 {
-    .dim(auto, 50px);
-    .font(@f0, 1.5em, 50px, inherit, 300);
-    vertical-align:middle;
-}
-
-.lagoon {
-    background-color:@p1;
-}
-
-.strawberry {
-    background-color:@p2;
-}
-
 .banana {
     background-color:@p3;
     color:black;
@@ -31,8 +17,13 @@ h1 {
     background-color:@p5;
 }
 
-.nassau-sunset {
-    background-color:@p6;
+.lagoon {
+    background-color:@p1;
+}
+
+.list {
+    list-type:none;
+    list-style-type:none;
 }
 
 .master-detail-shift {
@@ -40,4 +31,12 @@ h1 {
     &.groovy-active {
         left:200px;
     }
+}
+
+.nassau-sunset {
+    background-color:@p6;
+}
+
+.strawberry {
+    background-color:@p2;
 }

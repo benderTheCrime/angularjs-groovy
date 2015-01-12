@@ -50,3 +50,5 @@
         ]
     );
 })(document, angular);
+
+// TODO split into many controllers

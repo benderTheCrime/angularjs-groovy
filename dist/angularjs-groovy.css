@@ -62,6 +62,16 @@ h1 {
   bottom: initial;
   left: 0;
 }
+.groovy-header .groovy-header-title {
+  width: auto;
+  height: 50px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 1.5em;
+  line-height: 50px;
+  color: inherit;
+  font-weight: 300;
+  vertical-align: middle;
+}
 .groovy-footer {
   height: 60px;
   position: fixed;
@@ -175,21 +185,38 @@ h1 {
 .groovy-view.groovy-active {
   left: 200px;
 }
-h1 {
-  width: auto;
+.groovy-view.groovy-list-view .groovy-list-view-list {
+  list-type: none;
+  list-style-type: none;
+}
+.groovy-view.groovy-list-view .groovy-list-view-list li {
+  width: 100%;
   height: 50px;
+  cursor: pointer;
+  border-bottom: 1px solid #cccccc;
+}
+.groovy-view.groovy-list-view .groovy-list-view-list li a {
+  width: 100%;
+  height: 100%;
+}
+.groovy-view.groovy-list-view .groovy-list-view-list li a img {
+  margin-right: -10px;
+  width: auto;
+  height: 100%;
+}
+.groovy-view.groovy-list-view .groovy-list-view-list li a span {
+  margin-left: 15px;
   font-family: 'Source Sans Pro', sans-serif;
-  font-size: 1.5em;
+  font-size: 1em;
   line-height: 50px;
-  color: inherit;
-  font-weight: 300;
+  color: black;
+  font-weight: 400;
   vertical-align: middle;
+  text-decoration: none;
+  display: inline-block;
 }
-.lagoon {
-  background-color: #f84545;
-}
-.strawberry {
-  background-color: #fad46b;
+.groovy-view.groovy-list-view .groovy-list-view-list li:last-of-type {
+  border-bottom: none;
 }
 .banana {
   background-color: #f3bc65;
@@ -201,8 +228,12 @@ h1 {
 .emerald-cove {
   background-color: #3eb5ac;
 }
-.nassau-sunset {
-  background-color: #e96300;
+.lagoon {
+  background-color: #f84545;
+}
+.list {
+  list-type: none;
+  list-style-type: none;
 }
 .master-detail-shift {
   -webkit-transition: left 400ms ease;
@@ -213,4 +244,10 @@ h1 {
 }
 .master-detail-shift.groovy-active {
   left: 200px;
+}
+.nassau-sunset {
+  background-color: #e96300;
+}
+.strawberry {
+  background-color: #fad46b;
 }

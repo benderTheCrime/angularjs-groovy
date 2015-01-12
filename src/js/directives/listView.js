@@ -5,18 +5,28 @@
         'ngGroovyListView',
         [
             '$s',
+            '$compile',
+            'Handlebars',
             'baseView',
-            'scope',
-            function($s, baseView) {
-                return angular.extend(null, baseView, {
-                    scope: {
-                        groovyListView: '='
-                    },
-                    template: Handlebars.templates.listView({
-                        settings: $s,
-                        scope: this.scope
-                    })
-                });
+            function($s, $compile, Handlebars, baseView) {
+                var baseLink = baseView.link;
+                return {
+                    restrict: baseView.restrict,
+                    Controller: baseView.Controller,
+                    link: function(scope, element, attrs) {
+                        element.addClass('groovy-list-view');
+                        if (!attrs.ngGroovyNoClear) {
+                            element.html('');
+                        }
+                        element.append(
+                            $compile(Handlebars.templates.listView({
+                                name: attrs.ngGroovyViewName
+                            }))(scope)
+                        );
+                        baseLink(scope, element, attrs);
+                    }
+
+                };
             }
         ]
     );
