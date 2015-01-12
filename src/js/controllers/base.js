@@ -12,11 +12,8 @@
                 $scope.masterDetailActive = true;
 
                 $scope.groovyColor = function() {
-                    if ($s.header.color || $s.color) {
-                        return ($s.header.color || $s.color).replace(' ', '-').toLowerCase();
-                    } else {
-                        return '';
-                    }
+                    return ($s.header && $s.header.color) || $s.color ?
+                        ($s.header.color || $s.color).replace(' ', '-').toLowerCase() : '';
                 };
 
                 $scope.toggleMasterDetail = function() {
