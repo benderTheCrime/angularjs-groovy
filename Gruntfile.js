@@ -53,7 +53,7 @@
                     files: [ src + '**' ],
                     tasks: [ 'build', 'watch:app' ],
                     options: {
-                        debounceDelay: 2000
+                        debounceDelay: 1000
                     }
                 }
             },
@@ -98,9 +98,6 @@
                     nodeSrc + 'js/**/*.js',
                     'examples/groovy-app/app/js/**/*.js'
                 ]
-            },
-            bower: {
-                install: {}
             }
         });
         grunt.loadNpmTasks('grunt-browserify');
@@ -111,9 +108,7 @@
         grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-jshint');
         grunt.loadNpmTasks('grunt-jscs-checker');
-        grunt.loadNpmTasks('grunt-bower-task');
         grunt.registerTask('build', [
-            'bower:install',
             'handlebars:app',
             'browserify:app',
             'less:app',

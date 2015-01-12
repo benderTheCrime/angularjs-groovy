@@ -5,7 +5,9 @@
     "author": "@benderTheCrime <joe.groseclose@ordergroove.com>",
     "license": "MIT license",
     "dependencies": {},
-    "devDependencies": {},
+    "devDependencies": {
+        "angular-route": "1.2.16"
+    },
     "main": [
         "dist/angularjs-groovy.js",
         "dist/angularjs-groovy.css",

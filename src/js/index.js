@@ -1,6 +1,8 @@
 (function(w, d, a, g) {
     'use strict';
 
+    // Dependencies/Settings
+    require('../bower_components/angular-route/angular-route.js');
     require('./settings/conf');
 
     g.masterDetail = g.mD || g.masterDetail;
@@ -9,13 +11,16 @@
     delete g.mD;
     delete g.h;
 
-    var m = a.module('angularjs-groovy', [
-        'conf'
+    a.module('angularjs-groovy', [
+        'conf',
+        'ngRoute'
     ]).constant('$s', g);
 
     // Configs to append meta/style
-    require('./configs/meta')(m);
-    require('./configs/style')(m);
+    require('./configs/login');
+    require('./configs/meta');
+    require('./configs/style');
+
 
     // Services
     require('./services/Handlebars');
@@ -34,6 +39,9 @@
     require('./directives/view');
     require('./directives/listView');
 })(
-    window, document, angular,
-    typeof groovy !== 'undefined' ? groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
+    window,
+    document,
+    angular,
+    typeof groovy !== 'undefined' ?
+        groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
 );

@@ -29,6 +29,7 @@ Examples use the boilerplate
 <script type='text/javascript'>
     groovy = {
         appName: 'Groovy',
+        forWeb: false,
         header: {
             title: 'Groovy',
             color: 'Emerald Cove'
@@ -72,6 +73,7 @@ Doing the above will create a templated master-detail application.
 ```javascript
 groovy = {
     appName: 'Groovy', // Adds your application name to the title of the page
+    forWeb: false, // Is this application intended to be used for the web or as a native application
     header: false // This setting is optional
     masterDetail: false // Doing so will make a tabbed-view application instead of master-detail
 };

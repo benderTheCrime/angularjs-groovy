@@ -7,18 +7,19 @@
             '$s',
             '$compile',
             'Handlebars',
+            'viewData',
             'baseView',
-            function($s, $compile, Handlebars, baseView) {
+            function($s, $compile, Handlebars, viewData, baseView) {
                 var baseLink = baseView.link;
                 return {
                     restrict: baseView.restrict,
                     Controller: baseView.Controller,
                     link: function(scope, element, attrs) {
                         element.addClass('groovy-list-view');
-                        if (!attrs.ngGroovyNoClear) {
-                            element.html('');
-                        }
-                        element.append(
+                        viewData.setViewOptions(
+                            scope,
+                            element,
+                            attrs,
                             $compile(Handlebars.templates.listView({
                                 name: attrs.ngGroovyViewName
                             }))(scope)
