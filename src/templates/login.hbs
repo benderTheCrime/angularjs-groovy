@@ -1,0 +1,42 @@
+{{>loginBackdrop}}
+<div class='groovy-login'>
+    <h3 class='groovy-login-header'>Login</h3>
+    <div class='tile tile-login'>
+        <h1>{{appName}}</h1>
+        <div class='input-icon'>
+            <span class='fa-user fa'></span>
+            <input type='text'
+                   class='form-control'
+                   maxlength='75'
+                   placeholder='Username'>
+        </div>
+        <div class='input-icon'>
+            <span class='fa-lock fa'></span>
+            <input type='password'
+                   class='form-control'
+                   maxlength='75'
+                   placeholder='●●●●●'>
+        </div>
+        <a href='javascript:void(0);'
+           class='btn btn-block btn-primary btn-embossed'
+           ng-class='groovyColor()'
+           ng-click='login.action()'>
+            Log in
+        </a>
+        <a href='javascript:void(0);'
+           class='btn btn-block btn-primary btn-embossed'
+           ng-class='groovyColor()'
+           ng-click='toggleSignUp()'>
+            Sign Up
+        </a>
+        <div class='login-action clearfix'>
+            <div class='col-md-4 col-xs-3'>
+                <a href='javascript:void(0);'
+                   ng-click='login.forget()'>
+                    Forget?
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{{>signUp}}

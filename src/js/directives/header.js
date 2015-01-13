@@ -1,15 +1,16 @@
 (function(a) {
     'use strict';
 
+    var H = require('handlebars');
+
     a.module('angularjs-groovy').directive(
         'groovyHeader',
         [
             '$s',
-            'Handlebars',
-            function($s, Handlebars) {
+            function($s) {
                 return {
                     restrict: 'E',
-                    template: Handlebars.templates.header($s)
+                    template: H.templates.header($s)
                 };
             }
         ]

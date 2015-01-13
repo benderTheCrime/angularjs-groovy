@@ -9,11 +9,12 @@
             groovy = {
                 appName: 'Groovy',
                 forWeb: false,
+                // useLogin: true,
                 header: {
                     title: 'Groovy',
                     color: 'Emerald Cove'
                 },
-                //masterDetail: false,
+                // masterDetail: false,
                 masterDetail: {
                     iconUrl: 'images/appbar.nyan.svg'
                 },
@@ -30,7 +31,7 @@
         <link rel='stylesheet' href='css/index.css'></link>
     </head>
     <body ng-app='groovyApp'>
-        <groovy-base></groovy-base>
+        <ng-view></ng-view>
         <div ng-controller='test'
              ng-groovy-view
              ng-groovy-view-name='profile'

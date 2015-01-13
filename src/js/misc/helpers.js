@@ -5,5 +5,7 @@
         H.registerHelper('noparse', function(v) {
             return '{{' + v + '}}';
         });
+
+        H.partials = H.templates;
     };
 })();

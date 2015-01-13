@@ -1,0 +1,32 @@
+<div class='groovy-sign-up'>
+    <h3 class='groovy-sign-up-header'>Sign Up</h3>
+    <div class='tile tile-login'>
+        <h1>{{appName}}</h1>
+        <div class='input-icon'>
+            <span class='fa-user fa'></span>
+            <input type='text'
+                   class='form-control'
+                   maxlength='75'
+                   placeholder='Username'>
+        </div>
+        <div class='input-icon'>
+            <span class='fa-lock fa'></span>
+            <input type='password'
+                   class='form-control'
+                   maxlength='75'
+                   placeholder='●●●●●'>
+        </div>
+        <a href='javascript:void(0);'
+           class='btn btn-block btn-primary btn-embossed'
+           ng-class='groovyColor()'
+           ng-click='signUp.action()'>
+            Sign Up
+        </a>
+        <a href='javascript:void(0);'
+           class='btn btn-block btn-primary btn-embossed'
+           ng-class='groovyColor()'
+           ng-click='toggleSignUp()'>
+            Log In
+        </a>
+    </div>
+</div>

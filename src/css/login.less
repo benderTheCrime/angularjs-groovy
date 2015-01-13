@@ -1,0 +1,44 @@
+.groovy-login-backdrop {
+    .dim(100%, 100%);
+    .pos(fixed, 0, 0);
+}
+
+.groovy-login,
+.groovy-sign-up {
+    margin:0 2%;
+    .dim(96%, auto);
+    .pos(fixed, 20%, initial, initial, 0);
+    .transition(400ms, left);
+    z-index:110;
+    &.groovy-active {
+        left:-100%;
+    }
+    h1 {
+        margin-bottom:0.5em;
+        color:white;
+    }
+
+    input {
+        width:100%;
+    }
+    .groovy-login-header,
+    .groovy-sign-up-header {
+        font-weight: 400;
+        font-size: 1.25em;
+        margin-bottom: 0.2em;
+        color:white;
+    }
+    .fa-lock {
+        top:36%;
+    }
+    .tile-login {
+        padding-bottom:30px;
+    }
+}
+
+.groovy-sign-up {
+    left:100%;
+    &.groovy-active {
+        left:0;
+    }
+}

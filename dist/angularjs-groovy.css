@@ -29,6 +29,68 @@ span,
 h1 {
   display: block;
 }
+.groovy-login-backdrop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: initial;
+  left: initial;
+}
+.groovy-login,
+.groovy-sign-up {
+  margin: 0 2%;
+  width: 96%;
+  height: auto;
+  position: fixed;
+  top: 20%;
+  right: initial;
+  bottom: initial;
+  left: 0;
+  -webkit-transition: left 400ms ease;
+  -moz-transition: left 400ms ease;
+  -ms-transition: left 400ms ease;
+  -o-transition: left 400ms ease;
+  transition: left 400ms ease;
+  z-index: 110;
+}
+.groovy-login.groovy-active,
+.groovy-sign-up.groovy-active {
+  left: -100%;
+}
+.groovy-login h1,
+.groovy-sign-up h1 {
+  margin-bottom: 0.5em;
+  color: white;
+}
+.groovy-login input,
+.groovy-sign-up input {
+  width: 100%;
+}
+.groovy-login .groovy-login-header,
+.groovy-sign-up .groovy-login-header,
+.groovy-login .groovy-sign-up-header,
+.groovy-sign-up .groovy-sign-up-header {
+  font-weight: 400;
+  font-size: 1.25em;
+  margin-bottom: 0.2em;
+  color: white;
+}
+.groovy-login .fa-lock,
+.groovy-sign-up .fa-lock {
+  top: 36%;
+}
+.groovy-login .tile-login,
+.groovy-sign-up .tile-login {
+  padding-bottom: 30px;
+}
+.groovy-sign-up {
+  left: 100%;
+}
+.groovy-sign-up.groovy-active {
+  left: 0;
+}
 .groovy-header,
 .groovy-footer {
   width: 100%;
@@ -80,6 +142,15 @@ h1 {
   bottom: 0;
   left: initial;
 }
+.groovy-footer .groovy-view-tab {
+  padding: 0 10px;
+  width: auto;
+  height: 100%;
+  display: inline-block;
+  line-height: 60px;
+  vertical-align: middle;
+  cursor: pointer;
+}
 .groovy-footer.lagoon {
   background-color: #93a4aa;
 }
@@ -98,15 +169,6 @@ h1 {
 }
 .groovy-footer.nassau-sunset {
   background-color: #b2c6cd;
-}
-.groovy-footer .groovy-view-tab {
-  padding: 0 10px;
-  width: auto;
-  height: 100%;
-  display: inline-block;
-  line-height: 60px;
-  vertical-align: middle;
-  cursor: pointer;
 }
 .groovy-master-detail {
   width: 200px;
@@ -222,14 +284,61 @@ h1 {
   background-color: #f3bc65;
   color: black;
 }
+.banana.btn-embossed.btn-primary {
+  box-shadow: 0 5px #f3bc65;
+}
+.banana.btn-embossed.btn-primary:hover {
+  border: none;
+}
+.banana.btn-embossed.btn-primary:active,
+.banana.btn-embossed.btn-primary:focus {
+  background: #f3bc65;
+  box-shadow: none;
+}
 .bruise {
   background-color: #a88cd5;
+}
+.bruise.btn-embossed.btn-primary {
+  box-shadow: 0 5px #9175bd;
+}
+.bruise.btn-embossed.btn-primary:hover {
+  border: none;
+}
+.bruise.btn-embossed.btn-primary:active,
+.bruise.btn-embossed.btn-primary:focus {
+  background: #a88cd5;
+  box-shadow: none;
+}
+.btn {
+  border: none;
 }
 .emerald-cove {
   background-color: #3eb5ac;
 }
+.emerald-cove.btn-embossed.btn-primary {
+  box-shadow: 0 5px #28948c;
+}
+.emerald-cove.btn-embossed.btn-primary:hover {
+  border: none;
+}
+.emerald-cove.btn-embossed.btn-primary:active,
+.emerald-cove.btn-embossed.btn-primary:focus {
+  background: #3eb5ac;
+  box-shadow: none;
+}
 .lagoon {
   background-color: #f84545;
+}
+.lagoon.btn-embossed.btn-primary {
+  box-shadow: 0 5px #009dcd;
+}
+.lagoon.btn-embossed.btn-primary:hover {
+  border: none;
+}
+.lagoon.btn-embossed.btn-primary:active,
+.lagoon.btn-embossed.btn-primary:focus {
+  background: #f84545;
+  box-shadow: none;
 }
 .list {
   list-type: none;
@@ -248,6 +357,28 @@ h1 {
 .nassau-sunset {
   background-color: #e96300;
 }
+.nassau-sunset.btn-embossed.btn-primary {
+  box-shadow: 0 5px #f58410;
+}
+.nassau-sunset.btn-embossed.btn-primary:hover {
+  border: none;
+}
+.nassau-sunset.btn-embossed.btn-primary:active,
+.nassau-sunset.btn-embossed.btn-primary:focus {
+  background: #e96300;
+  box-shadow: none;
+}
 .strawberry {
   background-color: #fad46b;
+}
+.strawberry.btn-embossed.btn-primary {
+  box-shadow: 0 5px #cc0000;
+}
+.strawberry.btn-embossed.btn-primary:hover {
+  border: none;
+}
+.strawberry.btn-embossed.btn-primary:active,
+.strawberry.btn-embossed.btn-primary:focus {
+  background: #fad46b;
+  box-shadow: none;
 }

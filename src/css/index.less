@@ -1,5 +1,6 @@
 @import 'mixins';
 @import 'shared';
+@import 'login';
 @import 'headerFooter';
 @import 'masterDetail';
 @import 'view';
@@ -7,18 +8,62 @@
 .banana {
     background-color:@p3;
     color:black;
+    &.btn-embossed.btn-primary {
+        box-shadow: 0 5px @p12;
+        &:hover {
+            border:none;
+        }
+        &:active, &:focus {
+            background:@p3;
+            box-shadow:none;
+        }
+    }
 }
 
 .bruise {
     background-color:@p4;
+    &.btn-embossed.btn-primary {
+        box-shadow: 0 5px @p13;
+        &:hover {
+            border:none;
+        }
+        &:active, &:focus {
+            background:@p4;
+            box-shadow:none;
+        }
+    }
+}
+
+.btn {
+    border:none;
 }
 
 .emerald-cove {
     background-color:@p5;
+    &.btn-embossed.btn-primary {
+        box-shadow: 0 5px @p14;
+        &:hover {
+            border:none;
+        }
+        &:active, &:focus {
+            background:@p5;
+            box-shadow:none;
+        }
+    }
 }
 
 .lagoon {
     background-color:@p1;
+    &.btn-embossed.btn-primary {
+        box-shadow: 0 5px @p10;
+        &:hover {
+            border:none;
+        }
+        &:active, &:focus {
+            background:@p1;
+            box-shadow:none;
+        }
+    }
 }
 
 .list {
@@ -35,8 +80,28 @@
 
 .nassau-sunset {
     background-color:@p6;
+    &.btn-embossed.btn-primary {
+        box-shadow: 0 5px @p15;
+        &:hover {
+            border:none;
+        }
+        &:active, &:focus {
+            background:@p6;
+            box-shadow:none;
+        }
+    }
 }
 
 .strawberry {
     background-color:@p2;
+    &.btn-embossed.btn-primary {
+        box-shadow: 0 5px @p11;
+        &:hover {
+            border:none;
+        }
+        &:active, &:focus {
+            background:@p2;
+            box-shadow:none;
+        }
+    }
 }

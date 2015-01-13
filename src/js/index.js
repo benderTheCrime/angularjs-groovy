@@ -2,6 +2,11 @@
     'use strict';
 
     // Dependencies/Settings
+    var Handlebars = require('handlebars');
+
+    require('./templates');
+    require('./misc/helpers')(Handlebars);
+
     require('../bower_components/angular-route/angular-route.js');
     require('./settings/conf');
 
@@ -21,18 +26,16 @@
     require('./configs/meta');
     require('./configs/style');
 
-
     // Services
-    require('./services/Handlebars');
     require('./services/views');
     require('./services/baseView');
 
     // Controllers
+    require('./controllers/login');
     require('./controllers/base');
     require('./controllers/view');
 
     // Directives
-    require('./directives/base');
     require('./directives/header');
     require('./directives/masterDetail');
     require('./directives/footer');

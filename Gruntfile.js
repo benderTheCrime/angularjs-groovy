@@ -51,7 +51,7 @@
             watch: {
                 app: {
                     files: [ src + '**' ],
-                    tasks: [ 'build', 'watch:app' ],
+                    tasks: [ 'build' ],
                     options: {
                         debounceDelay: 1000
                     }
@@ -114,13 +114,13 @@
             'less:app',
             'cssmin'
         ]);
-        grunt.registerTask('default', [
-            'build',
-            'watch:app'
-        ]);
         grunt.registerTask('test', [
             'jshint:app',
             'jscs'
+        ]);
+        grunt.registerTask('default', [
+            'build',
+            'watch:app'
         ]);
     };
 })();

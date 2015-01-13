@@ -1,15 +1,16 @@
 (function(a) {
     'use strict';
 
+    var H = require('handlebars');
+
     a.module('angularjs-groovy').directive(
         'masterDetail',
         [
             '$s',
-            'Handlebars',
-            function($s, Handlebars) {
+            function($s) {
                 return {
                     restrict: 'E',
-                    template: Handlebars.templates.masterDetail($s)
+                    template: H.templates.masterDetail($s)
                 };
             }
         ]

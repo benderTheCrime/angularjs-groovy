@@ -9,7 +9,7 @@
                 items: [
                     {
                         label: 'test 1',
-                        href: '#',
+                        href: '#/',
                         icon: 'images/appbar.nyan2.svg'
                     },
                     {
@@ -17,7 +17,7 @@
                     },
                     {
                         label: 'test 3',
-                        href: '#'
+                        href: '#/'
                     },
                     {
                         label: 'test 4',

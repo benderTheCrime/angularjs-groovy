@@ -25,6 +25,17 @@
 .groovy-footer {
     height:60px;
     .pos(fixed, initial, 0, 0);
+    .groovy-view-tab {
+        padding:0 10px;
+        .dim(auto, 100%);
+        display:inline-block;
+        line-height:60px;
+        vertical-align:middle;
+        cursor:pointer;
+    }
+}
+
+.groovy-footer {
     &.lagoon {
         background-color:@p8;
     }
@@ -44,12 +55,5 @@
     &.nassau-sunset {
         background-color:@p9;
     }
-    .groovy-view-tab {
-        padding:0 10px;
-        .dim(auto, 100%);
-        display:inline-block;
-        line-height:60px;
-        vertical-align:middle;
-        cursor:pointer;
-    }
+
 }

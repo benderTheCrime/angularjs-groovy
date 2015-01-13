@@ -1,15 +1,16 @@
 (function(a) {
     'use strict';
 
+    var H = require('handlebars');
+
     a.module('angularjs-groovy').directive(
         'ngGroovyListView',
         [
             '$s',
             '$compile',
-            'Handlebars',
             'viewData',
             'baseView',
-            function($s, $compile, Handlebars, viewData, baseView) {
+            function($s, $compile, viewData, baseView) {
                 var baseLink = baseView.link;
                 return {
                     restrict: baseView.restrict,
@@ -20,7 +21,7 @@
                             scope,
                             element,
                             attrs,
-                            $compile(Handlebars.templates.listView({
+                            $compile(H.templates.listView({
                                 name: attrs.ngGroovyViewName
                             }))(scope)
                         );

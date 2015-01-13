@@ -1,40 +1,51 @@
-(function(a) {
+(function(d, a) {
     'use strict';
+
+    var H = require('handlebars');
 
     a.module('angularjs-groovy').config(
         [
             '$routeProvider',
             '$s',
             function($routeProvider, $s) {
-                // TODO get name of login html page, if not specified, try html/login.html, or login.html use promises
 
-
-
-                $routeProvider.when('/blah', {
-                    resolve: function($q, $location) {
-                            var deferred = $q.defer();
-                            deferred.resolve();
-                            if (true) {
-                                $location.path('html/login.html');
-                            }
-
-                            return deferred.promise;
-                        }
-                    }).when('/login', {
-                    templateUrl: 'html/login.html',
-                    controller: ''
+                $routeProvider.when('/index', {
+                    template: H.templates.base($s),
+                    controller: 'baseCtrl',
+                    resolve: {
+                        factory: authenticate
+                    }
+                }).when('/login', {
+                    template: H.templates.login($s),
+                    controller: 'loginCtrl',
+                    resolve: {
+                        factory: bypass
+                    }
                 }).otherwise({
-                    redirectTo: '/blah'
+                    redirectTo: '/index'
                 });
 
-                // IF INDEX LOAD THE BASE IN - RESOLVE BASED ON CRITERIA
-                // IF LOGIN LOAD THE LOGIN IN - RESOLIVE BASED ON REVERSE CRITERIA
-                // OTHERWISE REDIRECT TO INDEX
-                // MEET SOME LOGIN CRITERIA OR REDIRECT TO HTML/LOGIN or LOGIN.HTML
+                function authenticate($rootScope, $location) {
+                    if (!$s.useLogin || ($s.user || $rootScope.user)) {
+                        return true;
+                    } else {
+                        $location.path('/login');
+                    }
+                }
+
+                // The converse: if you're already on the login page and user exists
+                function bypass($rootScope, $location) {
+                    if ($s.useLogin && !$s.user && !$rootScope.user) {
+                        a.element(d.querySelectorAll('.groovy-view')).remove();
+                        return true;
+                    } else {
+                        $location.path('/index');
+                    }
+                }
             }
         ]
     );
-})(angular);
+})(document, angular);
 
 // TODO check if theoretical login location exists
 // TODO user definition of logged in state
