@@ -5,9 +5,10 @@
         'loginCtrl',
         [
             '$rootScope',
+            '$log',
             '$s',
             '$scope',
-            function($rootScope, $s, $scope) {
+            function($rootScope, $log, $s, $scope) {
                 $scope = a.extend($scope, {
                     groovyColor: function() {
                         return ($s.header && $s.header.color) || $s.color ?
@@ -31,7 +32,10 @@
                     ))[
                         $scope.signUpActive ? 'addClass' : 'removeClass'
                     ]('groovy-active');
+                    $log.debug('Groovy: Changed signUpActive');
                 });
+
+                $log.debug('Groovy: Instantiated login $scope methods');
             }
         ]
     );

@@ -5,13 +5,17 @@
         'baseCtrl',
         [
             '$rootScope',
+            '$log',
             '$s',
             '$timeout',
             '$scope',
             'viewData',
-            function($rootScope, $s, $timeout, $scope, viewData) {
+            function($rootScope, $log, $s, $timeout, $scope, viewData) {
                 $scope = a.extend($scope, {
                     views: viewData.views,
+                    header: {
+                        title: $s.header ? $s.header.title : $s.appName ? $s.appName : ''
+                    },
                     groovyColor: function() {
                         return ($s.header && $s.header.color) || $s.color ?
                             ($s.header.color || $s.color).replace(' ', '-').toLowerCase() : '';
@@ -24,17 +28,6 @@
                     },
                     setActiveGroovyView: function(id) {
                         viewData.setActiveView(id);
-                        for (var i = 0; i < viewData.views.length; ++i) {
-                            var view = viewData.views[i];
-                            if (view.id === viewData.activeViewId) {
-                                view.el.removeClass('ng-hide').addClass('ng-show');
-                            } else {
-                                view.el.removeClass('ng-show').addClass('ng-hide');
-                            }
-                        }
-                        $timeout(function() {
-                            $rootScope.masterDetailActive = false;
-                        }, 200);
                     }
                 });
 
@@ -44,7 +37,10 @@
                     ))[
                     $scope.masterDetailActive ? 'addClass' : 'removeClass'
                     ]('groovy-active');
+                    $log.debug('Groovy: Changed masterDetailActive');
                 });
+
+                $log.debug('Groovy: Instantiated base $scope methods');
             }
         ]
     );

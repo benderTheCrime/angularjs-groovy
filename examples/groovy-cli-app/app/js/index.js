@@ -5,6 +5,6 @@
         'angularjs-groovy'
     ]).constant(
         '$s',
-        {"useLogin":true,"header":{"color":"Bruise","title":"groovy-cli-app"},"masterDetail":{},"appName":"groovy-cli-app"}
+        {"appName":"groovy-cli-app","sV":{}}
     );
 })(angular);

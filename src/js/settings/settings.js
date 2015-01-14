@@ -17,9 +17,10 @@
         g.pageBased = g.pB || g.pageBased;
         g.tabbed = g.t || g.tabbed;
         g.header = g.h || g.header;
+        g.forWeb = g.fW || g.forWeb;
 
         // Trash the shorthand keys
-        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h' ]);
+        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h', 'fW' ]);
 
         // Resolve type
         if (g.type) {
@@ -42,6 +43,8 @@
         } else {
             g = defaultType(g);
         }
+        delete g.type;
+
         a.module('g', []).constant('$s', g);
     };
 })(angular);

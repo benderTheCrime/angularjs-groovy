@@ -13,6 +13,7 @@
             function($s, $compile, viewData, baseView) {
                 return {
                     restrict: baseView.restrict,
+                    priority: baseView.priority + 1,
                     Controller: baseView.Controller,
                     link: function(scope, element, attrs) {
                         element.addClass('groovy-list-view');
@@ -21,12 +22,13 @@
                             element,
                             attrs,
                             $compile(H.templates.listView({
+                                id: viewData.views.length - 1,
                                 name: attrs.ngGroovyViewName
                             }))(scope)
                         );
+
                         baseView.link(scope, element, attrs);
                     }
-
                 };
             }
         ]

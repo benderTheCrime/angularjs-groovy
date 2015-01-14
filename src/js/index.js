@@ -9,6 +9,7 @@
 
     require('../bower_components/angular-route/angular-route.js');
     require('../bower_components/angular-touch/angular-touch.js');
+    require('../bower_components/angular-sanitize/angular-sanitize.js');
     require('./settings/conf');
     require('./settings/settings')(g);
 
@@ -16,10 +17,12 @@
         'conf',
         'g',
         'ngRoute',
-        'ngTouch'
+        'ngTouch',
+        'ngSanitize'
     ]);
 
     // Configs to append meta/style
+    require('./configs/debug');
     require('./configs/login');
     require('./configs/meta');
     require('./configs/style');

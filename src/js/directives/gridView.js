@@ -13,9 +13,11 @@
             function($s, $compile, viewData, baseView) {
                 return {
                     restrict: baseView.restrict,
+                    priority: baseView.priority + 1,
                     Controller: baseView.Controller,
                     link: function(scope, element, attrs) {
                         var name = attrs.ngGroovyViewName;
+
                         element.addClass('groovy-grid-view');
                         viewData.setViewOptions(
                             scope,
@@ -27,6 +29,7 @@
                                 body: 'groovyGridView.' + name + '.body'
                             }))(scope)
                         );
+
                         baseView.link(scope, element, attrs);
                     }
 

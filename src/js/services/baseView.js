@@ -4,23 +4,40 @@
     a.module('angularjs-groovy').service(
         'baseView',
         [
+            '$rootScope',
+            '$log',
             'viewData',
-            function(viewData) {
+            function($rootScope, $log, viewData) {
                 return {
                     restrict: 'A',
+                    priority: 999,
                     Controller: [ '^baseCtrl', '^viewCtrl' ],
                     link: function(scope, element, attrs) {
-                        scope.groovyViewId = viewData.views.length;
+                        var id = viewData.views.length;
+                        scope = a.extend(scope, {
+                            groovyViewId: id,
+                            setActiveGroovyView: function(id) {
+                                $log.debug('Groovy: Trigger swipe event');
+                                viewData.setActiveView(id);
+                            },
+                            setMasterDetailActive: function(bool) {
+                                $log.debug('Groovy: Trigger swipe event');
+                                $rootScope.masterDetailActive = bool;
+                            }
+                        });
 
                         viewData.views.push({
-                            id: scope.groovyViewId,
+                            id: id,
                             el: element,
                             name: attrs.ngGroovyViewName[0].toUpperCase() +
                             attrs.ngGroovyViewName.slice(1).toLowerCase(),
                             icon: attrs.ngGroovyViewIconUrl
                         });
+                        $log.debug('Groovy: Added view to Groovy views');
 
-                        element.addClass('groovy-view ng-' + (scope.groovyViewId === 0 ? 'show' : 'hide'));
+                        viewData.setViewSwipeProperties(scope, element, attrs, id);
+
+                        element.addClass('groovy-view ng-' + (id === 0 ? 'show' : 'hide'));
                     }
                 };
             }

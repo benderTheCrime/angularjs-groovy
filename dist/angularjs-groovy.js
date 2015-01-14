@@ -3772,6 +3772,632 @@ function ngViewFillContentFactory($compile, $controller, $route) {
  */
 (function(window, angular, undefined) {'use strict';
 
+var $sanitizeMinErr = angular.$$minErr('$sanitize');
+
+/**
+ * @ngdoc module
+ * @name ngSanitize
+ * @description
+ *
+ * # ngSanitize
+ *
+ * The `ngSanitize` module provides functionality to sanitize HTML.
+ *
+ *
+ * <div doc-module-components="ngSanitize"></div>
+ *
+ * See {@link ngSanitize.$sanitize `$sanitize`} for usage.
+ */
+
+/*
+ * HTML Parser By Misko Hevery (misko@hevery.com)
+ * based on:  HTML Parser By John Resig (ejohn.org)
+ * Original code by Erik Arvidsson, Mozilla Public License
+ * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
+ *
+ * // Use like so:
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ */
+
+
+/**
+ * @ngdoc service
+ * @name $sanitize
+ * @function
+ *
+ * @description
+ *   The input is sanitized by parsing the html into tokens. All safe tokens (from a whitelist) are
+ *   then serialized back to properly escaped html string. This means that no unsafe input can make
+ *   it into the returned string, however, since our parser is more strict than a typical browser
+ *   parser, it's possible that some obscure input, which would be recognized as valid HTML by a
+ *   browser, won't make it through the sanitizer.
+ *   The whitelist is configured using the functions `aHrefSanitizationWhitelist` and
+ *   `imgSrcSanitizationWhitelist` of {@link ng.$compileProvider `$compileProvider`}.
+ *
+ * @param {string} html Html input.
+ * @returns {string} Sanitized html.
+ *
+ * @example
+   <example module="ngSanitize" deps="angular-sanitize.js">
+   <file name="index.html">
+     <script>
+       function Ctrl($scope, $sce) {
+         $scope.snippet =
+           '<p style="color:blue">an html\n' +
+           '<em onmouseover="this.textContent=\'PWN3D!\'">click here</em>\n' +
+           'snippet</p>';
+         $scope.deliberatelyTrustDangerousSnippet = function() {
+           return $sce.trustAsHtml($scope.snippet);
+         };
+       }
+     </script>
+     <div ng-controller="Ctrl">
+        Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+       <table>
+         <tr>
+           <td>Directive</td>
+           <td>How</td>
+           <td>Source</td>
+           <td>Rendered</td>
+         </tr>
+         <tr id="bind-html-with-sanitize">
+           <td>ng-bind-html</td>
+           <td>Automatically uses $sanitize</td>
+           <td><pre>&lt;div ng-bind-html="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+           <td><div ng-bind-html="snippet"></div></td>
+         </tr>
+         <tr id="bind-html-with-trust">
+           <td>ng-bind-html</td>
+           <td>Bypass $sanitize by explicitly trusting the dangerous value</td>
+           <td>
+           <pre>&lt;div ng-bind-html="deliberatelyTrustDangerousSnippet()"&gt;
+&lt;/div&gt;</pre>
+           </td>
+           <td><div ng-bind-html="deliberatelyTrustDangerousSnippet()"></div></td>
+         </tr>
+         <tr id="bind-default">
+           <td>ng-bind</td>
+           <td>Automatically escapes</td>
+           <td><pre>&lt;div ng-bind="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+           <td><div ng-bind="snippet"></div></td>
+         </tr>
+       </table>
+       </div>
+   </file>
+   <file name="protractor.js" type="protractor">
+     it('should sanitize the html snippet by default', function() {
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
+         toBe('<p>an html\n<em>click here</em>\nsnippet</p>');
+     });
+
+     it('should inline raw snippet if bound to a trusted value', function() {
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).
+         toBe("<p style=\"color:blue\">an html\n" +
+              "<em onmouseover=\"this.textContent='PWN3D!'\">click here</em>\n" +
+              "snippet</p>");
+     });
+
+     it('should escape snippet without any filter', function() {
+       expect(element(by.css('#bind-default div')).getInnerHtml()).
+         toBe("&lt;p style=\"color:blue\"&gt;an html\n" +
+              "&lt;em onmouseover=\"this.textContent='PWN3D!'\"&gt;click here&lt;/em&gt;\n" +
+              "snippet&lt;/p&gt;");
+     });
+
+     it('should update', function() {
+       element(by.model('snippet')).clear();
+       element(by.model('snippet')).sendKeys('new <b onclick="alert(1)">text</b>');
+       expect(element(by.css('#bind-html-with-sanitize div')).getInnerHtml()).
+         toBe('new <b>text</b>');
+       expect(element(by.css('#bind-html-with-trust div')).getInnerHtml()).toBe(
+         'new <b onclick="alert(1)">text</b>');
+       expect(element(by.css('#bind-default div')).getInnerHtml()).toBe(
+         "new &lt;b onclick=\"alert(1)\"&gt;text&lt;/b&gt;");
+     });
+   </file>
+   </example>
+ */
+function $SanitizeProvider() {
+  this.$get = ['$$sanitizeUri', function($$sanitizeUri) {
+    return function(html) {
+      var buf = [];
+      htmlParser(html, htmlSanitizeWriter(buf, function(uri, isImage) {
+        return !/^unsafe/.test($$sanitizeUri(uri, isImage));
+      }));
+      return buf.join('');
+    };
+  }];
+}
+
+function sanitizeText(chars) {
+  var buf = [];
+  var writer = htmlSanitizeWriter(buf, angular.noop);
+  writer.chars(chars);
+  return buf.join('');
+}
+
+
+// Regular Expressions for parsing tags and attributes
+var START_TAG_REGEXP =
+       /^<\s*([\w:-]+)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/,
+  END_TAG_REGEXP = /^<\s*\/\s*([\w:-]+)[^>]*>/,
+  ATTR_REGEXP = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g,
+  BEGIN_TAG_REGEXP = /^</,
+  BEGING_END_TAGE_REGEXP = /^<\s*\//,
+  COMMENT_REGEXP = /<!--(.*?)-->/g,
+  DOCTYPE_REGEXP = /<!DOCTYPE([^>]*?)>/i,
+  CDATA_REGEXP = /<!\[CDATA\[(.*?)]]>/g,
+  // Match everything outside of normal chars and " (quote character)
+  NON_ALPHANUMERIC_REGEXP = /([^\#-~| |!])/g;
+
+
+// Good source of info about elements and attributes
+// http://dev.w3.org/html5/spec/Overview.html#semantics
+// http://simon.html5.org/html-elements
+
+// Safe Void Elements - HTML5
+// http://dev.w3.org/html5/spec/Overview.html#void-elements
+var voidElements = makeMap("area,br,col,hr,img,wbr");
+
+// Elements that you can, intentionally, leave open (and which close themselves)
+// http://dev.w3.org/html5/spec/Overview.html#optional-tags
+var optionalEndTagBlockElements = makeMap("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"),
+    optionalEndTagInlineElements = makeMap("rp,rt"),
+    optionalEndTagElements = angular.extend({},
+                                            optionalEndTagInlineElements,
+                                            optionalEndTagBlockElements);
+
+// Safe Block Elements - HTML5
+var blockElements = angular.extend({}, optionalEndTagBlockElements, makeMap("address,article," +
+        "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +
+        "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
+
+// Inline Elements - HTML5
+var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a,abbr,acronym,b," +
+        "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +
+        "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));
+
+
+// Special Elements (can contain anything)
+var specialElements = makeMap("script,style");
+
+var validElements = angular.extend({},
+                                   voidElements,
+                                   blockElements,
+                                   inlineElements,
+                                   optionalEndTagElements);
+
+//Attributes that have href and hence need to be sanitized
+var uriAttrs = makeMap("background,cite,href,longdesc,src,usemap");
+var validAttrs = angular.extend({}, uriAttrs, makeMap(
+    'abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,'+
+    'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,'+
+    'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,'+
+    'scope,scrolling,shape,size,span,start,summary,target,title,type,'+
+    'valign,value,vspace,width'));
+
+function makeMap(str) {
+  var obj = {}, items = str.split(','), i;
+  for (i = 0; i < items.length; i++) obj[items[i]] = true;
+  return obj;
+}
+
+
+/**
+ * @example
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ * @param {string} html string
+ * @param {object} handler
+ */
+function htmlParser( html, handler ) {
+  var index, chars, match, stack = [], last = html;
+  stack.last = function() { return stack[ stack.length - 1 ]; };
+
+  while ( html ) {
+    chars = true;
+
+    // Make sure we're not in a script or style element
+    if ( !stack.last() || !specialElements[ stack.last() ] ) {
+
+      // Comment
+      if ( html.indexOf("<!--") === 0 ) {
+        // comments containing -- are not allowed unless they terminate the comment
+        index = html.indexOf("--", 4);
+
+        if ( index >= 0 && html.lastIndexOf("-->", index) === index) {
+          if (handler.comment) handler.comment( html.substring( 4, index ) );
+          html = html.substring( index + 3 );
+          chars = false;
+        }
+      // DOCTYPE
+      } else if ( DOCTYPE_REGEXP.test(html) ) {
+        match = html.match( DOCTYPE_REGEXP );
+
+        if ( match ) {
+          html = html.replace( match[0], '');
+          chars = false;
+        }
+      // end tag
+      } else if ( BEGING_END_TAGE_REGEXP.test(html) ) {
+        match = html.match( END_TAG_REGEXP );
+
+        if ( match ) {
+          html = html.substring( match[0].length );
+          match[0].replace( END_TAG_REGEXP, parseEndTag );
+          chars = false;
+        }
+
+      // start tag
+      } else if ( BEGIN_TAG_REGEXP.test(html) ) {
+        match = html.match( START_TAG_REGEXP );
+
+        if ( match ) {
+          html = html.substring( match[0].length );
+          match[0].replace( START_TAG_REGEXP, parseStartTag );
+          chars = false;
+        }
+      }
+
+      if ( chars ) {
+        index = html.indexOf("<");
+
+        var text = index < 0 ? html : html.substring( 0, index );
+        html = index < 0 ? "" : html.substring( index );
+
+        if (handler.chars) handler.chars( decodeEntities(text) );
+      }
+
+    } else {
+      html = html.replace(new RegExp("(.*)<\\s*\\/\\s*" + stack.last() + "[^>]*>", 'i'),
+        function(all, text){
+          text = text.replace(COMMENT_REGEXP, "$1").replace(CDATA_REGEXP, "$1");
+
+          if (handler.chars) handler.chars( decodeEntities(text) );
+
+          return "";
+      });
+
+      parseEndTag( "", stack.last() );
+    }
+
+    if ( html == last ) {
+      throw $sanitizeMinErr('badparse', "The sanitizer was unable to parse the following block " +
+                                        "of html: {0}", html);
+    }
+    last = html;
+  }
+
+  // Clean up any remaining tags
+  parseEndTag();
+
+  function parseStartTag( tag, tagName, rest, unary ) {
+    tagName = angular.lowercase(tagName);
+    if ( blockElements[ tagName ] ) {
+      while ( stack.last() && inlineElements[ stack.last() ] ) {
+        parseEndTag( "", stack.last() );
+      }
+    }
+
+    if ( optionalEndTagElements[ tagName ] && stack.last() == tagName ) {
+      parseEndTag( "", tagName );
+    }
+
+    unary = voidElements[ tagName ] || !!unary;
+
+    if ( !unary )
+      stack.push( tagName );
+
+    var attrs = {};
+
+    rest.replace(ATTR_REGEXP,
+      function(match, name, doubleQuotedValue, singleQuotedValue, unquotedValue) {
+        var value = doubleQuotedValue
+          || singleQuotedValue
+          || unquotedValue
+          || '';
+
+        attrs[name] = decodeEntities(value);
+    });
+    if (handler.start) handler.start( tagName, attrs, unary );
+  }
+
+  function parseEndTag( tag, tagName ) {
+    var pos = 0, i;
+    tagName = angular.lowercase(tagName);
+    if ( tagName )
+      // Find the closest opened tag of the same type
+      for ( pos = stack.length - 1; pos >= 0; pos-- )
+        if ( stack[ pos ] == tagName )
+          break;
+
+    if ( pos >= 0 ) {
+      // Close all the open elements, up the stack
+      for ( i = stack.length - 1; i >= pos; i-- )
+        if (handler.end) handler.end( stack[ i ] );
+
+      // Remove the open elements from the stack
+      stack.length = pos;
+    }
+  }
+}
+
+var hiddenPre=document.createElement("pre");
+var spaceRe = /^(\s*)([\s\S]*?)(\s*)$/;
+/**
+ * decodes all entities into regular string
+ * @param value
+ * @returns {string} A string with decoded entities.
+ */
+function decodeEntities(value) {
+  if (!value) { return ''; }
+
+  // Note: IE8 does not preserve spaces at the start/end of innerHTML
+  // so we must capture them and reattach them afterward
+  var parts = spaceRe.exec(value);
+  var spaceBefore = parts[1];
+  var spaceAfter = parts[3];
+  var content = parts[2];
+  if (content) {
+    hiddenPre.innerHTML=content.replace(/</g,"&lt;");
+    // innerText depends on styling as it doesn't display hidden elements.
+    // Therefore, it's better to use textContent not to cause unnecessary
+    // reflows. However, IE<9 don't support textContent so the innerText
+    // fallback is necessary.
+    content = 'textContent' in hiddenPre ?
+      hiddenPre.textContent : hiddenPre.innerText;
+  }
+  return spaceBefore + content + spaceAfter;
+}
+
+/**
+ * Escapes all potentially dangerous characters, so that the
+ * resulting string can be safely inserted into attribute or
+ * element text.
+ * @param value
+ * @returns {string} escaped text
+ */
+function encodeEntities(value) {
+  return value.
+    replace(/&/g, '&amp;').
+    replace(NON_ALPHANUMERIC_REGEXP, function(value){
+      return '&#' + value.charCodeAt(0) + ';';
+    }).
+    replace(/</g, '&lt;').
+    replace(/>/g, '&gt;');
+}
+
+/**
+ * create an HTML/XML writer which writes to buffer
+ * @param {Array} buf use buf.jain('') to get out sanitized html string
+ * @returns {object} in the form of {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * }
+ */
+function htmlSanitizeWriter(buf, uriValidator){
+  var ignore = false;
+  var out = angular.bind(buf, buf.push);
+  return {
+    start: function(tag, attrs, unary){
+      tag = angular.lowercase(tag);
+      if (!ignore && specialElements[tag]) {
+        ignore = tag;
+      }
+      if (!ignore && validElements[tag] === true) {
+        out('<');
+        out(tag);
+        angular.forEach(attrs, function(value, key){
+          var lkey=angular.lowercase(key);
+          var isImage = (tag === 'img' && lkey === 'src') || (lkey === 'background');
+          if (validAttrs[lkey] === true &&
+            (uriAttrs[lkey] !== true || uriValidator(value, isImage))) {
+            out(' ');
+            out(key);
+            out('="');
+            out(encodeEntities(value));
+            out('"');
+          }
+        });
+        out(unary ? '/>' : '>');
+      }
+    },
+    end: function(tag){
+        tag = angular.lowercase(tag);
+        if (!ignore && validElements[tag] === true) {
+          out('</');
+          out(tag);
+          out('>');
+        }
+        if (tag == ignore) {
+          ignore = false;
+        }
+      },
+    chars: function(chars){
+        if (!ignore) {
+          out(encodeEntities(chars));
+        }
+      }
+  };
+}
+
+
+// define ngSanitize module and register $sanitize service
+angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
+
+/* global sanitizeText: false */
+
+/**
+ * @ngdoc filter
+ * @name linky
+ * @function
+ *
+ * @description
+ * Finds links in text input and turns them into html links. Supports http/https/ftp/mailto and
+ * plain email address links.
+ *
+ * Requires the {@link ngSanitize `ngSanitize`} module to be installed.
+ *
+ * @param {string} text Input text.
+ * @param {string} target Window (_blank|_self|_parent|_top) or named frame to open links in.
+ * @returns {string} Html-linkified text.
+ *
+ * @usage
+   <span ng-bind-html="linky_expression | linky"></span>
+ *
+ * @example
+   <example module="ngSanitize" deps="angular-sanitize.js">
+     <file name="index.html">
+       <script>
+         function Ctrl($scope) {
+           $scope.snippet =
+             'Pretty text with some links:\n'+
+             'http://angularjs.org/,\n'+
+             'mailto:us@somewhere.org,\n'+
+             'another@somewhere.org,\n'+
+             'and one more: ftp://127.0.0.1/.';
+           $scope.snippetWithTarget = 'http://angularjs.org/';
+         }
+       </script>
+       <div ng-controller="Ctrl">
+       Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+       <table>
+         <tr>
+           <td>Filter</td>
+           <td>Source</td>
+           <td>Rendered</td>
+         </tr>
+         <tr id="linky-filter">
+           <td>linky filter</td>
+           <td>
+             <pre>&lt;div ng-bind-html="snippet | linky"&gt;<br>&lt;/div&gt;</pre>
+           </td>
+           <td>
+             <div ng-bind-html="snippet | linky"></div>
+           </td>
+         </tr>
+         <tr id="linky-target">
+          <td>linky target</td>
+          <td>
+            <pre>&lt;div ng-bind-html="snippetWithTarget | linky:'_blank'"&gt;<br>&lt;/div&gt;</pre>
+          </td>
+          <td>
+            <div ng-bind-html="snippetWithTarget | linky:'_blank'"></div>
+          </td>
+         </tr>
+         <tr id="escaped-html">
+           <td>no filter</td>
+           <td><pre>&lt;div ng-bind="snippet"&gt;<br>&lt;/div&gt;</pre></td>
+           <td><div ng-bind="snippet"></div></td>
+         </tr>
+       </table>
+     </file>
+     <file name="protractor.js" type="protractor">
+       it('should linkify the snippet with urls', function() {
+         expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
+             toBe('Pretty text with some links: http://angularjs.org/, us@somewhere.org, ' +
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(4);
+       });
+
+       it('should not linkify snippet without the linky filter', function() {
+         expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText()).
+             toBe('Pretty text with some links: http://angularjs.org/, mailto:us@somewhere.org, ' +
+                  'another@somewhere.org, and one more: ftp://127.0.0.1/.');
+         expect(element.all(by.css('#escaped-html a')).count()).toEqual(0);
+       });
+
+       it('should update', function() {
+         element(by.model('snippet')).clear();
+         element(by.model('snippet')).sendKeys('new http://link.');
+         expect(element(by.id('linky-filter')).element(by.binding('snippet | linky')).getText()).
+             toBe('new http://link.');
+         expect(element.all(by.css('#linky-filter a')).count()).toEqual(1);
+         expect(element(by.id('escaped-html')).element(by.binding('snippet')).getText())
+             .toBe('new http://link.');
+       });
+
+       it('should work with the target property', function() {
+        expect(element(by.id('linky-target')).
+            element(by.binding("snippetWithTarget | linky:'_blank'")).getText()).
+            toBe('http://angularjs.org/');
+        expect(element(by.css('#linky-target a')).getAttribute('target')).toEqual('_blank');
+       });
+     </file>
+   </example>
+ */
+angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
+  var LINKY_URL_REGEXP =
+        /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>]/,
+      MAILTO_REGEXP = /^mailto:/;
+
+  return function(text, target) {
+    if (!text) return text;
+    var match;
+    var raw = text;
+    var html = [];
+    var url;
+    var i;
+    while ((match = raw.match(LINKY_URL_REGEXP))) {
+      // We can not end in these as they are sometimes found at the end of the sentence
+      url = match[0];
+      // if we did not match ftp/http/mailto then assume mailto
+      if (match[2] == match[3]) url = 'mailto:' + url;
+      i = match.index;
+      addText(raw.substr(0, i));
+      addLink(url, match[0].replace(MAILTO_REGEXP, ''));
+      raw = raw.substring(i + match[0].length);
+    }
+    addText(raw);
+    return $sanitize(html.join(''));
+
+    function addText(text) {
+      if (!text) {
+        return;
+      }
+      html.push(sanitizeText(text));
+    }
+
+    function addLink(url, text) {
+      html.push('<a ');
+      if (angular.isDefined(target)) {
+        html.push('target="');
+        html.push(target);
+        html.push('" ');
+      }
+      html.push('href="');
+      html.push(url);
+      html.push('">');
+      addText(text);
+      html.push('</a>');
+    }
+  };
+}]);
+
+
+})(window, window.angular);
+
+},{}],19:[function(require,module,exports){
+/**
+ * @license AngularJS v1.2.16
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular, undefined) {'use strict';
+
 /**
  * @ngdoc module
  * @name ngTouch
@@ -4341,7 +4967,24 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 
 })(window, window.angular);
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
+(function(a) {
+    'use strict';
+
+    a.module('angularjs-groovy').config(
+        [
+            '$s',
+            '$logProvider',
+            function($s, $logProvider) {
+                if (!$s.debug) {
+                    $logProvider.debugEnabled(false);
+                }
+            }
+        ]
+    );
+})(angular);
+
+},{}],21:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -4394,7 +5037,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 // TODO check if theoretical login location exists
 // TODO user definition of logged in state
 
-},{"handlebars":16}],20:[function(require,module,exports){
+},{"handlebars":16}],22:[function(require,module,exports){
 // SO meta...
 (function(d, a) {
     'use strict';
@@ -4432,7 +5075,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     );
 })(document, angular);
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -4472,7 +5115,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     );
 })(document, angular);
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -4480,13 +5123,17 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
         'baseCtrl',
         [
             '$rootScope',
+            '$log',
             '$s',
             '$timeout',
             '$scope',
             'viewData',
-            function($rootScope, $s, $timeout, $scope, viewData) {
+            function($rootScope, $log, $s, $timeout, $scope, viewData) {
                 $scope = a.extend($scope, {
                     views: viewData.views,
+                    header: {
+                        title: $s.header ? $s.header.title : $s.appName ? $s.appName : ''
+                    },
                     groovyColor: function() {
                         return ($s.header && $s.header.color) || $s.color ?
                             ($s.header.color || $s.color).replace(' ', '-').toLowerCase() : '';
@@ -4499,17 +5146,6 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
                     },
                     setActiveGroovyView: function(id) {
                         viewData.setActiveView(id);
-                        for (var i = 0; i < viewData.views.length; ++i) {
-                            var view = viewData.views[i];
-                            if (view.id === viewData.activeViewId) {
-                                view.el.removeClass('ng-hide').addClass('ng-show');
-                            } else {
-                                view.el.removeClass('ng-show').addClass('ng-hide');
-                            }
-                        }
-                        $timeout(function() {
-                            $rootScope.masterDetailActive = false;
-                        }, 200);
                     }
                 });
 
@@ -4519,7 +5155,10 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
                     ))[
                     $scope.masterDetailActive ? 'addClass' : 'removeClass'
                     ]('groovy-active');
+                    $log.debug('Groovy: Changed masterDetailActive');
                 });
+
+                $log.debug('Groovy: Instantiated base $scope methods');
             }
         ]
     );
@@ -4527,7 +5166,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 
 // TODO split into many controllers
 
-},{}],23:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -4535,9 +5174,10 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
         'loginCtrl',
         [
             '$rootScope',
+            '$log',
             '$s',
             '$scope',
-            function($rootScope, $s, $scope) {
+            function($rootScope, $log, $s, $scope) {
                 $scope = a.extend($scope, {
                     groovyColor: function() {
                         return ($s.header && $s.header.color) || $s.color ?
@@ -4561,13 +5201,16 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
                     ))[
                         $scope.signUpActive ? 'addClass' : 'removeClass'
                     ]('groovy-active');
+                    $log.debug('Groovy: Changed signUpActive');
                 });
+
+                $log.debug('Groovy: Instantiated login $scope methods');
             }
         ]
     );
 })(document, angular);
 
-},{}],24:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -4584,9 +5227,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     );
 })(document, angular);
 
-// TODO split into many controllers
-
-},{}],25:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -4602,9 +5243,11 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
             function($s, $compile, viewData, baseView) {
                 return {
                     restrict: baseView.restrict,
+                    priority: baseView.priority + 1,
                     Controller: baseView.Controller,
                     link: function(scope, element, attrs) {
                         var name = attrs.ngGroovyViewName;
+
                         element.addClass('groovy-grid-view');
                         viewData.setViewOptions(
                             scope,
@@ -4616,63 +5259,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
                                 body: 'groovyGridView.' + name + '.body'
                             }))(scope)
                         );
-                        baseView.link(scope, element, attrs);
-                    }
 
-                };
-            }
-        ]
-    );
-})(angular);
-
-},{"handlebars":16}],26:[function(require,module,exports){
-(function(a) {
-    'use strict';
-
-    var H = require('handlebars');
-
-    a.module('angularjs-groovy').directive(
-        'groovyHeader',
-        [
-            '$s',
-            function($s) {
-                return {
-                    restrict: 'E',
-                    template: H.templates.header($s)
-                };
-            }
-        ]
-    );
-})(angular);
-
-},{"handlebars":16}],27:[function(require,module,exports){
-(function(a) {
-    'use strict';
-
-    var H = require('handlebars');
-
-    a.module('angularjs-groovy').directive(
-        'ngGroovyImageGridView',
-        [
-            '$s',
-            '$compile',
-            'viewData',
-            'baseView',
-            function($s, $compile, viewData, baseView) {
-                return {
-                    restrict: baseView.restrict,
-                    Controller: baseView.Controller,
-                    link: function(scope, element, attrs) {
-                        var name = attrs.ngGroovyViewName;
-                        element.addClass('groovy-grid-view');
-                        viewData.setViewOptions(
-                            scope,
-                            element,
-                            attrs,
-                            $compile(H.templates.grid({
-                                name: name
-                            }))(scope)
-                        );
                         baseView.link(scope, element, attrs);
                     }
 
@@ -4683,6 +5270,25 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 })(angular);
 
 },{"handlebars":16}],28:[function(require,module,exports){
+(function(a) {
+    'use strict';
+
+    a.module('angularjs-groovy').directive(
+        'groovyHeader',
+        [
+            '$s',
+            '$sce',
+            'viewData',
+            function($s, $sce, viewData) {
+                return viewData.setViewTemplate({ restrict: 'E' }, 'header');
+            }
+        ]
+    );
+})(angular);
+
+},{}],29:[function(require,module,exports){
+module.exports=require(1)
+},{}],30:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -4698,6 +5304,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
             function($s, $compile, viewData, baseView) {
                 return {
                     restrict: baseView.restrict,
+                    priority: baseView.priority + 1,
                     Controller: baseView.Controller,
                     link: function(scope, element, attrs) {
                         element.addClass('groovy-list-view');
@@ -4706,52 +5313,13 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
                             element,
                             attrs,
                             $compile(H.templates.listView({
+                                id: viewData.views.length - 1,
                                 name: attrs.ngGroovyViewName
                             }))(scope)
                         );
+
                         baseView.link(scope, element, attrs);
                     }
-
-                };
-            }
-        ]
-    );
-})(angular);
-
-},{"handlebars":16}],29:[function(require,module,exports){
-(function(a) {
-    'use strict';
-
-    var H = require('handlebars');
-
-    a.module('angularjs-groovy').directive(
-        'groovyMasterDetail',
-        [
-            '$s',
-            function($s) {
-                return {
-                    restrict: 'E',
-                    template: H.templates.masterDetail($s)
-                };
-            }
-        ]
-    );
-})(angular);
-
-},{"handlebars":16}],30:[function(require,module,exports){
-(function(a) {
-    'use strict';
-
-    var H = require('handlebars');
-
-    a.module('angularjs-groovy').directive(
-        'groovyPageBased',
-        [
-        '$s',
-            function($s) {
-                return {
-                    restrict: 'E',
-                    template: H.templates.pageBased($s)
                 };
             }
         ]
@@ -4762,23 +5330,54 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 (function(a) {
     'use strict';
 
-    var H = require('handlebars');
-
     a.module('angularjs-groovy').directive(
-        'groovyTabbed',
+        'groovyMasterDetail',
         [
             '$s',
-            function($s) {
-                return {
-                    restrict: 'E',
-                    template: H.templates.tabbed($s)
-                };
+            '$sce',
+            'viewData',
+            function($s, $sce, viewData) {
+                return viewData.setViewTemplate({ restrict: 'E' }, 'masterDetail');
             }
         ]
     );
 })(angular);
 
-},{"handlebars":16}],32:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
+(function(a) {
+    'use strict';
+
+    a.module('angularjs-groovy').directive(
+        'groovyPageBased',
+        [
+            '$s',
+            '$sce',
+            'viewData',
+            function($s, $sce, viewData) {
+                return viewData.setViewTemplate({ restrict: 'E' }, 'pageBased');
+            }
+        ]
+    );
+})(angular);
+
+},{}],33:[function(require,module,exports){
+(function(a) {
+    'use strict';
+
+    a.module('angularjs-groovy').directive(
+        'groovyTabbed',
+        [
+            '$s',
+            '$sce',
+            'viewData',
+            function($s, $sce, viewData) {
+                return viewData.setViewTemplate({ restrict: 'E' }, 'tabbed');
+            }
+        ]
+    );
+})(angular);
+
+},{}],34:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -4794,7 +5393,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     );
 })(document, angular);
 
-},{}],33:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function(w, d, a, g) {
     'use strict';
 
@@ -4806,6 +5405,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 
     require('../bower_components/angular-route/angular-route.js');
     require('../bower_components/angular-touch/angular-touch.js');
+    require('../bower_components/angular-sanitize/angular-sanitize.js');
     require('./settings/conf');
     require('./settings/settings')(g);
 
@@ -4813,10 +5413,12 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
         'conf',
         'g',
         'ngRoute',
-        'ngTouch'
+        'ngTouch',
+        'ngSanitize'
     ]);
 
     // Configs to append meta/style
+    require('./configs/debug');
     require('./configs/login');
     require('./configs/meta');
     require('./configs/style');
@@ -4847,7 +5449,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
         groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
 );
 
-},{"../bower_components/angular-route/angular-route.js":17,"../bower_components/angular-touch/angular-touch.js":18,"./configs/login":19,"./configs/meta":20,"./configs/style":21,"./controllers/base":22,"./controllers/login":23,"./controllers/view":24,"./directives/gridView":25,"./directives/header":26,"./directives/imageGridView":27,"./directives/listView":28,"./directives/masterDetail":29,"./directives/pageBased":30,"./directives/tabbed":31,"./directives/view":32,"./misc/helpers":34,"./services/baseView":36,"./services/views":37,"./settings/conf":38,"./settings/settings":39,"./templates":40,"handlebars":16}],34:[function(require,module,exports){
+},{"../bower_components/angular-route/angular-route.js":17,"../bower_components/angular-sanitize/angular-sanitize.js":18,"../bower_components/angular-touch/angular-touch.js":19,"./configs/debug":20,"./configs/login":21,"./configs/meta":22,"./configs/style":23,"./controllers/base":24,"./controllers/login":25,"./controllers/view":26,"./directives/gridView":27,"./directives/header":28,"./directives/imageGridView":29,"./directives/listView":30,"./directives/masterDetail":31,"./directives/pageBased":32,"./directives/tabbed":33,"./directives/view":34,"./misc/helpers":36,"./services/baseView":38,"./services/views":39,"./settings/conf":40,"./settings/settings":41,"./templates":42,"handlebars":16}],36:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -4860,7 +5462,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     };
 })();
 
-},{}],35:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -4879,30 +5481,47 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     };
 })();
 
-},{}],36:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function(a) {
     'use strict';
 
     a.module('angularjs-groovy').service(
         'baseView',
         [
+            '$rootScope',
+            '$log',
             'viewData',
-            function(viewData) {
+            function($rootScope, $log, viewData) {
                 return {
                     restrict: 'A',
+                    priority: 999,
                     Controller: [ '^baseCtrl', '^viewCtrl' ],
                     link: function(scope, element, attrs) {
-                        scope.groovyViewId = viewData.views.length;
+                        var id = viewData.views.length;
+                        scope = a.extend(scope, {
+                            groovyViewId: id,
+                            setActiveGroovyView: function(id) {
+                                $log.debug('Groovy: Trigger swipe event');
+                                viewData.setActiveView(id);
+                            },
+                            setMasterDetailActive: function(bool) {
+                                $log.debug('Groovy: Trigger swipe event');
+                                $rootScope.masterDetailActive = bool;
+                            }
+                        });
 
                         viewData.views.push({
-                            id: scope.groovyViewId,
+                            id: id,
                             el: element,
                             name: attrs.ngGroovyViewName[0].toUpperCase() +
                             attrs.ngGroovyViewName.slice(1).toLowerCase(),
                             icon: attrs.ngGroovyViewIconUrl
                         });
+                        $log.debug('Groovy: Added view to Groovy views');
 
-                        element.addClass('groovy-view ng-' + (scope.groovyViewId === 0 ? 'show' : 'hide'));
+                        viewData.setViewSwipeProperties(scope, element, attrs, id);
+
+                        element.addClass('groovy-view ng-' + (id === 0 ? 'show' : 'hide'));
                     }
                 };
             }
@@ -4910,20 +5529,43 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     );
 })(angular);
 
-},{}],37:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function(a) {
     'use strict';
+
+    var H = require('handlebars');
 
     a.module('angularjs-groovy').service(
         'viewData',
         [
+            '$rootScope',
+            '$s',
+            '$log',
+            '$sce',
+            '$compile',
+            '$timeout',
             '$parse',
-            function($parse) {
+            function($rootScope, $s, $log, $sce, $compile, $timeout, $parse) {
                 return {
                     views: [],
                     activeViewId: 0,
                     setActiveView: function(id) {
+                        if (id < 0 || id >= this.views.length) {
+                            return;
+                        }
                         this.activeViewId = id;
+                        for (var i = 0; i < this.views.length; ++i) {
+                            var view = this.views[i];
+                            if (view.id === this.activeViewId) {
+                                view.el.removeClass('ng-hide').addClass('ng-show');
+                            } else {
+                                view.el.removeClass('ng-show').addClass('ng-hide');
+                            }
+                        }
+                        $log.debug('Groovy: Set active Groovy view: ' + this.views[id].name);
+                        $timeout(function() {
+                            $rootScope.masterDetailActive = false;
+                        }, 200);
                     },
                     setViewOptions: function(scope, element, attrs, html) {
                         var args = attrs.hasOwnProperty('ngGroovyViewOptions')  ?
@@ -4937,6 +5579,45 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
                         } else {
                             element.append(html);
                         }
+                    },
+                    setViewTemplate: function(obj, name) {
+                        if ($s[name].templateUrl) {
+                            obj.templateUrl = $s[name].templateUrl;
+                            $log.debug('Groovy: Added custom template to base view for ' + name);
+                        } else {
+                            obj.template = H.templates[name]($s);
+                        }
+                        return obj;
+                    },
+                    setViewSwipeProperties: function(scope, el, attrs, id) {
+                        if ($s.masterDetail) {
+
+                            // TODO, I definitely don't like this very much...
+
+                            // For master detail we set only a swipe right property to toggle the
+                            // master detail pane
+                            el.attr('ng-swipe-right', 'setMasterDetailActive(true)');
+                            el.attr('ng-swipe-left', 'setMasterDetailActive(false)');
+                        } else if ($s['tabbed' || 'pageBased']) {
+
+                            // For tabbed and page based layouts we want to swipe left or right to change views
+                            el.attr('ng-swipe-left', 'setActiveGroovyView(' + (id + 1) + ')');
+                            el.attr('ng-swipe-right', 'setActiveGroovyView(' + (id - 1) + ')');
+                        } else {
+                            return;
+                        }
+
+
+                        // Trash the Groovy attrs so that we don't get ourselves stuck in a bad infinite loop
+                        // situation
+                        for (var key in attrs) {
+                            if (~key.indexOf('ngGroovy')) {
+                                el.removeAttr(key.replace(/([A-Z])/g, "-$1"));
+                            }
+                        }
+                        $compile(el[0])(scope);
+
+                        $log.debug('Groovy: Added swipe action bindings for view ' + id);
                     }
                 };
             }
@@ -4944,7 +5625,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     );
 })(angular);
 
-},{}],38:[function(require,module,exports){
+},{"handlebars":16}],40:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -4963,7 +5644,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
     a.module('conf', []).constant('conf', conf);
 })(angular);
 
-},{}],39:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -4983,9 +5664,10 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
         g.pageBased = g.pB || g.pageBased;
         g.tabbed = g.t || g.tabbed;
         g.header = g.h || g.header;
+        g.forWeb = g.fW || g.forWeb;
 
         // Trash the shorthand keys
-        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h' ]);
+        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h', 'fW' ]);
 
         // Resolve type
         if (g.type) {
@@ -5008,11 +5690,13 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
         } else {
             g = defaultType(g);
         }
+        delete g.type;
+
         a.module('g', []).constant('$s', g);
     };
 })(angular);
 
-},{"../misc/util":35}],40:[function(require,module,exports){
+},{"../misc/util":37}],42:[function(require,module,exports){
 var Handlebars = require('handlebars');var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};Handlebars.templates["base"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -5042,12 +5726,6 @@ function program7(depth0,data) {
   return "\n    <groovy-page-based></groovy-page-based>\n";
   }
 
-function program9(depth0,data) {
-  
-  
-  return "\n    <groovy-single-view></groovy-single-view>\n";
-  }
-
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.header), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
@@ -5058,9 +5736,6 @@ function program9(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.pageBased), {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n";
-  stack1 = helpers['if'].call(depth0, (depth0 && depth0.singleView), {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   return buffer;
@@ -5242,7 +5917,7 @@ function program4(depth0,data) {
 
   stack1 = helpers.unless.call(depth0, (depth0 && depth0.header), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n<div class='groovy-master-detail'\n     ng-class='groovyColor()'>\n    <div class='groovy-view-tab'\n         ng-repeat='view in views'\n         ng-class='{ \"groovy-active\": isActiveGroovyView(view.id) }'\n         onclick='javascript:void(0);'\n         ng-click='setActiveGroovyView(view.id)'>\n        <img ng-if='view.icon'\n             class='groovy-view-tab-img'\n             ng-src='";
+  buffer += "\n<div class='groovy-master-detail' ng-class='groovyColor()'>\n    <div class='groovy-view-tab'\n         ng-repeat='view in views'\n         ng-class='{ \"groovy-active\": isActiveGroovyView(view.id) }'\n         onclick='javascript:void(0);'\n         ng-click='setActiveGroovyView(view.id)'>\n        <img ng-if='view.icon'\n             class='groovy-view-tab-img'\n             ng-src='";
   stack1 = (helper = helpers.noparse || (depth0 && depth0.noparse),options={hash:{},data:data},helper ? helper.call(depth0, "view.icon", options) : helperMissing.call(depth0, "noparse", "view.icon", options));
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "' />\n        <span ng-if='view.name' class='groovy-view-tab-label'>\n            ";
@@ -5287,4 +5962,4 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += "\n        </span>\n    </div>\n</div>\n";
   return buffer;
   });
-},{"handlebars":16}]},{},[33])
+},{"handlebars":16}]},{},[35])
