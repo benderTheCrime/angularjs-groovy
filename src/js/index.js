@@ -8,18 +8,16 @@
     require('./misc/helpers')(Handlebars);
 
     require('../bower_components/angular-route/angular-route.js');
+    require('../bower_components/angular-touch/angular-touch.js');
     require('./settings/conf');
-
-    g.masterDetail = g.mD || g.masterDetail;
-    g.header = g.h || g.header;
-
-    delete g.mD;
-    delete g.h;
+    require('./settings/settings')(g);
 
     a.module('angularjs-groovy', [
         'conf',
-        'ngRoute'
-    ]).constant('$s', g);
+        'g',
+        'ngRoute',
+        'ngTouch'
+    ]);
 
     // Configs to append meta/style
     require('./configs/login');
@@ -38,9 +36,12 @@
     // Directives
     require('./directives/header');
     require('./directives/masterDetail');
-    require('./directives/footer');
+    require('./directives/tabbed');
+    require('./directives/pageBased');
     require('./directives/view');
     require('./directives/listView');
+    require('./directives/gridView');
+    require('./directives/imageGridView');
 })(
     window,
     document,

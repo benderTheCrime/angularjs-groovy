@@ -1,15 +1,15 @@
 .groovy-view {
     .master-detail-shift;
+    margin:2%;
     padding:5px;
-    .dim(100%, auto);
+    .dim(96%, auto);
+    min-height:85%;
     .transition(400ms, left);
-    min-height:50px;
     .pos(absolute, 50px, initial, initial, 0);
-    border:1px solid @c0;
-    background-color:white;
     z-index:90;
     &.groovy-list-view {
         .groovy-list-view-list {
+            margin:-5px -5px 10px -5px;
             .list;
             li {
                 .dim(100%, 50px);
@@ -18,8 +18,10 @@
                 a {
                     .dim(100%, 100%);
                     img {
+                        .left;
                         margin-right:-10px;
                         .dim(auto, 100%);
+                        display:inline-block;
                     }
                     span {
                         margin-left:15px;
@@ -29,10 +31,37 @@
                         display:inline-block;
                     }
                 }
-                &:last-of-type {
-                    border-bottom:none;
-                }
             }
         }
+    }
+    &.groovy-grid-view {
+        .groovy-grid-view-grid {
+            .dim();
+            table {
+                margin:0 -5px 10px -5px;
+                display: table;
+                width: 105%;
+                border-collapse: collapse;
+                text-align:center;
+                tbody tr {
+                    &:last-of-type {
+                        border-bottom:1px solid @c0;
+                    }
+                }
+            }
+            .panel-heading,
+            .panel-body {
+                background-color:white;
+                padding:10px 15px;
+            }
+        }
+    }
+    &.groovy-list-view,
+    &.groovy-grid-view {
+        .border-radius(5px);
+        overflow:hidden;
+        background-color:white;
+        border:1px solid @c0;
+        box-shadow:0 3px 3px -2px @c0;
     }
 }

@@ -4,13 +4,13 @@
     var H = require('handlebars');
 
     a.module('angularjs-groovy').directive(
-        'groovyMasterDetail',
+        'groovyTabbed',
         [
             '$s',
             function($s) {
                 return {
                     restrict: 'E',
-                    template: H.templates.masterDetail($s)
+                    template: H.templates.tabbed($s)
                 };
             }
         ]

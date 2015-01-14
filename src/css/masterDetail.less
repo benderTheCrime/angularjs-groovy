@@ -7,32 +7,70 @@
     z-index:101;
     &.lagoon {
         background-color:@p8;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p8, 10%);
+            .groovy-view-tab-label {
+                color:@p1;
+            }
+        }
     }
     &.strawberry {
         background-color:@p7;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p7, 10%);
+            .groovy-view-tab-label {
+                color:@p2;
+            }
+        }
     }
     &.banana {
         background-color:@p9;
         color:black;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p9, 10%);
+            .groovy-view-tab-label {
+                color:@p3;
+            }
+        }
     }
     &.bruise {
         background-color:@p8;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p8, 10%);
+            .groovy-view-tab-label {
+                color:@p4;
+            }
+        }
     }
     &.emerald-cove {
         background-color:@p7;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p7, 10%);
+            .groovy-view-tab-label {
+                color:@p5;
+            }
+        }
     }
     &.nassau-sunset {
         background-color:@p9;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p9, 10%);
+            .groovy-view-tab-label {
+                color:@p6;
+            }
+        }
     }
     &.groovy-active {
         left:0;
     }
-    .groovy-view-detail {
+    .groovy-view-tab {
         .dim(100%, 50px);
         .font(@f0, 1em, 50px, inherit);
         vertical-align:middle;
         border-bottom:1px solid @c0;
-        img {
+        cursor:pointer;
+        .groovy-view-tab-img {
+            .left;
             .dim(auto, 50px);
             max-width:50px;
         }

@@ -48,6 +48,23 @@
                     ]
                 }
             },
+            browserSync: {
+                app: {
+                    bsFiles: {
+                        src: dest + '**'
+                    },
+                    options: {
+                        server: {
+                            baseDir: './examples/groovy-app/app/',
+                            index: 'index.html',
+                            files: [ dest + '**', 'examples/**' ],
+                            https: true,
+                            browser: 'google chrome'
+                        },
+                        watchTask: true
+                    }
+                }
+            },
             watch: {
                 app: {
                     files: [ src + '**' ],
@@ -103,24 +120,26 @@
         grunt.loadNpmTasks('grunt-browserify');
         grunt.loadNpmTasks('grunt-contrib-less');
         grunt.loadNpmTasks('grunt-handlebars-compiler');
+        grunt.loadNpmTasks('grunt-browser-sync');
         grunt.loadNpmTasks('grunt-contrib-watch');
         grunt.loadNpmTasks('grunt-contrib-uglify');
         grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-jshint');
         grunt.loadNpmTasks('grunt-jscs-checker');
         grunt.registerTask('build', [
-            'handlebars:app',
-            'browserify:app',
-            'less:app',
+            'handlebars',
+            'browserify',
+            'less',
             'cssmin'
         ]);
         grunt.registerTask('test', [
-            'jshint:app',
+            'jshint',
             'jscs'
         ]);
         grunt.registerTask('default', [
             'build',
-            'watch:app'
+            'browserSync',
+            'watch'
         ]);
     };
 })();

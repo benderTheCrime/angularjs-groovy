@@ -1,0 +1,8 @@
+<div class='groovy-page-based'>
+    <div class='groovy-view-tab'
+         ng-repeat='view in views'
+         ng-class='{ "groovy-active": isActiveGroovyView(view.id) }'
+         onclick='javascript:void(0);'
+         ng-click='setActiveGroovyView(view.id)'>
+    </div>
+</div>

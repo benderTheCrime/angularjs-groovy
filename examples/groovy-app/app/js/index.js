@@ -26,5 +26,29 @@
                 ]
             }
         };
+        $scope.groovyGridView = {
+            grid: {
+                title: 'Blah',
+                body: 'Blah blah blah',
+                keys: [ 'test 1', 'test 2', 'test 3' ],
+                items: [
+                    {
+                        'test 1': 'blah',
+                        'test 2': 'blah',
+                        'test 3': 'blah'
+                    },
+                    {
+                        'test 1': 'blah',
+                        'test 2': 'blah',
+                        'test 3': 'blah'
+                    },
+                    {
+                        'test 1': 'blah',
+                        'test 2': 'blah',
+                        'test 3': 'blah'
+                    }
+                ]
+            }
+        };
     });
 })(angular);

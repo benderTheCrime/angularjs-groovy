@@ -5,6 +5,8 @@ perform perfectly.
 
 To address issues or request additional functionality, please use the issues tab associated with this repo.
 
+Build includes ngRoute and ngTouch modules for AngularJS
+
 ####To use this framework to create a boilerplate application project, please install via NPM:
 ```shell
 npm install [-g] angularjs-groovy
