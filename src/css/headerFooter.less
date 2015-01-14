@@ -1,8 +1,7 @@
-.groovy-header, .groovy-footer {
+.groovy-header, .groovy-tabbed {
     .master-detail-shift;
     .dim(100%, 50px);
     .pos(fixed, 0, initial, initial, 0);
-    .transition(400ms, left);
     background-color:@c0;
     color:white;
     text-align:center;
@@ -10,10 +9,14 @@
 }
 
 .groovy-header {
+    .transition(400ms, left);
     .groovy-header-menu {
         margin:5px;
         .dim(40px, 40px);
         .pos(absolute, 0, initial, initial, 0);
+        vertical-align: middle;
+        line-height: 40px;
+
     }
     .groovy-header-title {
         .dim(auto, 50px);
@@ -22,38 +25,82 @@
     }
 }
 
-.groovy-footer {
+.groovy-tabbed {
     height:60px;
     .pos(fixed, initial, 0, 0);
     .groovy-view-tab {
         padding:0 10px;
         .dim(auto, 100%);
-        display:inline-block;
-        line-height:60px;
-        vertical-align:middle;
         cursor:pointer;
+        display:inline-block;
+        .groovy-view-tab-img {
+            margin:0 auto;
+            .dim(38px, 38px);
+        }
+        .groovy-view-tab-label {
+            margin-top:-4px;
+            .dim(100%, 20px);
+            font-size:0.9em;
+            text-align:center;
+        }
     }
 }
 
-.groovy-footer {
+.groovy-tabbed {
     &.lagoon {
         background-color:@p8;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p8, 10%);
+            .groovy-view-tab-label {
+                color:@p5;
+            }
+        }
     }
     &.strawberry {
         background-color:@p7;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p7, 10%);
+            .groovy-view-tab-label {
+                color:@p2;
+            }
+        }
     }
     &.banana {
         background-color:@p9;
         color:black;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p9, 10%);
+            .groovy-view-tab-label {
+                color:@p3;
+            }
+        }
     }
     &.bruise {
         background-color:@p8;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p8, 10%);
+            .groovy-view-tab-label {
+                color:@p4;
+            }
+        }
     }
     &.emerald-cove {
         background-color:@p7;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p7, 10%);
+            .groovy-view-tab-label {
+                color:@p5;
+            }
+        }
     }
     &.nassau-sunset {
         background-color:@p9;
+        .groovy-view-tab.groovy-active {
+            background-color:lighten(@p9, 10%);
+            .groovy-view-tab-label {
+                color:@p6;
+            }
+        }
     }
 
 }

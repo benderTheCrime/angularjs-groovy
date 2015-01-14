@@ -11,24 +11,27 @@
                 * manage attachment of the required styles
                 */
                 var scripts = a.element(d.head.children),
-                path;
+                    path,
+                    i;
 
                 // Get the relative path
-                a.forEach(scripts, function(v) {
-                    if (v.src && !!~v.src.indexOf('angularjs-groovy')) {
-                        path = v.src.replace(v.src.split('/').pop(), '');
-                    } else if (v.href && ~conf.requiredStyles.indexOf(v.href)) {
-                        conf.requiredStyles.splice(conf.requiredStyles.indexOf(v.href), 1);
+                for (i = scripts.length - 1; i >= 0; --i) {
+                    var script = scripts[i];
+                    if (script.src && !!~script.src.indexOf('angularjs-groovy')) {
+                        path = script.src.replace(script.src.split('/').pop(), '');
+                    } else if (script.href && ~conf.requiredStyles.indexOf(script.href)) {
+                        conf.requiredStyles.splice(conf.requiredStyles.indexOf(script.href), 1);
                     }
-                });
+                }
 
                 // Attach any styles still required
-                a.forEach(conf.requiredStyles, function(v) {
-                    var link = d.createElement('link');
+                for (i = conf.requiredStyles.length - 1; i >= 0; --i) {
+                    var style = conf.requiredStyles[i],
+                        link = d.createElement('link');
                     link.rel = 'stylesheet';
-                    link.href = ~v.indexOf('http') ? v : path + v;
+                    link.href = ~style.indexOf('http') ? style : path + style;
                     d.head.insertBefore(link, d.head.children[0]);
-                });
+                }
             }
         ]
     );

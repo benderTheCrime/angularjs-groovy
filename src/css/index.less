@@ -3,6 +3,7 @@
 @import 'login';
 @import 'headerFooter';
 @import 'masterDetail';
+@import 'pageBased';
 @import 'view';
 
 .banana {
@@ -66,9 +67,16 @@
     }
 }
 
+.left {
+    float:left;
+}
+
 .list {
     list-type:none;
     list-style-type:none;
+    li {
+        display:inline-block;
+    }
 }
 
 .master-detail-shift {
@@ -90,6 +98,10 @@
             box-shadow:none;
         }
     }
+}
+
+.right {
+    float:right;
 }
 
 .strawberry {

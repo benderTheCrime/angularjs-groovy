@@ -1,4 +1,5 @@
-<ul class='groovy-list-view-list'>
+<ul class='groovy-list-view-list'
+    ng-if='groovyListView.{{name}}'>
     <li class='groovy-list-view-item'
         ng-repeat='item in groovyListView.{{name}}.items'>
         <a ng-href='{{{noparse 'item.href'}}}'>

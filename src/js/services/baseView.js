@@ -8,7 +8,7 @@
             function(viewData) {
                 return {
                     restrict: 'A',
-                    Controller: [ '^viewCtrl' ],
+                    Controller: [ '^baseCtrl', '^viewCtrl' ],
                     link: function(scope, element, attrs) {
                         scope.groovyViewId = viewData.views.length;
 

@@ -9,11 +9,13 @@
         concat =        require('gulp-concat'),
         declare =       require('gulp-declare'),
         less =          require('gulp-less'),
+        path =          require('path'),
         rename =        require('gulp-rename'),
         uglify =        require('gulp-uglify'),
         cssmin =        require('gulp-cssmin'),
         jshint =        require('gulp-jshint'),
-        jscs =          require('gulp-jscs');
+        jscs =          require('gulp-jscs'),
+        browserSync =   require('browser-sync');
 
     var src = 'src/',
         dest = 'dist/',
@@ -55,19 +57,21 @@
             )
             .pipe(gulp.dest(src + 'js/'));
     });
-    gulp.task('less', function () {
+    gulp.task('less', function() {
         return gulp.src(src + 'css/index.less')
-            .pipe(less())
+            .pipe(less({
+                paths: [ path.join(__dirname, 'less', 'includes') ]
+            }))
             .pipe(rename('angularjs-groovy.css'))
             .pipe(gulp.dest(dest));
     });
-    gulp.task('uglify', [ 'browserify' ], function(){
+    gulp.task('uglify', [ 'browserify' ], function() {
         gulp.src(dest + 'angularjs-groovy.js')
             .pipe(uglify())
             .pipe(rename({suffix: '.min'}))
             .pipe(gulp.dest(dest));
     });
-    gulp.task('cssmin', [ 'less' ], function () {
+    gulp.task('cssmin', [ 'less' ], function() {
         gulp.src(dest + 'angularjs-groovy.css')
             .pipe(cssmin())
             .pipe(rename({suffix: '.min'}))
@@ -78,7 +82,7 @@
             .pipe(jshint())
             .pipe(jshint.reporter('default', { verbose: true }));
     });
-    gulp.task('jscs', function () {
+    gulp.task('jscs', function() {
         gulp.src([
                 src + 'js/**/!(templates)*.js',
                 nodeSrc + 'js/**/*.js',
@@ -90,8 +94,19 @@
         'uglify',
         'cssmin'
     ]);
-    gulp.task('watch', function() {
-        gulp.watch(src + '**', { debounceDelay: 1000 }, [ 'build' ]);
+    gulp.task('server', function() {
+        return browserSync({
+            server: {
+                baseDir: './examples/groovy-app/app/',
+                index: 'index.html',
+                files: [ dest + '**', 'examples/**' ],
+                https: true,
+                browser: 'google chrome'
+            }
+        });
+    });
+    gulp.task('watch', [ 'server' ], function() {
+        gulp.watch(src + '**', [ 'build', browserSync.reload ]);
     });
     gulp.task('test', [ 'jshint', 'jscs' ]);
     gulp.task('default', [ 'watch' ]);

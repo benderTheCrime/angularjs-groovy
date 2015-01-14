@@ -1,0 +1,23 @@
+.groovy-page-based {
+    margin-left:-100px;
+    .dim(200px, 10px);
+    .pos(fixed, initial, initial, 40px, 50%);
+    z-index:100;
+    text-align:center;
+    .groovy-view-tab {
+        margin:0 8px;
+        .dim(10px, 10px);
+        .border-radius(10px);
+        .transition(400ms, opacity);
+        .transition(400ms, -moz-opacity);
+        .transition(400ms, -webkit-opacity);
+        .opacity(0.3);
+        background-color:black;
+        display:inline-block;
+        cursor:pointer;
+        vertical-align:top;
+        &.groovy-active {
+            .opacity(0.6);
+        }
+    }
+}

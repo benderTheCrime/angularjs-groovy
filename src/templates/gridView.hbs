@@ -1,0 +1,12 @@
+<div ng-if='groovyGridView.{{name}}'
+     class='groovy-grid-view-grid panel panel-default'>
+    <div ng-if='groovyGridView.{{name}}.title'
+         class='panel-heading'>
+        {{{noparse title}}}
+    </div>
+    <div ng-if='groovyGridView.{{name}}.body'
+         class='panel-body'>
+        <p>{{{noparse body}}}</p>
+    </div>
+    {{>grid this}}
+</div>

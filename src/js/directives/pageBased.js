@@ -4,13 +4,13 @@
     var H = require('handlebars');
 
     a.module('angularjs-groovy').directive(
-        'groovyFooter',
+        'groovyPageBased',
         [
-            '$s',
+        '$s',
             function($s) {
                 return {
                     restrict: 'E',
-                    template: H.templates.footer($s)
+                    template: H.templates.pageBased($s)
                 };
             }
         ]

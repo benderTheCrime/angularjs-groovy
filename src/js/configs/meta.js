@@ -15,11 +15,11 @@
                     title.html($s.appName);
                 }
 
-                angular.forEach(meta, function(v) {
-                    if (v.name === name) {
+                for (var i = meta.length - 1; i >= 0; --i) {
+                    if (meta[i].name === name) {
                         viewport = true;
                     }
-                });
+                }
 
                 if (!viewport) {
                     var viewMeta = d.createElement('meta');

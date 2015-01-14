@@ -4,7 +4,7 @@
     var H = require('handlebars');
 
     a.module('angularjs-groovy').directive(
-        'ngGroovyListView',
+        'ngGroovyImageGridView',
         [
             '$s',
             '$compile',
@@ -15,13 +15,14 @@
                     restrict: baseView.restrict,
                     Controller: baseView.Controller,
                     link: function(scope, element, attrs) {
-                        element.addClass('groovy-list-view');
+                        var name = attrs.ngGroovyViewName;
+                        element.addClass('groovy-grid-view');
                         viewData.setViewOptions(
                             scope,
                             element,
                             attrs,
-                            $compile(H.templates.listView({
-                                name: attrs.ngGroovyViewName
+                            $compile(H.templates.grid({
+                                name: name
                             }))(scope)
                         );
                         baseView.link(scope, element, attrs);

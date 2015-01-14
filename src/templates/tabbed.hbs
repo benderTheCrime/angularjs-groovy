@@ -1,15 +1,4 @@
-{{#unless header}}
-    {{#if masterDetail.iconUrl}}
-        <img class='groovy-header-menu'
-             src='{{masterDetail.iconUrl}}'
-             onclick='javascript:void(0);'
-             ng-click='toggleMasterDetail()' />
-    {{else}}
-        <span class='fa fa-bars' ng-click='toggleMasterDetail()'></span>
-    {{/if}}
-{{/unless}}
-<div class='groovy-master-detail'
-     ng-class='groovyColor()'>
+<div class='groovy-tabbed' ng-class='groovyColor()'>
     <div class='groovy-view-tab'
          ng-repeat='view in views'
          ng-class='{ "groovy-active": isActiveGroovyView(view.id) }'

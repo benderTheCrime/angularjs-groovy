@@ -6,7 +6,8 @@
     "license": "MIT license",
     "dependencies": {},
     "devDependencies": {
-        "angular-route": "1.2.16"
+        "angular-route": "1.2.16",
+        "angular-touch": "1.2.16"
     },
     "main": [
         "dist/angularjs-groovy.js",

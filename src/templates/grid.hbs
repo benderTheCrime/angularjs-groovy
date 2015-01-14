@@ -1,0 +1,12 @@
+<table class='groovy-table table'>
+    <thead>
+        <tr>
+            <th ng-repeat='key in groovyGridView.{{name}}.keys'>{{{noparse 'key'}}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat='item in groovyGridView.{{name}}.items'>
+            <td ng-repeat='key in groovyGridView.{{name}}.keys'>{{{noparse 'item[key]'}}}</td>
+        </tr>
+    </tbody>
+</table>
