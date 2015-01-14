@@ -88,7 +88,7 @@ An attribute representing options on the view is also available (similar to ngMo
 ```javascript
 groovy = {
     appName:            'Groovy',       // Adds your application name to the title of the page
-    forWeb:             false,          // Is this application intended to be used for the web or as a native application
+    forWeb:             false,          // Also 'fW', Is this application intended to be used for the web or as a native application
     useLogin:           false,          // Defaults to false, instantiates a view for login, controlled by user reference
     header: {                           // Also 'h'
         title:          'Groovy',       // Application header content
@@ -108,6 +108,6 @@ groovy = {
     },
     singleView:          {}             // Also 'sV'
     color:               null           // Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset',
-    debug:               false,         // Enables AngularJS debug statements for Groovy
+    debug:               false          // Enables AngularJS debug statements for Groovy
 };
 ```
