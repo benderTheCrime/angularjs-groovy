@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    var gulp =      require('gulp'),
+    var gulp =          require('gulp'),
         argv =          require('yargs').argv,
         browserify =    require('gulp-browserify'),
         handlebars =    require('gulp-handlebars'),
@@ -30,9 +30,6 @@
                 }
             }))
             .pipe(rename('angularjs-groovy.js'))
-            .pipe(gulp.dest(dest))
-            .pipe(uglify())
-            .pipe(rename({suffix: '.min'}))
             .pipe(gulp.dest(dest));
     });
     gulp.task('handlebars', function() {
