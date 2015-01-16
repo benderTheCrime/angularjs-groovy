@@ -1,9 +1,6 @@
-#Create a templated application from scratch in minutes
+#Create a templated application from scratch in two minutes
 
-Note: This project is still in early development. Although functional, it may not
-perform perfectly.
-
-To address issues or request additional functionality, please use the issues tab associated with this repo. Build includes ngRoute and ngTouch modules for AngularJS.
+Note: This project is still in early development. Although functional, it may not perform perfectly. To address issues or request additional functionality, please use the issues tab associated with this repo. Build includes ngRoute and ngTouch modules for AngularJS. If you choose to scaffold an application that is not for web, you will be prompted to install phonegap.
 
 ##To use this framework to create a boilerplate application project, please install via NPM:
 ```shell
@@ -79,6 +76,7 @@ inside of your own JavaScript. Doing the above will create a templated master-de
 * ngGroovyView
 * ngGroovyListView
 * ngGroovyGridView
+
 Check the examples to determine how these views appear. They can also be nested inside other views as directives.
 
 An attribute representing options on the view is also available (similar to ngModelOptions) with the following options:
@@ -89,21 +87,21 @@ An attribute representing options on the view is also available (similar to ngMo
 groovy = {
     appName:            'Groovy',       // Adds your application name to the title of the page
     forWeb:             false,          // Also 'fW', Is this application intended to be used for the web or as a native application
-    useLogin:           false,          // Defaults to false, instantiates a view for login, controlled by user reference
+    useLogin:           false,          // Also 'uL', Defaults to false, instantiates a view for login, controlled by user reference
     header: {                           // Also 'h'
         title:          'Groovy',       // Application header content
         color:          null,           // Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'
         templateUrl:    'index.html'    // An html file to use en lieu of the default API header template
     },
     type:               '',             // Options: masterDetail (mD), tabbed (t), pageBased (pB), singleView (sV)
-    masterDetail:   {                   // Also 'mD'
+    masterDetail: {                     // Also 'mD'
         iconUrl:        'icon.svg',     // An image file to use en lieu of the default API master detail icon
         templateUrl:    'index.html'    // An html file to use en lieu of the default API master detail template
     },
-    tabbed:         {                   // Also 't'
+    tabbed: {                           // Also 't'
         templateUrl:    'index.html'    // An html file to use en lieu of the default API tabbed template
     },
-    pageBased:      {                   // Also 'pB'
+    pageBased: {                        // Also 'pB'
         templateUrl:    'index.html'    // An html file to use en lieu of the default API page based template
     },
     singleView:          {}             // Also 'sV'

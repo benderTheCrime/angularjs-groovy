@@ -69,12 +69,11 @@
                         } else if ($s['tabbed' || 'pageBased']) {
 
                             // For tabbed and page based layouts we want to swipe left or right to change views
-                            el.attr('ng-swipe-left', 'setActiveGroovyView(' + (id + 1) + ')');
                             el.attr('ng-swipe-right', 'setActiveGroovyView(' + (id - 1) + ')');
+                            el.attr('ng-swipe-left', 'setActiveGroovyView(' + (id + 1) + ')');
                         } else {
                             return;
                         }
-
 
                         // Trash the Groovy attrs so that we don't get ourselves stuck in a bad infinite loop
                         // situation
@@ -84,7 +83,6 @@
                             }
                         }
                         $compile(el[0])(scope);
-
                         $log.debug('Groovy: Added swipe action bindings for view ' + id);
                     }
                 };

@@ -12,15 +12,18 @@
     module.exports = function(g) {
 
         // Check for shorthand from the CLI
-        g.masterDetail = g.mD || g.masterDetail;
-        g.singleView = g.sV || g.singleView;
-        g.pageBased = g.pB || g.pageBased;
-        g.tabbed = g.t || g.tabbed;
-        g.header = g.h || g.header;
-        g.forWeb = g.fW || g.forWeb;
+        a.extend(g, {
+            masterDetail: g.mD || g.masterDetail,
+            singleView: g.sV || g.singleView,
+            pageBased: g.pB || g.pageBased,
+            tabbed: g.t || g.tabbed,
+            header: g.h || g.header,
+            useLogin: g.uL || g.useLogin,
+            forWeb: g.fW || g.forWeb
+        });
 
         // Trash the shorthand keys
-        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h', 'fW' ]);
+        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h', 'uL', 'fW' ]);
 
         // Resolve type
         if (g.type) {
