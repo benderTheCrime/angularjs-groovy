@@ -1,6 +1,6 @@
 #Create a templated application from scratch in two minutes
 
-Note: This project is still in early development. Although functional, it may not perform perfectly. To address issues or request additional functionality, please use the issues tab associated with this repo. Build includes ngRoute and ngTouch modules for AngularJS. If you choose to scaffold an application that is not for web, you will be prompted to install phonegap.
+To address issues or request additional functionality, please use the issues tab associated with this repo. Build includes ngRoute and ngTouch modules for AngularJS. If you choose to scaffold an application that is not for web, you will be prompted to install phonegap.
 
 ##To use this framework to create a boilerplate application project, please install via NPM:
 ```shell
