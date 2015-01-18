@@ -5,7 +5,8 @@
         var env = grunt.option('env') ? grunt.option('env').toLowerCase() : 'prod',
             src = 'src/',
             dest = 'dist/',
-            nodeSrc = 'lib/';
+            nodeSrc = 'lib/',
+            docSrc = 'doc';
 
         grunt.initConfig({
             wrap: {
@@ -134,6 +135,15 @@
                     nodeSrc + 'js/**/*.js',
                     'examples/groovy-app/app/js/**/*.js'
                 ]
+            },
+            ngdoc: {
+                options: {
+                    dest: docSrc,
+                    scripts: src + 'js/**/*.js',
+                    html5Mode: true,
+                    startPage: '/index',
+                    title: 'angularjs-groovy documentation'
+                }
             }
         });
         grunt.loadNpmTasks('grunt-browserify');
@@ -145,6 +155,7 @@
         grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-jshint');
         grunt.loadNpmTasks('grunt-jscs-checker');
+        grunt.loadNpmTasks('grunt-ngdoc');
         grunt.registerTask('build', [
             'handlebars',
             'browserify',
@@ -153,7 +164,8 @@
         ]);
         grunt.registerTask('test', [
             'jshint',
-            'jscs'
+            'jscs',
+            'ngdoc'
         ]);
         grunt.registerTask('default', [
             'build',

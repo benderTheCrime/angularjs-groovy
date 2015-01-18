@@ -8,13 +8,6 @@
             settings: {
                 items: [
                     {
-                        label: 'test 1',
-                        icon: 'images/appbar.nyan2.svg',
-                        type: 'checklist',
-                        list: [ 1, 2, 3 ],
-                        value: true
-                    },
-                    {
                         label: 'test 2',
                         type: 'toggle',
                         value: false

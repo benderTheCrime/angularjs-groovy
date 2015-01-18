@@ -14,6 +14,13 @@
             '$timeout',
             '$parse',
             function($rootScope, $s, $log, $sce, $compile, $timeout, $parse) {
+
+                /**
+                 * @ngdoc service
+                 * @name angularjs-groovy.viewData
+                 * @description Provides common view utilities to the directives and manages
+                 * a list of instantiated views and the active view
+                 */
                 return {
                     views: [],
                     activeViewId: 0,
@@ -79,7 +86,7 @@
                         // situation
                         for (var key in attrs) {
                             if (~key.indexOf('ngGroovy')) {
-                                el.removeAttr(key.replace(/([A-Z])/g, "-$1"));
+                                el.removeAttr(key.replace(/([A-Z])/g, '-$1'));
                             }
                         }
                         $compile(el[0])(scope);

@@ -27,7 +27,7 @@
 
         // Resolve type
         if (g.type) {
-            switch(g.type) {
+            switch (g.type) {
                 case 'masterDetail':
                     g.masterDetail = g.masterDetail || {};
                     g = u.trashKeys(g, [ 'tabbed', 'pageBased', 'singleView' ]);

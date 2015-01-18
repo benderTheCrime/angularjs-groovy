@@ -35,7 +35,6 @@
                         d.head.insertBefore(link, d.head.children[0]);
                     }
 
-
                     w.jQuery = require('jquery').noConflict();
                     require('bootstrap');
                     require('checkbox');

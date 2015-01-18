@@ -15,11 +15,13 @@
         cssmin =        require('gulp-cssmin'),
         jshint =        require('gulp-jshint'),
         jscs =          require('gulp-jscs'),
+        ngdoc =         require('gulp-ngdocs'),
         browserSync =   require('browser-sync');
 
     var src = 'src/',
         dest = 'dist/',
-        nodeSrc = 'lib/';
+        nodeSrc = 'lib/',
+        docSrc = 'doc';
 
     gulp.task('browserify', [ 'handlebars' ], function() {
         return gulp.src(src + '/js/index.js')
@@ -122,7 +124,7 @@
             .pipe(jshint())
             .pipe(jshint.reporter('default', { verbose: true }));
     });
-    gulp.task('jscs', function() {
+    gulp.task('jscs', [ 'jshint' ], function() {
         gulp.src([
             src + 'js/**/!(templates)*.js',
             nodeSrc + 'js/**/*.js',
@@ -130,10 +132,16 @@
         ])
         .pipe(jscs());
     });
-    gulp.task('build', [
-        'uglify',
-        'cssmin'
-    ]);
+    gulp.task('ngdoc', [ 'jscs' ], function() {
+        return gulp.src(src + 'js/**/*.js')
+            .pipe(ngdoc.process({
+                html5Mode: true,
+                startPage: '/index',
+                title: 'angularjs-groovy documentation'
+            }))
+            .pipe(gulp.dest(docSrc));
+    });
+    gulp.task('build', [ 'uglify', 'cssmin' ]);
     gulp.task('server', function() {
         return browserSync({
             server: {
@@ -148,6 +156,6 @@
     gulp.task('watch', [ 'server' ], function() {
         gulp.watch(src + '**', [ 'build', browserSync.reload ]);
     });
-    gulp.task('test', [ 'jshint', 'jscs' ]);
+    gulp.task('test', [ 'ngdoc' ]);
     gulp.task('default', [ 'watch' ]);
 })();

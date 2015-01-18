@@ -14,6 +14,10 @@
     require('../bower_components/angular-touch/angular-touch.js');
     require('../bower_components/angular-sanitize/angular-sanitize.js');
 
+    /**
+     * @ngdoc overview
+     * @name angularjs-groovy
+     */
     a.module('angularjs-groovy', [
         'conf',
         'g',
