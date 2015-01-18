@@ -4,7 +4,7 @@
     var H = require('handlebars');
 
     a.module('angularjs-groovy').directive(
-        'ngGroovyListView',
+        'ngGroovyImgDetail',
         [
         '$s',
         '$parse',

@@ -15,7 +15,7 @@
                     restrict: baseView.restrict,
                     priority: baseView.priority + 1,
                     Controller: baseView.Controller,
-                    link: function(scope, element, attrs) {
+                    link: function(scope, element, attrs, settings) {
                         element.addClass('groovy-list-view');
                         viewData.setViewOptions(
                             scope,
@@ -23,7 +23,8 @@
                             attrs,
                             $compile(H.templates.listView({
                                 id: viewData.views.length - 1,
-                                name: attrs.ngGroovyViewName
+                                name: attrs.ngGroovyViewName,
+                                settings: settings
                             }))(scope)
                         );
 

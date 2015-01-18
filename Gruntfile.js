@@ -8,6 +8,15 @@
             nodeSrc = 'lib/';
 
         grunt.initConfig({
+            wrap: {
+                app: {
+                    src: src + 'bower_components/bootstrap/dist/js/bootstrap.js',
+                    dest: src + 'bower_components/bootstrap/dist/js/bootstrap.js',
+                    options: {
+                        wrapper: [ 'module.exports = function($j) { var jQuery = $j;\n', '};' ]
+                    }
+                }
+            },
             browserify: {
                 app: {
                     files: [
@@ -19,10 +28,20 @@
                     options: {
                         debug: env === 'dev',
                         alias: {
-                            handlebars: '../../node_modules/handlebars/dist/handlebars.runtime.js'
+                            handlebars: '../../node_modules/handlebars/dist/handlebars.runtime.js',
+                            jquery: '../../bower_components/jquery/dist/jquery.js',
+                            bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap.js',
+                            checkbox: '../../bower_components/drunken-parrot-flat-ui/js/checkbox.js',
+                            radio: '../../bower_components/drunken-parrot-flat-ui/js/radio.js',
+                            'switch': '../../bower_components/drunken-parrot-flat-ui/js/bootstrap-switch.js',
+                            toolbar: '../../bower_components/drunken-parrot-flat-ui/js/toolbar.js',
+                            application: '../../bower_components/drunken-parrot-flat-ui/js/application.js'
+                        },
+                        preBundleCB: function() {
+                            grunt.task.run([ 'wrap' ]);
                         },
                         postBundleCB: function(err, src, next) {
-                            grunt.task.run([ 'uglify:app' ]);
+                            grunt.task.run([ 'uglify' ]);
                             next(err, src);
                         }
                     }

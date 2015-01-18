@@ -32,12 +32,14 @@
                 });
 
                 $rootScope.$watch('masterDetailActive', function() {
-                    a.element(d.querySelectorAll(
-                        '.groovy-master-detail, .groovy-view, .groovy-header'
-                    ))[
-                    $scope.masterDetailActive ? 'addClass' : 'removeClass'
-                    ]('groovy-active');
-                    $log.debug('Groovy: Changed masterDetailActive');
+                    if ($s.masterDetail) {
+                        a.element(d.querySelectorAll(
+                            '.groovy-master-detail, .groovy-view, .groovy-header'
+                        ))[
+                        $scope.masterDetailActive ? 'addClass' : 'removeClass'
+                        ]('groovy-active');
+                        $log.debug('Groovy: Changed masterDetailActive');
+                    }
                 });
 
                 $log.debug('Groovy: Instantiated base $scope methods');

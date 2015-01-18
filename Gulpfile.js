@@ -28,6 +28,49 @@
                 alias: {
                     handlebars: '../../node_modules/handlebars/dist/handlebars.runtime.js'
                 }
+            }).on('prebundle', function(b) {
+                b.require(
+                    __dirname + '/' + src + 'bower_components/jquery/dist/jquery.js',
+                    {
+                        expose: 'jquery'
+                    }
+                );
+                b.require(
+                    __dirname + '/' + src + 'bower_components/bootstrap/dist/js/bootstrap.js',
+                    {
+                        expose: 'bootstrap'
+                    }
+                );
+                b.require(
+                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/checkbox.js',
+                    {
+                        expose: 'checkbox'
+                    }
+                );
+                b.require(
+                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/radio.js',
+                    {
+                        expose: 'radio'
+                    }
+                );
+                b.require(
+                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/bootstrap-switch.js',
+                    {
+                        expose: 'bootstrap-switch'
+                    }
+                );
+                b.require(
+                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/toolbar.js',
+                    {
+                        expose: 'toolbar'
+                    }
+                );
+                b.require(
+                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/application.js',
+                    {
+                        expose: 'application'
+                    }
+                );
             }))
             .pipe(rename('angularjs-groovy.js'))
             .pipe(gulp.dest(dest));

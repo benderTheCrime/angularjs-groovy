@@ -8,7 +8,10 @@
     "devDependencies": {
         "angular-route": "1.2.16",
         "angular-touch": "1.2.16",
-        "angular-sanitize": "1.2.16"
+        "angular-sanitize": "1.2.16",
+        "bootstrap": "~3.3.1",
+        "drunken-parrot-flat-ui": "https://github.com/hoarrd/drunken-parrot-flat-ui.git",
+        "jquery": "~2.1.3"
     },
     "main": [
         "dist/angularjs-groovy.js",

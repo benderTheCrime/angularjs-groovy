@@ -48,9 +48,14 @@
         <div ng-controller='test'
              ng-groovy-list-view
              ng-groovy-view-options='{ prependHTML: true }'
-             ng-groovy-view-name='settings'
+             ng-groovy-view-name='list'
              ng-groovy-view-icon-url='images/appbar.nyan.svg'>
             Settings
+        </div>
+        <div ng-controller='test'
+             ng-groovy-settings-view
+             ng-groovy-view-name='settings'
+             ng-groovy-view-icon-url='images/appbar.nyan.svg'>
         </div>
         <script type='text/javascript' id="__bs_script__">//<![CDATA[
         document.write("<script async src='//HOST:3000/browser-sync/browser-sync-client.1.9.0.js'><\/script>".replace(/HOST/g, location.hostname).replace(/PORT/g, location.port));

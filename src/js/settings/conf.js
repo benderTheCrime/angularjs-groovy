@@ -5,6 +5,8 @@
 
         // Required stylesheets
         requiredStyles: [
+            'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/' +
+                'master/bootstrap/css/bootstrap.css',
             'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/master/' +
                 'css/font-awesome.min.css',
             'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/' +

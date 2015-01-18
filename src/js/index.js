@@ -7,11 +7,12 @@
     require('./templates');
     require('./misc/helpers')(Handlebars);
 
+    require('./settings/conf');
+    require('./settings/settings')(g);
+
     require('../bower_components/angular-route/angular-route.js');
     require('../bower_components/angular-touch/angular-touch.js');
     require('../bower_components/angular-sanitize/angular-sanitize.js');
-    require('./settings/conf');
-    require('./settings/settings')(g);
 
     a.module('angularjs-groovy', [
         'conf',
@@ -43,6 +44,7 @@
     require('./directives/pageBased');
     require('./directives/view');
     require('./directives/listView');
+    require('./directives/settings');
     require('./directives/gridView');
     require('./directives/imageGridView');
 })(

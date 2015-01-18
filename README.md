@@ -83,29 +83,23 @@ An attribute representing options on the view is also available (similar to ngMo
 * prependHTML: Whether view html for non-base view types should be prepended (appends by default)
 
 ####Groovy Options:
-```javascript
-groovy = {
-    appName:            'Groovy',       // Adds your application name to the title of the page
-    forWeb:             false,          // Also 'fW', Is this application intended to be used for the web or as a native application
-    useLogin:           false,          // Also 'uL', Defaults to false, instantiates a view for login, controlled by user reference
-    header: {                           // Also 'h'
-        title:          'Groovy',       // Application header content
-        color:          null,           // Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'
-        templateUrl:    'index.html'    // An html file to use en lieu of the default API header template
-    },
-    type:               '',             // Options: masterDetail (mD), tabbed (t), pageBased (pB), singleView (sV)
-    masterDetail: {                     // Also 'mD'
-        iconUrl:        'icon.svg',     // An image file to use en lieu of the default API master detail icon
-        templateUrl:    'index.html'    // An html file to use en lieu of the default API master detail template
-    },
-    tabbed: {                           // Also 't'
-        templateUrl:    'index.html'    // An html file to use en lieu of the default API tabbed template
-    },
-    pageBased: {                        // Also 'pB'
-        templateUrl:    'index.html'    // An html file to use en lieu of the default API page based template
-    },
-    singleView:          {}             // Also 'sV'
-    color:               null           // Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset',
-    debug:               false          // Enables AngularJS debug statements for Groovy
-};
-```
+| Key                       | Type    | Definition                                                                      | Default   |
+| ------------------------- | ------- | ------------------------------------------------------------------------------- | --------- |
+| appName                   | string  | Adds your application name to the title of the page                             | undefined |
+| forWeb / fW               | boolean | Is this application intended to be used for the web or as a native application? | true      |
+| useLogin / uL             | boolean | Instantiates a view for login, controlled by user reference                     | false     |
+| useStyle                  | boolean | Use bootstrap/drunken pirate/groovy css                                         | true      |
+| header / h                | object  |                                                                                 | undefined |
+| header.title              | string  | Application header content                                                      | undefined |
+| header.color              | string  | Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'      | undefined |
+| header.templateUrl        | string  | An html file to use en lieu of the default API header template                  | undefined |
+| type                      | string  | Options: masterDetail (mD), tabbed (t), pageBased (pB), singleView (sV)         | 'sV'      |
+| masterDetail / mD         | object  |                                                                                 | undefined |
+| masterDetail.iconUrl      | string  | An image file to use en lieu of the default API master detail icon              | undefined |
+| masterDetail.templateUrl  | string  | An html file to use en lieu of the default API master detail template           | undefined |
+| tabbed / t                | object  |                                                                                 | undefined |
+| tabbed.templateUrl        | string  | An html file to use en lieu of the default API page based template              | undefined |
+| pageBased / pB            | object  |                                                                                 | undefined |
+| pageBased.templateUrl     | string  | An html file to use en lieu of the default API page based template              | undefined |
+| color                     | string  | Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'      | undefined |
+| debug                     | boolean | Enables AngularJS debug statements for Groovy                                   | false     |

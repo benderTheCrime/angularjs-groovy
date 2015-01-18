@@ -1,12 +1,33 @@
 <ul class='groovy-list-view-list'
-    ng-if='groovyListView.{{name}}'>
+    ng-if='groovy{{#if settings}}Settings{{else}}List{{/if}}View.{{name}}'>
     <li class='groovy-list-view-item'
-        ng-repeat='item in groovyListView.{{name}}.items'>
+        ng-repeat='item in groovy{{#if settings}}Settings{{else}}List{{/if}}View.{{name}}.items'
+        {{#if settings}}
+            ng-click='item.value = !item.value'
+        {{/if}}>
         <a ng-href='{{{noparse 'item.href'}}}'>
-            <img ng-if='item.icon' ng-src='{{{noparse 'item.icon'}}}' />
-            <span>
+            <img ng-if='item.icon' class='groovy-list-view-icon' ng-src='{{{noparse 'item.icon'}}}' />
+            <span class='groovy-list-view-label'>
                 {{{noparse 'item.label'}}}
             </span>
+            {{#if settings}}
+                <div ng-if='item.type === "toggle"'
+                     ng-class='{ "switch-on": item.value, "switch-off": !item.value}'
+                     class='groovy-settings-view-switch switch switch-wrapper switch-animate'>
+                    <div class='switch-container'>
+                        <span class='switch-handle-on switch-primary'>
+                            ON
+                        </span>
+                        <label class='groovy-settings-view-label switch-label'>
+                            &nbsp;
+                        </label>
+                        <span class='switch-handle-off switch-default'>
+                            OFF
+                        </span>
+                        <input type='checkbox' ng-model='item.label' ng-checked='item.value'>
+                    </div>
+                </div>
+            {{/if}}
         </a>
     </li>
 </ul>
