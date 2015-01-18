@@ -31,7 +31,7 @@
         <h1>
 <a id="create-a-templated-application-from-scratch-in-two-minutes" class="anchor" href="#create-a-templated-application-from-scratch-in-two-minutes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a templated application from scratch in two minutes</h1>
 
-<p>Note: This project is still in early development. Although functional, it may not perform perfectly. To address issues or request additional functionality, please use the issues tab associated with this repo. Build includes ngRoute and ngTouch modules for AngularJS. If you choose to scaffold an application that is not for web, you will be prompted to install phonegap.</p>
+<p>To address issues or request additional functionality, please use the issues tab associated with this repo. Build includes ngRoute and ngTouch modules for AngularJS. If you choose to scaffold an application that is not for web, you will be prompted to install phonegap.</p>
 
 <h2>
 <a id="to-use-this-framework-to-create-a-boilerplate-application-project-please-install-via-npm" class="anchor" href="#to-use-this-framework-to-create-a-boilerplate-application-project-please-install-via-npm" aria-hidden="true"><span class="octicon octicon-link"></span></a>To use this framework to create a boilerplate application project, please install via NPM:</h2>
@@ -129,30 +129,126 @@
 <h4>
 <a id="groovy-options" class="anchor" href="#groovy-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Groovy Options:</h4>
 
-<div class="highlight highlight-javascript"><pre>groovy <span class="pl-k">=</span> {
-    appName<span class="pl-k">:</span>            <span class="pl-s1"><span class="pl-pds">'</span>Groovy<span class="pl-pds">'</span></span>,       <span class="pl-c">// Adds your application name to the title of the page</span>
-    forWeb<span class="pl-k">:</span>             <span class="pl-c1">false</span>,          <span class="pl-c">// Also 'fW', Is this application intended to be used for the web or as a native application</span>
-    useLogin<span class="pl-k">:</span>           <span class="pl-c1">false</span>,          <span class="pl-c">// Also 'uL', Defaults to false, instantiates a view for login, controlled by user reference</span>
-    header<span class="pl-k">:</span> {                           <span class="pl-c">// Also 'h'</span>
-        title<span class="pl-k">:</span>          <span class="pl-s1"><span class="pl-pds">'</span>Groovy<span class="pl-pds">'</span></span>,       <span class="pl-c">// Application header content</span>
-        color<span class="pl-k">:</span>          <span class="pl-c1">null</span>,           <span class="pl-c">// Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'</span>
-        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API header template</span>
-    },
-    type<span class="pl-k">:</span>               <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,             <span class="pl-c">// Options: masterDetail (mD), tabbed (t), pageBased (pB), singleView (sV)</span>
-    masterDetail<span class="pl-k">:</span> {                     <span class="pl-c">// Also 'mD'</span>
-        iconUrl<span class="pl-k">:</span>        <span class="pl-s1"><span class="pl-pds">'</span>icon.svg<span class="pl-pds">'</span></span>,     <span class="pl-c">// An image file to use en lieu of the default API master detail icon</span>
-        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API master detail template</span>
-    },
-    tabbed<span class="pl-k">:</span> {                           <span class="pl-c">// Also 't'</span>
-        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API tabbed template</span>
-    },
-    pageBased<span class="pl-k">:</span> {                        <span class="pl-c">// Also 'pB'</span>
-        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API page based template</span>
-    },
-    singleView<span class="pl-k">:</span>          {}             <span class="pl-c">// Also 'sV'</span>
-    color<span class="pl-k">:</span>               <span class="pl-c1">null</span>           <span class="pl-c">// Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset',</span>
-    debug<span class="pl-k">:</span>               <span class="pl-c1">false</span>          <span class="pl-c">// Enables AngularJS debug statements for Groovy</span>
-};</pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Definition</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>appName</td>
+<td>string</td>
+<td>Adds your application name to the title of the page</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>forWeb / fW</td>
+<td>boolean</td>
+<td>Is this application intended to be used for the web or as a native application?</td>
+<td>true</td>
+</tr>
+<tr>
+<td>useLogin / uL</td>
+<td>boolean</td>
+<td>Instantiates a view for login, controlled by user reference</td>
+<td>false</td>
+</tr>
+<tr>
+<td>useStyle</td>
+<td>boolean</td>
+<td>Use bootstrap/drunken pirate/groovy css</td>
+<td>true</td>
+</tr>
+<tr>
+<td>header / h</td>
+<td>object</td>
+<td></td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>header.title</td>
+<td>string</td>
+<td>Application header content</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>header.color</td>
+<td>string</td>
+<td>Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>header.templateUrl</td>
+<td>string</td>
+<td>An html file to use en lieu of the default API header template</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Options: masterDetail (mD), tabbed (t), pageBased (pB), singleView (sV)</td>
+<td>'sV'</td>
+</tr>
+<tr>
+<td>masterDetail / mD</td>
+<td>object</td>
+<td></td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>masterDetail.iconUrl</td>
+<td>string</td>
+<td>An image file to use en lieu of the default API master detail icon</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>masterDetail.templateUrl</td>
+<td>string</td>
+<td>An html file to use en lieu of the default API master detail template</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>tabbed / t</td>
+<td>object</td>
+<td></td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>tabbed.templateUrl</td>
+<td>string</td>
+<td>An html file to use en lieu of the default API page based template</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>pageBased / pB</td>
+<td>object</td>
+<td></td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>pageBased.templateUrl</td>
+<td>string</td>
+<td>An html file to use en lieu of the default API page based template</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>color</td>
+<td>string</td>
+<td>Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td>debug</td>
+<td>boolean</td>
+<td>Enables AngularJS debug statements for Groovy</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/benderTheCrime">benderTheCrime</a></p>
