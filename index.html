@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Groovy by benderTheCrime</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Groovy</h1>
+        <p>A Framework for WebView Applications in AngularJS</p>
+
+        <p class="view"><a href="https://github.com/benderTheCrime/angularjs-groovy">View the Project on GitHub <small>benderTheCrime/angularjs-groovy</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/benderTheCrime/angularjs-groovy/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/benderTheCrime/angularjs-groovy/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/benderTheCrime/angularjs-groovy">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="create-a-templated-application-from-scratch-in-two-minutes" class="anchor" href="#create-a-templated-application-from-scratch-in-two-minutes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a templated application from scratch in two minutes</h1>
+
+<p>Note: This project is still in early development. Although functional, it may not perform perfectly. To address issues or request additional functionality, please use the issues tab associated with this repo. Build includes ngRoute and ngTouch modules for AngularJS. If you choose to scaffold an application that is not for web, you will be prompted to install phonegap.</p>
+
+<h2>
+<a id="to-use-this-framework-to-create-a-boilerplate-application-project-please-install-via-npm" class="anchor" href="#to-use-this-framework-to-create-a-boilerplate-application-project-please-install-via-npm" aria-hidden="true"><span class="octicon octicon-link"></span></a>To use this framework to create a boilerplate application project, please install via NPM:</h2>
+
+<div class="highlight highlight-shell"><pre>npm install [-g] angularjs-groovy</pre></div>
+
+<h2>
+<a id="to-use-this-framework-as-a-runtime-js-api-please-install-the-bower-component" class="anchor" href="#to-use-this-framework-as-a-runtime-js-api-please-install-the-bower-component" aria-hidden="true"><span class="octicon octicon-link"></span></a>To use this framework as a runtime JS API, please install the Bower component:</h2>
+
+<div class="highlight highlight-shell"><pre>bower install angularjs-groovy --save-dev</pre></div>
+
+<h2>
+<a id="for-cli-use" class="anchor" href="#for-cli-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>For CLI use:</h2>
+
+<div class="highlight highlight-shell"><pre>groovy <span class="pl-k">&lt;</span>app name<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>desired location<span class="pl-k">&gt;</span></pre></div>
+
+<p>and then follow the prompts. Examples use the boilerplate.</p>
+
+<h2>
+<a id="for-runtime-use" class="anchor" href="#for-runtime-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>For Runtime Use:</h2>
+
+<h3>
+<a id="include-a-groovy-settings-object" class="anchor" href="#include-a-groovy-settings-object" aria-hidden="true"><span class="octicon octicon-link"></span></a>Include a Groovy Settings Object:</h3>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">&lt;</span>script type<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span><span class="pl-k">&gt;</span>
+    groovy <span class="pl-k">=</span> {
+        forWeb<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+        useLogin<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+        header<span class="pl-k">:</span> {
+            title<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>Groovy<span class="pl-pds">'</span></span>,
+            color<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>Emerald Cove<span class="pl-pds">'</span></span>
+        },
+        masterDetail<span class="pl-k">:</span> {
+            iconUrl<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>images/appbar.nyan.svg<span class="pl-pds">'</span></span>
+        }
+    };
+<span class="pl-k">&lt;</span>/script<span class="pl-k">&gt;</span></pre></div>
+
+<p>More details on each option are included below.</p>
+
+<h3>
+<a id="include-these-files-in-the-head-of-your-html" class="anchor" href="#include-these-files-in-the-head-of-your-html" aria-hidden="true"><span class="octicon octicon-link"></span></a>Include these files in the head of your HTML:</h3>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">&lt;</span>script type<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span>
+        src<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>bower_components/angularjs/angular.js<span class="pl-pds">'</span></span><span class="pl-k">&gt;</span>
+<span class="pl-k">&lt;</span>/script<span class="pl-k">&gt;</span>
+<span class="pl-k">&lt;</span>script type<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>text/javascript<span class="pl-pds">'</span></span>
+        src<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>bower_components/angularjs-groovy/dist/angularjs-groovy.js<span class="pl-pds">'</span></span><span class="pl-k">&gt;</span>
+<span class="pl-k">&lt;</span>/script<span class="pl-k">&gt;</span></pre></div>
+
+<p>Or wherever your Bower components install.</p>
+
+<h3>
+<a id="include-an-element-where-you-wish-your-application-elements-to-register" class="anchor" href="#include-an-element-where-you-wish-your-application-elements-to-register" aria-hidden="true"><span class="octicon octicon-link"></span></a>Include an element where you wish your application elements to register:</h3>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">&lt;</span>ng<span class="pl-k">-</span>view<span class="pl-k">&gt;&lt;</span>/ng<span class="pl-k">-</span>view<span class="pl-k">&gt;</span></pre></div>
+
+<h3>
+<a id="create-a-module-with-angularjs-groovy-as-a-dependency" class="anchor" href="#create-a-module-with-angularjs-groovy-as-a-dependency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a module with angularjs-groovy as a dependency:</h3>
+
+<div class="highlight highlight-javascript"><pre>angular.module(<span class="pl-s1"><span class="pl-pds">'</span>groovyApp<span class="pl-pds">'</span></span>, [
+    <span class="pl-s1"><span class="pl-pds">'</span>angularjs-groovy<span class="pl-pds">'</span></span>
+]);</pre></div>
+
+<p>inside of your own JavaScript. Doing the above will create a templated master-detail application.</p>
+
+<h3>
+<a id="next-you-may-choose-to-add-one-or-many-application-views" class="anchor" href="#next-you-may-choose-to-add-one-or-many-application-views" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next you may choose to add one or many application views:</h3>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">&lt;</span>div ng<span class="pl-k">-</span>controller<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>yourCtrl<span class="pl-pds">'</span></span>
+     ng<span class="pl-k">-</span>groovy<span class="pl-k">-</span>view
+     ng<span class="pl-k">-</span>groovy<span class="pl-k">-</span>view<span class="pl-k">-</span>name<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>settings<span class="pl-pds">'</span></span>
+     ng<span class="pl-k">-</span>groovy<span class="pl-k">-</span>view<span class="pl-k">-</span>icon<span class="pl-k">-</span>url<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>iconUrl<span class="pl-pds">'</span></span>
+     ng<span class="pl-k">-</span>groovy<span class="pl-k">-</span>view<span class="pl-k">-</span>options<span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">'</span>{ prependHTML: true }<span class="pl-pds">'</span></span><span class="pl-k">&gt;</span>
+    HTML
+<span class="pl-k">&lt;</span>/div<span class="pl-k">&gt;</span></pre></div>
+
+<h4>
+<a id="available-view-types" class="anchor" href="#available-view-types" aria-hidden="true"><span class="octicon octicon-link"></span></a>Available View Types:</h4>
+
+<ul>
+<li>ngGroovyView</li>
+<li>ngGroovyListView</li>
+<li>ngGroovyGridView</li>
+</ul>
+
+<p>Check the examples to determine how these views appear. They can also be nested inside other views as directives.</p>
+
+<p>An attribute representing options on the view is also available (similar to ngModelOptions) with the following options:</p>
+
+<ul>
+<li>prependHTML: Whether view html for non-base view types should be prepended (appends by default)</li>
+</ul>
+
+<h4>
+<a id="groovy-options" class="anchor" href="#groovy-options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Groovy Options:</h4>
+
+<div class="highlight highlight-javascript"><pre>groovy <span class="pl-k">=</span> {
+    appName<span class="pl-k">:</span>            <span class="pl-s1"><span class="pl-pds">'</span>Groovy<span class="pl-pds">'</span></span>,       <span class="pl-c">// Adds your application name to the title of the page</span>
+    forWeb<span class="pl-k">:</span>             <span class="pl-c1">false</span>,          <span class="pl-c">// Also 'fW', Is this application intended to be used for the web or as a native application</span>
+    useLogin<span class="pl-k">:</span>           <span class="pl-c1">false</span>,          <span class="pl-c">// Also 'uL', Defaults to false, instantiates a view for login, controlled by user reference</span>
+    header<span class="pl-k">:</span> {                           <span class="pl-c">// Also 'h'</span>
+        title<span class="pl-k">:</span>          <span class="pl-s1"><span class="pl-pds">'</span>Groovy<span class="pl-pds">'</span></span>,       <span class="pl-c">// Application header content</span>
+        color<span class="pl-k">:</span>          <span class="pl-c1">null</span>,           <span class="pl-c">// Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'</span>
+        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API header template</span>
+    },
+    type<span class="pl-k">:</span>               <span class="pl-s1"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,             <span class="pl-c">// Options: masterDetail (mD), tabbed (t), pageBased (pB), singleView (sV)</span>
+    masterDetail<span class="pl-k">:</span> {                     <span class="pl-c">// Also 'mD'</span>
+        iconUrl<span class="pl-k">:</span>        <span class="pl-s1"><span class="pl-pds">'</span>icon.svg<span class="pl-pds">'</span></span>,     <span class="pl-c">// An image file to use en lieu of the default API master detail icon</span>
+        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API master detail template</span>
+    },
+    tabbed<span class="pl-k">:</span> {                           <span class="pl-c">// Also 't'</span>
+        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API tabbed template</span>
+    },
+    pageBased<span class="pl-k">:</span> {                        <span class="pl-c">// Also 'pB'</span>
+        templateUrl<span class="pl-k">:</span>    <span class="pl-s1"><span class="pl-pds">'</span>index.html<span class="pl-pds">'</span></span>    <span class="pl-c">// An html file to use en lieu of the default API page based template</span>
+    },
+    singleView<span class="pl-k">:</span>          {}             <span class="pl-c">// Also 'sV'</span>
+    color<span class="pl-k">:</span>               <span class="pl-c1">null</span>           <span class="pl-c">// Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset',</span>
+    debug<span class="pl-k">:</span>               <span class="pl-c1">false</span>          <span class="pl-c">// Enables AngularJS debug statements for Groovy</span>
+};</pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/benderTheCrime">benderTheCrime</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
