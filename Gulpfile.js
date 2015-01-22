@@ -120,7 +120,11 @@
             .pipe(gulp.dest(dest));
     });
     gulp.task('jshint', function() {
-        gulp.src(src)
+        return gulp.src([
+                src + 'js/**/!(templates)*.js',
+                nodeSrc + 'js/**/*.js',
+                'examples/groovy-app/app/js/**/*.js'
+            ])
             .pipe(jshint())
             .pipe(jshint.reporter('default', { verbose: true }));
     });
@@ -132,8 +136,8 @@
         ])
         .pipe(jscs());
     });
-    gulp.task('ngdoc', [ 'jscs' ], function() {
-        return gulp.src(src + 'js/**/*.js')
+    gulp.task('ngdoc', function() {
+        gulp.src(src + 'js/**/*.js')
             .pipe(ngdoc.process({
                 html5Mode: true,
                 startPage: '/index',
@@ -156,6 +160,12 @@
     gulp.task('watch', [ 'server' ], function() {
         gulp.watch(src + '**', [ 'build', browserSync.reload ]);
     });
-    gulp.task('test', [ 'ngdoc' ]);
+    gulp.task('test', [ 'ngdoc', 'jscs' ]);
     gulp.task('default', [ 'watch' ]);
+
+    module.exports = function(cb) {
+        gulp.start('test', function() {
+            cb();
+        });
+    };
 })();

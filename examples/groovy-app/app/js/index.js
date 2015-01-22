@@ -8,9 +8,15 @@
             settings: {
                 items: [
                     {
-                        label: 'test 2',
+                        label: 'test 1',
+                        icon: 'images/appbar.nyan2.svg',
                         type: 'toggle',
                         value: false
+                    },
+                    {
+                        label: 'test 2',
+                        type: 'toggle',
+                        value: true
                     },
                     {
                         label: 'test 3',

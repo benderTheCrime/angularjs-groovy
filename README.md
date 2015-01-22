@@ -14,7 +14,7 @@ bower install angularjs-groovy --save-dev
 
 ##For CLI use:
 ```shell
-groovy <app name> <desired location>
+groovy [app name] [desired location]
 ```
 and then follow the prompts. Examples use the boilerplate.
 
@@ -75,6 +75,7 @@ inside of your own JavaScript. Doing the above will create a templated master-de
 ####Available View Types:
 * ngGroovyView
 * ngGroovyListView
+* ngGroovySettingsView
 * ngGroovyGridView
 
 Check the examples to determine how these views appear. They can also be nested inside other views as directives.

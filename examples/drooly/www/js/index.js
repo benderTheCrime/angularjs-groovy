@@ -5,6 +5,6 @@
         'angularjs-groovy'
     ]).constant(
         '$s',
-        {"header":{"color":"Emerald Cove","title":"drooly"},"masterDetail":false,"appName":"drooly"}
+        {"h":false,"mD":false,"t":false,"pB":false,"name":"drooly","sV":{}}
     );
 })(angular);
