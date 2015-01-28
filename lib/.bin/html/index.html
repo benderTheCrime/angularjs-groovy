@@ -7,17 +7,32 @@
         <meta name='viewport'
               content='user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height'>
         <title></title>
-        <script type='text/javascript'
-                src='bower_components/angularjs/angular.js'>
-        </script>
-        <script type='text/javascript'
-                src='bower_components/angularjs-groovy/dist/angularjs-groovy.min.js'>
-        </script>
-        <script type='text/javascript' src='js/index.js'></script>
-        <link rel='stylesheet'
-              href='bower_components/angularjs-groovy/dist/angularjs-groovy.min.css'>
+
+        <!-- start: template required resources -->
+            <script type='text/javascript'
+                    src='bower_components/angularjs/angular.js'>
+            </script>
+            <script type='text/javascript'
+                    src='bower_components/angularjs-groovy/dist/angularjs-groovy.min.js'>
+            </script>
+            <link rel='stylesheet'
+                  href='https://rawgit.com/hoarrd/drunken-parrot-flat-ui/master/css/font-awesome.min.css'>
+            <link rel='stylesheet'
+                  href='https://rawgit.com/hoarrd/drunken-parrot-flat-ui/master/css/drunken-parrot.css'>
+            <link rel='stylesheet'
+                  href='bower_components/angularjs-groovy/dist/angularjs-groovy.min.css'>
+        <!-- end: template required resources -->
+
+        <!-- start: template demo css -->
+            <link rel='stylesheet'
+                  href='css/index.min.css'>
+        <!-- end: template demo css -->
     </head>
     <body ng-app='test'>
         {{code}}
+
+        <!-- start: templtate demo script -->
+            <script type='text/javascript' src='js/index.js'></script>
+        <!-- end: templtate demo script -->
     </body>
 </html>

@@ -16,7 +16,17 @@ bower install angularjs-groovy --save-dev
 ```shell
 groovy [app name] [desired location]
 ```
-and then follow the prompts. Examples use the boilerplate.
+and then follow the prompts. Examples use the boilerplate. Projects are built in the desired location with both Grunt and Gulp build scripts.
+To watch:
+```shell
+grunt
+gulp
+```
+To build:
+```shell
+grunt build
+gulp build
+```
 
 ##For Runtime Use:
 ###Include a Groovy Settings Object:

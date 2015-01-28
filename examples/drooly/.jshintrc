@@ -26,6 +26,7 @@
         "Handlebars": true,
         "module": true,
         "require": true,
-        "process": true
+        "process": true,
+        "__dirname": true
     }
 }
