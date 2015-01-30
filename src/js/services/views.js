@@ -67,8 +67,6 @@
                     setViewSwipeProperties: function(scope, el, attrs, id) {
                         if ($s.masterDetail) {
 
-                            // TODO, I definitely don't like this very much...
-
                             // For master detail we set only a swipe right property to toggle the
                             // master detail pane
                             el.attr('ng-swipe-right', 'setMasterDetailActive(true)');

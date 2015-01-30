@@ -37,8 +37,8 @@ img {
   position: fixed;
   top: 0;
   right: 0;
-  bottom: initial;
-  left: initial;
+  bottom: ;
+  left: ;
 }
 .groovy-login,
 .groovy-sign-up {
@@ -47,8 +47,8 @@ img {
   height: auto;
   position: fixed;
   top: 20%;
-  right: initial;
-  bottom: initial;
+  right: ;
+  bottom: ;
   left: 0;
   -webkit-transition: left 400ms ease;
   -moz-transition: left 400ms ease;
@@ -104,8 +104,8 @@ img {
   height: 50px;
   position: fixed;
   top: 0;
-  right: initial;
-  bottom: initial;
+  right: ;
+  bottom: ;
   left: 0;
   background-color: #cccccc;
   color: white;
@@ -129,8 +129,8 @@ img {
   height: 40px;
   position: absolute;
   top: 0;
-  right: initial;
-  bottom: initial;
+  right: ;
+  bottom: ;
   left: 0;
   vertical-align: middle;
   line-height: 40px;
@@ -151,7 +151,7 @@ img {
   top: initial;
   right: 0;
   bottom: 0;
-  left: initial;
+  left: ;
 }
 .groovy-tabbed .groovy-view-tab {
   padding: 0 10px;
@@ -232,8 +232,8 @@ img {
   height: 100%;
   position: fixed;
   top: 0;
-  right: initial;
-  bottom: initial;
+  right: ;
+  bottom: ;
   left: -200px;
   -webkit-transition: left 400ms ease;
   -moz-transition: left 400ms ease;
@@ -325,8 +325,8 @@ img {
   width: 200px;
   height: 10px;
   position: fixed;
-  top: initial;
-  right: initial;
+  top: ;
+  right: ;
   bottom: 40px;
   left: 50%;
   z-index: 100;
@@ -380,8 +380,8 @@ img {
   transition: left 400ms ease;
   position: absolute;
   top: 50px;
-  right: initial;
-  bottom: initial;
+  right: ;
+  bottom: ;
   left: 0;
   z-index: 90;
 }
@@ -412,6 +412,7 @@ img {
   width: auto;
   height: 100%;
   display: inline-block;
+  text-decoration: none;
 }
 .groovy-view.groovy-list-view .groovy-list-view-list li a .groovy-list-view-label {
   margin-left: 15px;

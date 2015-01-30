@@ -12,17 +12,29 @@
                 * manage attachment of the required styles
                 */
                 if ($s.useStyle !== false) {
-                    var scripts = a.element(d.head.children),
+                    var scripts = Array.prototype.slice.call(d.querySelectorAll('script, head link')),
+                        stylesheets = conf.requiredStyles,
                         path,
                         i;
+
+                    // Remove any repeat stylesheets and trim stylesheets from scripts
+                    for (i = stylesheets.length - 1; i >= 0; --i) {
+                        for (var j = scripts.length - 1; j >= 0; --j) {
+                            if (!scripts[j].href) {
+                                continue;
+                            }
+                            if (~scripts[j].href.indexOf(stylesheets[i].href)) {
+                                stylesheets.splice(i);
+                            }
+                            scripts.splice(j);
+                        }
+                    }
 
                     // Get the relative path
                     for (i = scripts.length - 1; i >= 0; --i) {
                         var script = scripts[i];
                         if (script.src && !!~script.src.indexOf('angularjs-groovy')) {
                             path = script.src.replace(script.src.split('/').pop(), '');
-                        } else if (script.href && ~conf.requiredStyles.indexOf(script.href)) {
-                            conf.requiredStyles.splice(conf.requiredStyles.indexOf(script.href), 1);
                         }
                     }
 
@@ -32,16 +44,18 @@
                             link = d.createElement('link');
                         link.rel = 'stylesheet';
                         link.href = ~style.indexOf('http') ? style : path + style;
-                        d.head.insertBefore(link, d.head.children[0]);
+                        d.head.insertBefore(link, d.head.children[1]);
                     }
 
-                    w.jQuery = require('jquery').noConflict();
-                    require('bootstrap');
-                    require('checkbox');
-                    require('radio');
-                    require('bootstrap-switch');
-                    require('toolbar');
-                    require('application');
+                    w.jQuery = require('../../bower_components/jquery/dist/jquery').noConflict();
+
+                    require('../../bower_components/bootstrap/dist/js/bootstrap');
+                    require('../../bower_components/drunken-parrot-flat-ui/js/checkbox');
+                    require('../../bower_components/drunken-parrot-flat-ui/js/radio');
+                    require('../../bower_components/drunken-parrot-flat-ui/js/bootstrap-switch');
+
+                    // require('toolbar');
+                    // require('application');
                 }
             }
         ]

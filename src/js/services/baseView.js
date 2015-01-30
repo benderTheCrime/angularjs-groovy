@@ -8,6 +8,13 @@
             '$log',
             'viewData',
             function($rootScope, $log, viewData) {
+
+                /**
+                 * @ngdoc service
+                 * @name angularjs-groovy.baseView
+                 * @description Set an object representing the base settings of
+                 * a directive
+                 */
                 return {
                     restrict: 'A',
                     priority: 999,

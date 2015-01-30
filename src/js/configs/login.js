@@ -46,6 +46,3 @@
         ]
     );
 })(document, angular);
-
-// TODO check if theoretical login location exists
-// TODO user definition of logged in state

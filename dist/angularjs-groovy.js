@@ -1,4 +1,4 @@
-require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 
 },{}],2:[function(require,module,exports){
 "use strict";
@@ -4967,7 +4967,7 @@ makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
 
 })(window, window.angular);
 
-},{}],"YQuqqg":[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /*!
  * Bootstrap v3.3.1 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
@@ -7289,39 +7289,7 @@ if (typeof jQuery === 'undefined') {
 
 }(jQuery);
 
-},{}],"bootstrap":[function(require,module,exports){
-module.exports=require('YQuqqg');
-},{}],"fGQ78Q":[function(require,module,exports){
-(function($) {
-    // Switch
-	$("[data-toggle='switch']").bootstrapSwitch({baseClass: 'switch'});
-
-	$('#top-toolbar').toolbar({
-		content: '#user-toolbar-options',
-		position: 'top'
-	});
-
-	$('#bottom-toolbar').toolbar({
-		content: '#user-toolbar-options',
-		position: 'bottom'
-	});
-
-	$('#vertical-top-toolbar').toolbar({
-		content: '#user-toolbar-options',
-		position: 'vertical-top'
-	});
-
-	$('#vertical-bottom-toolbar').toolbar({
-		content: '#user-toolbar-options',
-		position: 'vertical-bottom'
-	});
-
-})(jQuery);
-},{}],"application":[function(require,module,exports){
-module.exports=require('fGQ78Q');
-},{}],"bootstrap-switch":[function(require,module,exports){
-module.exports=require('WsJQer');
-},{}],"WsJQer":[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /* ========================================================================
  * bootstrap-switch - v3.0.1
  * http://www.bootstrap-switch.org
@@ -7833,7 +7801,7 @@ module.exports=require('WsJQer');
 
 }).call(this);
 
-},{}],"9ZUJBv":[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /* =============================================================
  * checkbox v0.0.3
  * ============================================================ */
@@ -7946,9 +7914,7 @@ module.exports=require('WsJQer');
   });
 
 }(window.jQuery);
-},{}],"checkbox":[function(require,module,exports){
-module.exports=require('9ZUJBv');
-},{}],"7h/7qO":[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /* =============================================================
  * radio.js v0.0.3
  * ============================================================ */
@@ -8088,283 +8054,7 @@ module.exports=require('9ZUJBv');
   });
 
 }(window.jQuery);
-},{}],"radio":[function(require,module,exports){
-module.exports=require('7h/7qO');
-},{}],"6QKN0n":[function(require,module,exports){
-/**
- * Toolbar.js
- *
- * @fileoverview  jQuery plugin that creates tooltip style toolbars.
- * @link          http://paulkinzett.github.com/toolbar/
- * @author        Paul Kinzett (http://kinzett.co.nz/)
- * @version       1.0.4
- * @requires      jQuery 1.7+
- *
- * @license jQuery Toolbar Plugin v1.0.4
- * http://paulkinzett.github.com/toolbar/
- * Copyright 2013 Paul Kinzett (http://kinzett.co.nz/)
- * Released under the MIT license.
- * <https://raw.github.com/paulkinzett/toolbar/master/LICENSE.txt>
- */
-
-if ( typeof Object.create !== 'function' ) {
-    Object.create = function( obj ) {
-        function F() {}
-        F.prototype = obj;
-        return new F();
-    };
-}
-
-(function( $, window, document, undefined ) {
-
-    var ToolBar = {
-        init: function( options, elem ) {
-            var self = this;
-            self.elem = elem;
-            self.$elem = $( elem );
-            self.options = $.extend( {}, $.fn.toolbar.options, options );
-            self.toolbar = $('<div class="tool-container gradient" />')
-                .addClass('tool-'+self.options.position)
-                .addClass('tool-rounded')
-                .append('<div class="tool-items" />')
-                // .append('<div class="arrow" />')
-                .appendTo('body')
-                .css('opacity', 0)
-                .hide();
-            self.toolbar_arrow = self.toolbar.find('.arrow');
-            self.initializeToolbar();
-        },
-
-        initializeToolbar: function() {
-            var self = this;
-            self.populateContent();
-            self.setTrigger();
-            self.toolbarWidth = self.toolbar.width();
-        },
-
-        setTrigger: function() {
-            var self = this;
-
-            self.$elem.on('click', function(event) {
-                event.preventDefault();
-                if(self.$elem.hasClass('pressed')) {
-                    self.hide();
-                } else {
-                    self.show();
-                }
-            });
-
-            if (self.options.hideOnClick) {
-                $('html').on("click.toolbar", function ( event ) {
-                    if (event.target != self.elem &&
-                        self.$elem.has(event.target).length === 0 &&
-                        self.toolbar.has(event.target).length === 0 &&
-                        self.toolbar.is(":visible")) {
-                        self.hide();
-                    }
-                });
-            }
-
-            $(window).resize(function( event ) {
-                event.stopPropagation();
-                if ( self.toolbar.is(":visible") ) {
-                    self.toolbarCss = self.getCoordinates(self.options.position, 20);
-                    self.collisionDetection();
-                    self.toolbar.css( self.toolbarCss );
-                    self.toolbar_arrow.css( self.arrowCss );
-                }
-            });
-        },
-
-        populateContent: function() {
-            var self = this;
-            var location = self.toolbar.find('.tool-items');
-            var content = $(self.options.content).clone( true ).find('a').addClass('tool-item gradient');
-            location.html(content);
-            location.find('.tool-item').on('click', function(event) {
-                event.preventDefault();
-                self.$elem.trigger('toolbarItemClick', this);
-            });
-        },
-
-        calculatePosition: function() {
-            var self = this;
-                self.arrowCss = {};
-                self.toolbarCss = self.getCoordinates(self.options.position, 0);
-                self.toolbarCss.position = 'absolute';
-                self.toolbarCss.zIndex = self.options.zIndex;
-                self.collisionDetection();
-                self.toolbar.css(self.toolbarCss);
-                self.toolbar_arrow.css(self.arrowCss);
-        },
-
-        getCoordinates: function( position, adjustment ) {
-            var self = this;
-            self.coordinates = self.$elem.offset();
-            console.log(self.coordinates.top-200);
-            console.log(self.toolbar.height());
-
-            if (self.options.adjustment && self.options.adjustment[self.options.position]) {
-                adjustment = self.options.adjustment[self.options.position] + adjustment;
-            }
-
-            switch(self.options.position) {
-                case 'top':
-                    return {
-                        left: self.coordinates.left-(self.toolbar.width()/2)+(self.$elem.outerWidth()/2),
-                        top: self.coordinates.top-self.$elem.height()-adjustment-2,
-                        right: 'auto'
-                    };
-                case 'left':
-                    return {
-                        left: self.coordinates.left-(self.toolbar.width()/2)-(self.$elem.width()/2)-adjustment,
-                        top: self.coordinates.top-(self.toolbar.height()/2)+(self.$elem.outerHeight()/2),
-                        right: 'auto'
-                    };
-                case 'right':
-                    return {
-                        left: self.coordinates.left+(self.toolbar.width()/2)+(self.$elem.width()/3)+adjustment,
-                        top: self.coordinates.top-(self.toolbar.height()/2)+(self.$elem.outerHeight()/2),
-                        right: 'auto'
-                    };
-                case 'vertical-top':
-                    return {
-                        left: self.coordinates.left,
-                        top: self.coordinates.top-(self.toolbar.height()-18),
-                        right: 'auto'
-                    };
-                case 'vertical-bottom':
-                    return {
-                        left: self.coordinates.left,
-                        top: self.coordinates.top+22,
-                        right: 'auto'
-                    };
-                case 'bottom':
-                    return {
-                        left: self.coordinates.left-(self.toolbar.width()/2)+(self.$elem.outerWidth()/2),
-                        top: self.coordinates.top+self.$elem.height()+adjustment+2,
-                        right: 'auto'
-                    };
-            }
-        },
-
-        collisionDetection: function() {
-            var self = this;
-            var edgeOffset = 20;
-            if(self.options.position == 'top' || self.options.position == 'bottom') {
-                self.arrowCss = {left: '50%', right: '50%'};
-                if( self.toolbarCss.left < edgeOffset ) {
-                    self.toolbarCss.left = edgeOffset;
-                    self.arrowCss.left = self.$elem.offset().left + self.$elem.width()/2-(edgeOffset);
-                }
-                else if(($(window).width() - (self.toolbarCss.left + self.toolbarWidth)) < edgeOffset) {
-                    self.toolbarCss.right = edgeOffset;
-                    self.toolbarCss.left = 'auto';
-                    self.arrowCss.left = 'auto';
-                    self.arrowCss.right = ($(window).width()-self.$elem.offset().left)-(self.$elem.width()/2)-(edgeOffset)-5;
-                }
-            }
-        },
-
-        show: function() {
-            var self = this;
-            var animation = {'opacity': 1};
-
-            self.$elem.addClass('pressed');
-            self.calculatePosition();
-
-            switch(self.options.position) {
-                case 'top':
-                    animation.top = '-=20';
-                    break;
-                case 'vertical-top':
-                    animation.top = '-=20';
-                    break;
-                case 'vertical-bottom':
-                    animation.top = '+=20';
-                    break;
-                case 'left':
-                    animation.left = '-=20';
-                    break;
-                case 'right':
-                    animation.left = '+=20';
-                    break;
-                case 'bottom':
-                    animation.top = '+=20';
-                    break;
-            }
-
-            self.toolbar.show().animate(animation, 100 );
-            self.$elem.trigger('toolbarShown');
-        },
-
-        hide: function() {
-            var self = this;
-            var animation = {'opacity': 0};
-
-            self.$elem.removeClass('pressed');
-
-            switch(self.options.position) {
-                case 'top':
-                    animation.top = '+=20';
-                    break;
-                case 'vertical-top':
-                    animation.top = '+=20';
-                    break;
-                case 'vertical-bottom':
-                    animation.top = '-=20';
-                    break;
-                case 'left':
-                    animation.left = '+=20';
-                    break;
-                case 'right':
-                    animation.left = '-=20';
-                    break;
-                case 'bottom':
-                    animation.top = '-=20';
-                    break;
-            }
-
-            self.toolbar.animate(animation, 100, function() {
-                self.toolbar.hide();
-            });
-
-            self.$elem.trigger('toolbarHidden');
-        },
-
-        getToolbarElement: function () {
-            return this.toolbar.find('.tool-items');
-        }
-    };
-
-    $.fn.toolbar = function( options ) {
-        if ($.isPlainObject( options )) {
-            return this.each(function() {
-                var toolbarObj = Object.create( ToolBar );
-                toolbarObj.init( options, this );
-                $(this).data('toolbarObj', toolbarObj);
-            });
-        } else if ( typeof options === 'string' && options.indexOf('_') !== 0 ) {
-            var toolbarObj = $(this).data('toolbarObj');
-            var method = toolbarObj[options];
-            return method.apply(toolbarObj, $.makeArray(arguments).slice(1));
-        }
-    };
-
-    $.fn.toolbar.options = {
-        content: '#myContent',
-        position: 'top',
-        hideOnClick: false,
-        zIndex: 120,
-    };
-
-}) ( jQuery, window, document );
-
-},{}],"toolbar":[function(require,module,exports){
-module.exports=require('6QKN0n');
-},{}],"jquery":[function(require,module,exports){
-module.exports=require('Nmjch/');
-},{}],"Nmjch/":[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.3
  * http://jquery.com/
@@ -17571,7 +17261,7 @@ return jQuery;
 
 }));
 
-},{}],34:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -17588,7 +17278,7 @@ return jQuery;
     );
 })(angular);
 
-},{}],35:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -17638,10 +17328,7 @@ return jQuery;
     );
 })(document, angular);
 
-// TODO check if theoretical login location exists
-// TODO user definition of logged in state
-
-},{"handlebars":16}],36:[function(require,module,exports){
+},{"handlebars":16}],27:[function(require,module,exports){
 // SO meta...
 (function(d, a) {
     'use strict';
@@ -17679,7 +17366,7 @@ return jQuery;
     );
 })(document, angular);
 
-},{}],37:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function(w, d, a) {
     'use strict';
 
@@ -17694,17 +17381,29 @@ return jQuery;
                 * manage attachment of the required styles
                 */
                 if ($s.useStyle !== false) {
-                    var scripts = a.element(d.head.children),
+                    var scripts = Array.prototype.slice.call(d.querySelectorAll('script, head link')),
+                        stylesheets = conf.requiredStyles,
                         path,
                         i;
+
+                    // Remove any repeat stylesheets and trim stylesheets from scripts
+                    for (i = stylesheets.length - 1; i >= 0; --i) {
+                        for (var j = scripts.length - 1; j >= 0; --j) {
+                            if (!scripts[j].href) {
+                                continue;
+                            }
+                            if (~scripts[j].href.indexOf(stylesheets[i].href)) {
+                                stylesheets.splice(i);
+                            }
+                            scripts.splice(j);
+                        }
+                    }
 
                     // Get the relative path
                     for (i = scripts.length - 1; i >= 0; --i) {
                         var script = scripts[i];
                         if (script.src && !!~script.src.indexOf('angularjs-groovy')) {
                             path = script.src.replace(script.src.split('/').pop(), '');
-                        } else if (script.href && ~conf.requiredStyles.indexOf(script.href)) {
-                            conf.requiredStyles.splice(conf.requiredStyles.indexOf(script.href), 1);
                         }
                     }
 
@@ -17714,23 +17413,25 @@ return jQuery;
                             link = d.createElement('link');
                         link.rel = 'stylesheet';
                         link.href = ~style.indexOf('http') ? style : path + style;
-                        d.head.insertBefore(link, d.head.children[0]);
+                        d.head.insertBefore(link, d.head.children[1]);
                     }
 
-                    w.jQuery = require('jquery').noConflict();
-                    require('bootstrap');
-                    require('checkbox');
-                    require('radio');
-                    require('bootstrap-switch');
-                    require('toolbar');
-                    require('application');
+                    w.jQuery = require('../../bower_components/jquery/dist/jquery').noConflict();
+
+                    require('../../bower_components/bootstrap/dist/js/bootstrap');
+                    require('../../bower_components/drunken-parrot-flat-ui/js/checkbox');
+                    require('../../bower_components/drunken-parrot-flat-ui/js/radio');
+                    require('../../bower_components/drunken-parrot-flat-ui/js/bootstrap-switch');
+
+                    // require('toolbar');
+                    // require('application');
                 }
             }
         ]
     );
 })(window, document, angular);
 
-},{"application":"fGQ78Q","bootstrap":"YQuqqg","bootstrap-switch":"WsJQer","checkbox":"9ZUJBv","jquery":"Nmjch/","radio":"7h/7qO","toolbar":"6QKN0n"}],38:[function(require,module,exports){
+},{"../../bower_components/bootstrap/dist/js/bootstrap":20,"../../bower_components/drunken-parrot-flat-ui/js/bootstrap-switch":21,"../../bower_components/drunken-parrot-flat-ui/js/checkbox":22,"../../bower_components/drunken-parrot-flat-ui/js/radio":23,"../../bower_components/jquery/dist/jquery":24}],29:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -17783,7 +17484,7 @@ return jQuery;
 
 // TODO split into many controllers
 
-},{}],39:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -17827,7 +17528,7 @@ return jQuery;
     );
 })(document, angular);
 
-},{}],40:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -17844,7 +17545,7 @@ return jQuery;
     );
 })(document, angular);
 
-},{}],41:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -17886,7 +17587,7 @@ return jQuery;
     );
 })(angular);
 
-},{"handlebars":16}],42:[function(require,module,exports){
+},{"handlebars":16}],33:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -17903,9 +17604,9 @@ return jQuery;
     );
 })(angular);
 
-},{}],43:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 module.exports=require(1)
-},{}],44:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -17944,7 +17645,7 @@ module.exports=require(1)
     );
 })(angular);
 
-},{"handlebars":16}],45:[function(require,module,exports){
+},{"handlebars":16}],36:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -17961,7 +17662,7 @@ module.exports=require(1)
     );
 })(angular);
 
-},{}],46:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -17978,7 +17679,7 @@ module.exports=require(1)
     );
 })(angular);
 
-},{}],47:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -18002,7 +17703,7 @@ module.exports=require(1)
     );
 })(angular);
 
-},{}],48:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -18019,7 +17720,7 @@ module.exports=require(1)
     );
 })(angular);
 
-},{}],49:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function(d, a) {
     'use strict';
 
@@ -18035,7 +17736,7 @@ module.exports=require(1)
     );
 })(document, angular);
 
-},{}],50:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function(w, d, a, g) {
     'use strict';
 
@@ -18097,7 +17798,7 @@ module.exports=require(1)
         groovy : typeof window.groovy !== 'undefined' ? window.groovy : {}
 );
 
-},{"../bower_components/angular-route/angular-route.js":17,"../bower_components/angular-sanitize/angular-sanitize.js":18,"../bower_components/angular-touch/angular-touch.js":19,"./configs/debug":34,"./configs/login":35,"./configs/meta":36,"./configs/style":37,"./controllers/base":38,"./controllers/login":39,"./controllers/view":40,"./directives/gridView":41,"./directives/header":42,"./directives/imageGridView":43,"./directives/listView":44,"./directives/masterDetail":45,"./directives/pageBased":46,"./directives/settings":47,"./directives/tabbed":48,"./directives/view":49,"./misc/helpers":51,"./services/baseView":53,"./services/views":54,"./settings/conf":55,"./settings/settings":56,"./templates":57,"handlebars":16}],51:[function(require,module,exports){
+},{"../bower_components/angular-route/angular-route.js":17,"../bower_components/angular-sanitize/angular-sanitize.js":18,"../bower_components/angular-touch/angular-touch.js":19,"./configs/debug":25,"./configs/login":26,"./configs/meta":27,"./configs/style":28,"./controllers/base":29,"./controllers/login":30,"./controllers/view":31,"./directives/gridView":32,"./directives/header":33,"./directives/imageGridView":34,"./directives/listView":35,"./directives/masterDetail":36,"./directives/pageBased":37,"./directives/settings":38,"./directives/tabbed":39,"./directives/view":40,"./misc/helpers":42,"./services/baseView":44,"./services/views":45,"./settings/conf":46,"./settings/settings":47,"./templates":48,"handlebars":16}],42:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -18110,7 +17811,7 @@ module.exports=require(1)
     };
 })();
 
-},{}],52:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 (function() {
     'use strict';
 
@@ -18129,7 +17830,7 @@ module.exports=require(1)
     };
 })();
 
-},{}],53:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -18140,6 +17841,13 @@ module.exports=require(1)
             '$log',
             'viewData',
             function($rootScope, $log, viewData) {
+
+                /**
+                 * @ngdoc service
+                 * @name angularjs-groovy.baseView
+                 * @description Set an object representing the base settings of
+                 * a directive
+                 */
                 return {
                     restrict: 'A',
                     priority: 999,
@@ -18177,7 +17885,7 @@ module.exports=require(1)
     );
 })(angular);
 
-},{}],54:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -18247,8 +17955,6 @@ module.exports=require(1)
                     setViewSwipeProperties: function(scope, el, attrs, id) {
                         if ($s.masterDetail) {
 
-                            // TODO, I definitely don't like this very much...
-
                             // For master detail we set only a swipe right property to toggle the
                             // master detail pane
                             el.attr('ng-swipe-right', 'setMasterDetailActive(true)');
@@ -18278,7 +17984,7 @@ module.exports=require(1)
     );
 })(angular);
 
-},{"handlebars":16}],55:[function(require,module,exports){
+},{"handlebars":16}],46:[function(require,module,exports){
 (function(a) {
     'use strict';
 
@@ -18299,62 +18005,62 @@ module.exports=require(1)
     a.module('conf', []).constant('conf', conf);
 })(angular);
 
-},{}],56:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 (function(a) {
     'use strict';
 
     var u = require('../misc/util');
 
-    function defaultType(g) {
-        g.singleView = g.singleView || {};
-        g = u.trashKeys(g, [ 'masterDetail', 'tabbed', 'pageBased' ]);
-        return g;
-    }
+    var keyMap = {
+            mD: 'masterDetail',
+            sV: 'singleView',
+            pB: 'pageBased',
+            t: 'tabbed',
+            h: 'header',
+            uL: 'useLogin',
+            fW: 'forWeb',
+            n: 'appName'
+        },
+        types = [ 'masterDetail', 'tabbed', 'pageBased'],
+        type,
+        key;
 
     module.exports = function(g) {
+        type = g.type;
+        delete g.type;
 
         // Check for shorthand from the CLI
-        a.extend(g, {
-            masterDetail: g.mD || g.masterDetail,
-            singleView: g.sV || g.singleView,
-            pageBased: g.pB || g.pageBased,
-            tabbed: g.t || g.tabbed,
-            header: g.h || g.header,
-            useLogin: g.uL || g.useLogin,
-            forWeb: g.fW || g.forWeb
-        });
-
-        // Trash the shorthand keys
-        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h', 'uL', 'fW' ]);
+        for (key in g) {
+            if (key in keyMap) {
+                g[keyMap[key]] = g[key];
+                if (!type && ~types.indexOf(keyMap[key])) {
+                    type = keyMap[key];
+                }
+                delete g[key];
+            }
+        }
 
         // Resolve type
-        if (g.type) {
-            switch (g.type) {
-                case 'masterDetail':
-                    g.masterDetail = g.masterDetail || {};
-                    g = u.trashKeys(g, [ 'tabbed', 'pageBased', 'singleView' ]);
-                    break;
-                case 'tabbed':
-                    g.tabbed = g.tabbed || {};
-                    g = u.trashKeys(g, [ 'masterDetail', 'pageBased', 'singleView' ]);
-                    break;
-                case 'pageBased':
-                    g.pageBased = g.pageBased || {};
-                    g = u.trashKeys(g, [ 'masterDetail', 'tabbed', 'singleView' ]);
-                    break;
-                default:
-                    g = defaultType(g);
-            }
+        if (~types.indexOf(type)) {
+            g[type] = typeof g[type] === 'object' ? g[type] : {};
         } else {
-            g = defaultType(g);
+            g.singleView = typeof g.singleView === 'object' ? g.singleView : {};
+            g = u.trashKeys(g, [ 'masterDetail', 'tabbed', 'pageBased' ]);
         }
-        delete g.type;
+
+        // Resolve appName
+        if (g.header && typeof g.header !== 'object') {
+            g.header = {};
+        }
+        if (g.appName && g.header && !g.header.title) {
+            g.header.title = g.appName;
+        }
 
         a.module('g', []).constant('$s', g);
     };
 })(angular);
 
-},{"../misc/util":52}],57:[function(require,module,exports){
+},{"../misc/util":43}],48:[function(require,module,exports){
 var Handlebars = require('handlebars');var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};Handlebars.templates["base"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
@@ -18683,4 +18389,4 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += "\n        </span>\n    </div>\n</div>\n";
   return buffer;
   });
-},{"handlebars":16}]},{},[50])
+},{"handlebars":16}]},{},[41])

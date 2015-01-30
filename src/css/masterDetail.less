@@ -1,6 +1,6 @@
 .groovy-master-detail {
     .dim(200px, 100%);
-    .pos(fixed, 0, initial, initial, -200px);
+    .pos(fixed, 0, @5: -200px);
     .transition(400ms, left);
     box-shadow:inset -4px 0px 8px black;
     color: white;
@@ -71,7 +71,7 @@
         cursor:pointer;
         .groovy-view-tab-img {
             .left;
-            .dim(auto, 50px);
+            .dim(@2: 50px);
             max-width:50px;
         }
     }

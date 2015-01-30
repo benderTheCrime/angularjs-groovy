@@ -3,50 +3,50 @@
 
     var u = require('../misc/util');
 
-    function defaultType(g) {
-        g.singleView = g.singleView || {};
-        g = u.trashKeys(g, [ 'masterDetail', 'tabbed', 'pageBased' ]);
-        return g;
-    }
+    var keyMap = {
+            mD: 'masterDetail',
+            sV: 'singleView',
+            pB: 'pageBased',
+            t: 'tabbed',
+            h: 'header',
+            uL: 'useLogin',
+            fW: 'forWeb',
+            n: 'appName'
+        },
+        types = [ 'masterDetail', 'tabbed', 'pageBased'],
+        type,
+        key;
 
     module.exports = function(g) {
+        type = g.type;
+        delete g.type;
 
         // Check for shorthand from the CLI
-        a.extend(g, {
-            masterDetail: g.mD || g.masterDetail,
-            singleView: g.sV || g.singleView,
-            pageBased: g.pB || g.pageBased,
-            tabbed: g.t || g.tabbed,
-            header: g.h || g.header,
-            useLogin: g.uL || g.useLogin,
-            forWeb: g.fW || g.forWeb
-        });
-
-        // Trash the shorthand keys
-        g = u.trashKeys(g, [ 'mD', 'sV', 'pB', 't', 'h', 'uL', 'fW' ]);
+        for (key in g) {
+            if (key in keyMap) {
+                g[keyMap[key]] = g[key];
+                if (!type && ~types.indexOf(keyMap[key])) {
+                    type = keyMap[key];
+                }
+                delete g[key];
+            }
+        }
 
         // Resolve type
-        if (g.type) {
-            switch (g.type) {
-                case 'masterDetail':
-                    g.masterDetail = g.masterDetail || {};
-                    g = u.trashKeys(g, [ 'tabbed', 'pageBased', 'singleView' ]);
-                    break;
-                case 'tabbed':
-                    g.tabbed = g.tabbed || {};
-                    g = u.trashKeys(g, [ 'masterDetail', 'pageBased', 'singleView' ]);
-                    break;
-                case 'pageBased':
-                    g.pageBased = g.pageBased || {};
-                    g = u.trashKeys(g, [ 'masterDetail', 'tabbed', 'singleView' ]);
-                    break;
-                default:
-                    g = defaultType(g);
-            }
+        if (~types.indexOf(type)) {
+            g[type] = typeof g[type] === 'object' ? g[type] : {};
         } else {
-            g = defaultType(g);
+            g.singleView = typeof g.singleView === 'object' ? g.singleView : {};
+            g = u.trashKeys(g, [ 'masterDetail', 'tabbed', 'pageBased' ]);
         }
-        delete g.type;
+
+        // Resolve appName
+        if (g.header && typeof g.header !== 'object') {
+            g.header = {};
+        }
+        if (g.appName && g.header && !g.header.title) {
+            g.header.title = g.appName;
+        }
 
         a.module('g', []).constant('$s', g);
     };

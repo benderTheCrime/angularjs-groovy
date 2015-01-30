@@ -2,17 +2,17 @@
     .master-detail-shift;
     margin:2%;
     padding:5px;
-    .dim(96%, auto);
+    .dim(96%);
     min-height:85%;
     .transition(400ms, left);
-    .pos(absolute, 50px, initial, initial, 0);
+    .pos(absolute, 50px, @5: 0);
     z-index:90;
     &.groovy-list-view {
         .groovy-list-view-list {
             margin:-5px -5px 10px -5px;
             .list;
             li {
-                .dim(100%, auto);
+                .dim(100%);
                 cursor:pointer;
                 border-bottom:1px solid @c0;
                 a {
@@ -20,7 +20,7 @@
                     .groovy-list-view-icon {
                         .left;
                         margin-right:-10px;
-                        .dim(auto, 100%);
+                        .dim(@2: 100%);
                         display:inline-block;
                         text-decoration:none;
                     }

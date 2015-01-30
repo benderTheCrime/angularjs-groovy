@@ -5,10 +5,9 @@
         args =      p.argv,
         chalk =     require('chalk'),
         gulp =      require('../Gulpfile'),
-        term =      require('./js/misc/terminal'),
-        main =      require('./js/index');
+        term =      require('./js/misc/terminal');
 
-    var debug = false;
+    var debug;
 
     if (/-(|-)h($|elp)/i.test(args)) {
         term.help();
@@ -28,6 +27,6 @@
         term.out(
             chalk.bold('Thank you for using Groovy\'s Boilerplate!\n') + chalk.white('Let\'s get started...\n')
         );
-        main();
+        require('./js/index')();
     }
 })();

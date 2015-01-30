@@ -3,6 +3,7 @@
 
     var gulp =          require('gulp'),
         argv =          require('yargs').argv,
+        chalk =         require('chalk'),
         browserify =    require('gulp-browserify'),
         handlebars =    require('gulp-handlebars'),
         wrap =          require('gulp-wrap'),
@@ -26,54 +27,10 @@
     gulp.task('browserify', [ 'handlebars' ], function() {
         return gulp.src(src + '/js/index.js')
             .pipe(browserify({
-                debug: argv.env === 'dev',
-                alias: {
-                    handlebars: '../../node_modules/handlebars/dist/handlebars.runtime.js'
+                browserifyOptions: {
+                    debug: argv.env === 'dev'
                 }
-            }).on('prebundle', function(b) {
-                b.require(
-                    __dirname + '/' + src + 'bower_components/jquery/dist/jquery.js',
-                    {
-                        expose: 'jquery'
-                    }
-                );
-                b.require(
-                    __dirname + '/' + src + 'bower_components/bootstrap/dist/js/bootstrap.js',
-                    {
-                        expose: 'bootstrap'
-                    }
-                );
-                b.require(
-                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/checkbox.js',
-                    {
-                        expose: 'checkbox'
-                    }
-                );
-                b.require(
-                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/radio.js',
-                    {
-                        expose: 'radio'
-                    }
-                );
-                b.require(
-                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/bootstrap-switch.js',
-                    {
-                        expose: 'bootstrap-switch'
-                    }
-                );
-                b.require(
-                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/toolbar.js',
-                    {
-                        expose: 'toolbar'
-                    }
-                );
-                b.require(
-                    __dirname + '/' + src + 'bower_components/drunken-parrot-flat-ui/js/application.js',
-                    {
-                        expose: 'application'
-                    }
-                );
-            }))
+            }).on('error', onErr))
             .pipe(rename('angularjs-groovy.js'))
             .pipe(gulp.dest(dest));
     });
@@ -103,7 +60,7 @@
         return gulp.src(src + 'css/index.less')
             .pipe(less({
                 paths: [ path.join(__dirname, 'less', 'includes') ]
-            }))
+            }).on('error', onErr))
             .pipe(rename('angularjs-groovy.css'))
             .pipe(gulp.dest(dest));
     });
@@ -157,11 +114,15 @@
             }
         });
     });
-    gulp.task('watch', [ 'server' ], function() {
+    gulp.task('watch', [ 'build', 'server' ], function() {
         gulp.watch(src + '**', [ 'build', browserSync.reload ]);
     });
     gulp.task('test', [ 'ngdoc', 'jscs' ]);
     gulp.task('default', [ 'watch' ]);
+
+    function onErr(err) {
+        console.log(chalk.red(chalk.bold('ERROR: ') + err.message));
+    }
 
     module.exports = function(cb) {
         gulp.start('test', function() {

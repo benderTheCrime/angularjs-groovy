@@ -16,7 +16,9 @@ bower install angularjs-groovy --save-dev
 ```shell
 groovy [app name] [desired location]
 ```
-and then follow the prompts. Examples use the boilerplate. Projects are built in the desired location with both Grunt and Gulp build scripts.
+Follow the prompts. Your settings can then be found in the js file settings.js. Examples use the boilerplate.
+
+Projects are built in the desired location with both Grunt and Gulp build scripts.
 To watch:
 ```shell
 grunt
@@ -96,7 +98,7 @@ An attribute representing options on the view is also available (similar to ngMo
 ####Groovy Options:
 | Key                       | Type    | Definition                                                                      | Default   |
 | ------------------------- | ------- | ------------------------------------------------------------------------------- | --------- |
-| appName                   | string  | Adds your application name to the title of the page                             | undefined |
+| appName / n               | string  | Adds your application name to the title of the page                             | undefined |
 | forWeb / fW               | boolean | Is this application intended to be used for the web or as a native application? | true      |
 | useLogin / uL             | boolean | Instantiates a view for login, controlled by user reference                     | false     |
 | useStyle                  | boolean | Use bootstrap/drunken pirate/groovy css                                         | true      |
@@ -112,5 +114,5 @@ An attribute representing options on the view is also available (similar to ngMo
 | tabbed.templateUrl        | string  | An html file to use en lieu of the default API page based template              | undefined |
 | pageBased / pB            | object  |                                                                                 | undefined |
 | pageBased.templateUrl     | string  | An html file to use en lieu of the default API page based template              | undefined |
-| color                     | string  | Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'      | undefined |
+| color / c                 | string  | Options: 'Lagoon, Strawberry, Banana, Bruise, Emerald Cove, Nassau Sunset'      | undefined |
 | debug                     | boolean | Enables AngularJS debug statements for Groovy                                   | false     |

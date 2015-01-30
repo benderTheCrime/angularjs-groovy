@@ -1,7 +1,7 @@
 .groovy-header, .groovy-tabbed {
     .master-detail-shift;
     .dim(100%, 50px);
-    .pos(fixed, 0, initial, initial, 0);
+    .pos(fixed, 0, @5: 0);
     background-color:@c0;
     color:white;
     text-align:center;
@@ -13,13 +13,13 @@
     .groovy-header-menu {
         margin:5px;
         .dim(40px, 40px);
-        .pos(absolute, 0, initial, initial, 0);
+        .pos(absolute, 0, @5: 0);
         vertical-align: middle;
         line-height: 40px;
 
     }
     .groovy-header-title {
-        .dim(auto, 50px);
+        .dim(@2: 50px);
         .font(@f0, 1.5em, 50px, inherit, 300);
         vertical-align:middle;
     }
@@ -27,10 +27,10 @@
 
 .groovy-tabbed {
     height:60px;
-    .pos(fixed, initial, 0, 0);
+    .pos(fixed, initial, @3: 0, @4: 0);
     .groovy-view-tab {
         padding:0 10px;
-        .dim(auto, 100%);
+        .dim(@2: 100%);
         cursor:pointer;
         display:inline-block;
         .groovy-view-tab-img {
