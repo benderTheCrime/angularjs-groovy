@@ -1,6 +1,6 @@
 {
     "name": "angularjs-groovy",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": "A Framework for WebView Applications in Angular",
     "author": "@benderTheCrime <joe.groseclose@ordergroove.com>",
     "license": "MIT",
