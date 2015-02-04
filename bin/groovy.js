@@ -5,7 +5,7 @@
         args =      p.argv,
         chalk =     require('chalk'),
         gulp =      require('../Gulpfile'),
-        term =      require('./js/misc/terminal');
+        term =      require('../lib/js/misc/terminal');
 
     var debug;
 
@@ -27,6 +27,6 @@
         term.out(
             chalk.bold('Thank you for using Groovy\'s Boilerplate!\n') + chalk.white('Let\'s get started...\n')
         );
-        require('./js/index')();
+        require('../lib/js/index')();
     }
 })();

@@ -1,7 +1,7 @@
 {
     "name": "angularjs-groovy",
     "author": "Joe Groseclose (@benderTheCrime)",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "description": "A Framework for WebView Applications in Angular",
     "license": "MIT",
     "private": false,
@@ -47,7 +47,7 @@
     },
     "main": "dist/angularjs-groovy.min.js",
     "bin": {
-        "groovy": "lib/groovy.js"
+        "groovy": "bin/groovy.js"
     },
     "repository": {
         "type": "git",
