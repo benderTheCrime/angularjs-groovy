@@ -10,9 +10,9 @@
     require('./settings/conf');
     require('./settings/settings')(g);
 
-    require('../bower_components/angular-route/angular-route.js');
-    require('../bower_components/angular-touch/angular-touch.js');
-    require('../bower_components/angular-sanitize/angular-sanitize.js');
+    require('../bower_components/angular-route/angular-route.min.js');
+    require('../bower_components/angular-touch/angular-touch.min.js');
+    require('../bower_components/angular-sanitize/angular-sanitize.min.js');
 
     /**
      * @ngdoc overview

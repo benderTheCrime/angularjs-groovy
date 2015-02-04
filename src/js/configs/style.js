@@ -18,12 +18,12 @@
                         i;
 
                     // Remove any repeat stylesheets and trim stylesheets from scripts
-                    for (i = stylesheets.length - 1; i >= 0; --i) {
-                        for (var j = scripts.length - 1; j >= 0; --j) {
+                    for (i = 0; i < stylesheets.length; ++i) {
+                        for (var j = 0; j < scripts.length; ++j) {
                             if (!scripts[j].href) {
                                 continue;
                             }
-                            if (~scripts[j].href.indexOf(stylesheets[i].href)) {
+                            if (~scripts[j].href.indexOf(stylesheets[i].filename.split('.')[0])) {
                                 stylesheets.splice(i);
                             }
                             scripts.splice(j);
@@ -39,11 +39,11 @@
                     }
 
                     // Attach any styles still required
-                    for (i = conf.requiredStyles.length - 1; i >= 0; --i) {
-                        var style = conf.requiredStyles[i],
+                    for (i = stylesheets.length - 1; i >= 0; --i) {
+                        var style = stylesheets[i],
                             link = d.createElement('link');
                         link.rel = 'stylesheet';
-                        link.href = ~style.indexOf('http') ? style : path + style;
+                        link.href = (style.loc ? style.loc : path) + style.filename;
                         d.head.insertBefore(link, d.head.children[1]);
                     }
 

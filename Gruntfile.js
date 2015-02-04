@@ -75,6 +75,9 @@
                 }
             },
             uglify: {
+                options: {
+                    mangle: false
+                },
                 app: {
                     files: [
                         {

@@ -9,21 +9,15 @@
         <title></title>
 
         <!-- start: template required resources -->
-            <script type='text/javascript'
-                    src='js/settings.js'>
-            </script>
-            <script type='text/javascript'
-                    src='bower_components/angularjs/angular.js'>
-            </script>
-            <script type='text/javascript'
-                    src='../../../dist/angularjs-groovy.js'>
-            </script>
             <link rel='stylesheet'
                   href='https://rawgit.com/hoarrd/drunken-parrot-flat-ui/master/css/font-awesome.min.css'>
             <link rel='stylesheet'
                   href='https://rawgit.com/hoarrd/drunken-parrot-flat-ui/master/css/drunken-parrot.css'>
             <link rel='stylesheet'
-                  href='../../../dist/angularjs-groovy.min.css'>
+                  href='bower_components/angularjs-groovy/dist/angularjs-groovy.min.css'>
+            <script type='text/javascript'
+                    src='js/settings.js'>
+            </script>
         <!-- end: template required resources -->
 
         <!-- start: template demo css -->
@@ -35,6 +29,12 @@
         <ng-view></ng-view>
 
         <!-- start: templtate demo script -->
+            <script type='text/javascript'
+                    src='bower_components/angularjs/angular.js'>
+            </script>
+            <script type='text/javascript'
+                    src='bower_components/angularjs-groovy/dist/angularjs-groovy.min.js'>
+            </script>
             <script type='text/javascript' src='js/index.js'></script>
         <!-- end: templtate demo script -->
     </body>

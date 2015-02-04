@@ -1,17 +1,24 @@
 (function(a) {
     'use strict';
 
+    var loc = 'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/master/';
+
     var conf = {
 
         // Required stylesheets
         requiredStyles: [
-            'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/' +
-                'master/bootstrap/css/bootstrap.css',
-            'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/master/' +
-                'css/font-awesome.min.css',
-            'https://rawgit.com/hoarrd/drunken-parrot-flat-ui/' +
-                'master/css/drunken-parrot.css',
-            'angularjs-groovy.min.css'
+            {
+                loc: loc + 'css/',
+                filename: 'font-awesome.min.css'
+            },
+            {
+                loc: loc + 'css/',
+                filename: 'drunken-parrot.css'
+            },
+            {
+                loc: false,
+                filename: 'angularjs-groovy.min.css'
+            }
         ]
     };
 

@@ -66,7 +66,9 @@
     });
     gulp.task('uglify', [ 'browserify' ], function() {
         gulp.src(dest + 'angularjs-groovy.js')
-            .pipe(uglify())
+            .pipe(uglify({
+                mangle: false
+            }))
             .pipe(rename({suffix: '.min'}))
             .pipe(gulp.dest(dest));
     });
