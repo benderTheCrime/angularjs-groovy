@@ -152,15 +152,19 @@ Temporary Items
 .apdisk
 
 
-# NPM
+### NPM ###
 npm-debug.log*
 node_modules
 
 
-# Bower
+### Bower ###
 bower_components
 
 
-# Custom
+### JetBrains IDEs ###
+.idea
+
+
+### Custom ###
 templates.js
 TODO.txt
