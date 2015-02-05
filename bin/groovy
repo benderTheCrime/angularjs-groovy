@@ -12,8 +12,6 @@ if (/-(|-)h($|elp)/i.test(args)) {
     term.help();
 } else if (/-(|-)d($|ebug)/i.test(args)) {
     debug = true;
-} else if (~args.indexOf('node')) {
-    args.splice(args.indexOf('node'), 1);
 }
 
 if (debug) {
@@ -26,5 +24,5 @@ if (debug) {
     term.out(
         chalk.bold('Thank you for using Groovy\'s Boilerplate!\n') + chalk.white('Let\'s get started...\n')
     );
-    require('../lib/js/index')();
+    return require('../lib/js/index')();
 }

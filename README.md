@@ -14,7 +14,7 @@ bower install angularjs-groovy --save-dev
 
 ##For CLI use:
 ```shell
-groovy [app name] [desired location]
+angularjs-groovy [app name] [desired location]
 ```
 Follow the prompts. Your settings can then be found in the js file settings.js. Examples use the boilerplate.
 
